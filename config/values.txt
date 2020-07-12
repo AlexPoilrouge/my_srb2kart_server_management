@@ -1,0 +1,13 @@
+STRASHBOT_USER:strashbot
+SERVICE_INSTALL_PATH:/etc/systemd/system
+SUDOERS_DIR:/etc/sudoers.d/
+SRB2KART_EXE:/usr/bin/srb2kart
+SRB2KART_DIR:.srb2kart
+SRB2K_SERVICE_START_CMD:/bin/systemctl start srb2kart_serv.service
+SRB2K_SERVICE_STOP_CMD:/bin/systemctl stop srb2kart_serv.service
+SRB2K_SERVICE_RESTART_CMD:/bin/systemctl restart srb2kart_serv.service
+SRB2K_SERVICE_ISACTIVE_CMD:/bin/systemctl is-active srb2kart_serv.service
+SRB2K_ADDRESS:
+SYSTEMD_INSTALL:true
+NGINX_INSTALL:true
+NGINX_CONF_DIR:/etc/nginx/conf.d
