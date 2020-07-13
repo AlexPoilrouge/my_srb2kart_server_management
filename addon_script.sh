@@ -35,11 +35,12 @@ TIME_MAPS_DIR="maps"
 
 
 _update(){
-    DL_ZIP="dl/strashbot_addons.zip"
+    DL_ZIP="${INSTALLED_ADDONS_DIR}/strashbot_addons.zip"
+    DL_README="${INSTALLED_ADDONS_DIR}/README.txt"
     rm -f "${DL_ZIP}" 2>/dev/null 2>&1
-    echo "These addons are to be copied in the 'DOWNLOAD' folder of your SRB2Kart folder…"    > dl/README.txt
-    zip "${DL_ZIP}" -j dl/README.txt >/dev/null 2>&1
-    rm -f dl/README.txt 2>/dev/null 2>&1
+    echo "These addons are to be copied in the 'DOWNLOAD' folder of your SRB2Kart folder…" > "${DL_README}"
+    zip "${DL_ZIP}" -j "${DL_README}" >/dev/null 2>&1
+    rm -f "${DL_README}" 2>/dev/null 2>&1
 
 
     echo "wait" > "${TMP_FILE}"
@@ -195,7 +196,7 @@ case "$CMD" in
         _FILE="tmp/$( basename "$2" )"
     fi
 
-    if mv "$_FILE" dl/"$( basename $2 )"; then
+    if mv "$_FILE" "${INSTALLED_ADDONS_DIR}/$( basename $2 )"; then
         _update
         echo "$( basename $2 ) moved from **[Temporary]** to **[Downloaded]**"
     else
