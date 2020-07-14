@@ -46,7 +46,9 @@ _update(){
     echo "wait" > "${TMP_FILE}"
     ( ls_restricted "${PENDING_ADDONS_DIR}" ) | while read -r L; do
             chmod 704 "${L}"
-            mv "${L}" "${INSTALLED_ADDONS_DIR}"
+            if ! systemctl is-active "${SERV_SERVICE}" >/dev/null 2>&1; then
+                mv "${L}" "${INSTALLED_ADDONS_DIR}"
+            fi
         done
 
     echo "wait" > "${DL_FILE}"
