@@ -7,3 +7,6 @@ Type=simple
 User=${STRASHBOT_USER}
 WorkingDirectory=${STRASHBOT_USER_HOME}
 ExecStart=sh ${SRB2KART_DIR}/server_start.sh
+
+Restart=on-failure
+RestartSec=10s
