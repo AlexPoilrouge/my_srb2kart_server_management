@@ -2,26 +2,26 @@
 server{
     server_name ${SRB2K_ADDR};
 
-    location ~* ^\/(.+\..+)$ {
+    location ~* ^\/.srb2kart\/(.+\..+)$ {
         root ${STRASHBOT_USER_HOME}/${SRB2KART_DIR};
 
         try_files $uri /dl/$1;
     }
 
     location ~* ^\/dl\/(.+\..+)$ {
-        root ${STRASHBOT_USER_HOME}/${SRB2KART_DIR};
+        root ${STRASHBOT_USER_HOME}/${SRB2KART_DIR}/addons;
 
         try_files \$uri /tmp/$1;
     }
 
     location ~* ^\/tmp\/(.+\..+)$ {
-        root ${STRASHBOT_USER_HOME}/${SRB2KART_DIR};
+        root ${STRASHBOT_USER_HOME}/${SRB2KART_DIR}/addons;
 
         try_files $uri /Packs/$1;
     }
 
     location ~* ^\/Packs\/(.+\..+)$ {
-        root ${STRASHBOT_USER_HOME}/${SRB2KART_DIR};
+        root ${STRASHBOT_USER_HOME}/${SRB2KART_DIR}/addons;
 
         try_files $uri =404;
     }
