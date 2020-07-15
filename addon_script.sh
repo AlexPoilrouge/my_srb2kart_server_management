@@ -25,6 +25,7 @@ cd "${SCRIPT_DIR}"
 
 TMP_FILE="tmp_load.cfg"
 DL_FILE="dl_load.cfg"
+BASE_FILE="base_load.cfg"
 
 ADDONS_DIR="addons"
 PENDING_ADDONS_DIR="${ADDONS_DIR}/tmp"
@@ -61,8 +62,12 @@ _update(){
         done
 
 
+    echo "wait" > "${BASE_FILE}"
     ( ls_restricted "${BASE_ADDONS_DIR}" ) | while read -r L; do
             chmod 704 "${L}"
+            echo "addfile \"${L}\"" >> "${BASE_FILE}"
+            echo "wait" >> "${BASE_FILE}"
+
             zip -jur "${DL_ZIP}" "${L}" >/dev/null 2>&1
         done
 }

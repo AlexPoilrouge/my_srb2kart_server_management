@@ -154,6 +154,7 @@ if "${SYSTEMD_INSTALL}"; then
     mkdir -p "${ROOT_DIR}/${SERVICE_INSTALL_PATH}"
     install -v config/srb2kart_serv.service "${ROOT_DIR}/${SERVICE_INSTALL_PATH}" -m 644
     
+    echo "[systemd] daemon reload…"
     systemctl daemon-reload
 
     mkdir -p "${ROOT_DIR}/${SUDOERS_DIR}"
@@ -164,6 +165,13 @@ if "${NGINX_INSTALL}"; then
     echo "Nginx install… ${NGINX_CONF_DIR}"
     mkdir -p "${ROOT_DIR}/${NGINX_CONF_DIR}"
     install -v config/nginx-http-srb2kart.conf "${ROOT_DIR}/${NGINX_CONF_DIR}" -m 644
+    
+    if "${SYSTEMD_INSTALL}" && ( systemctl is-active nginx.service >/dev/null 2>&1 ); then
+        echo "[systemd] restarting nginx…"
+        systemctl restart nginx.service
+    fi
 fi
+
+su ${STRASHBOT_USER} -c "cd ${SRB2KART_F_DIR}; ./addon_script.sh INIT"
 
 echo "End."
