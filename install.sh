@@ -145,8 +145,9 @@ fi
 
 mkdir -p "${SRB2KART_F_DIR}"
 
-install -v ./{addon_script.sh,record_lmp_read.py} "${SRB2KART_F_DIR}"
-install -v ./config/serv/{dkartconfig.cfg,kartserv.cfg,startup.cfg,server_start.sh} "${SRB2KART_F_DIR}"
+install -v ./{addon_script.sh,record_lmp_read.py} "${SRB2KART_F_DIR}" -m 700
+install -v ./config/serv/{dkartconfig.cfg,kartserv.cfg,startup.cfg,server_start.sh} "${SRB2KART_F_DIR}" -m 700
+install -v ./config/serv/startup.cfg "${SRB2KART_F_DIR}" -m 704
 chown "${STRASHBOT_USER}:${STRASHBOT_USER}" -R "${SRB2KART_F_DIR}"
 
 if "${SYSTEMD_INSTALL}"; then
@@ -163,6 +164,8 @@ fi
 
 if "${NGINX_INSTALL}"; then
     echo "Nginx install… ${NGINX_DIR}"
+
+    chmod 701 "${STRASHBOT_USER_HOME}"
 
     mkdir -p "${ROOT_DIR}/${NGINX_DIR}/sites-available"
     mkdir -p "${ROOT_DIR}/${NGINX_DIR}/sites-enabled"

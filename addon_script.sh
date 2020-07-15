@@ -266,6 +266,7 @@ case "$CMD" in
     fi
 
     mv "${2}" "${_CFG_FILE}"
+    chmod 704 "${_CFG_FILE}"
 ;;
 "CFG_BLACKLIST")
     for i in ${CFG_CMD_BLACKLIST[@]}; do
