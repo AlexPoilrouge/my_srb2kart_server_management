@@ -10,4 +10,4 @@ SRB2K_SERVICE_ISACTIVE_CMD:/bin/systemctl is-active srb2kart_serv.service
 SRB2K_ADDR:
 SYSTEMD_INSTALL:true
 NGINX_INSTALL:true
-NGINX_CONF_DIR:/etc/nginx/conf.d
+NGINX_DIR:/etc/nginx

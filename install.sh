@@ -162,9 +162,16 @@ if "${SYSTEMD_INSTALL}"; then
 fi
 
 if "${NGINX_INSTALL}"; then
-    echo "Nginx install… ${NGINX_CONF_DIR}"
-    mkdir -p "${ROOT_DIR}/${NGINX_CONF_DIR}"
-    install -v config/nginx-http-srb2kart.conf "${ROOT_DIR}/${NGINX_CONF_DIR}" -m 644
+    echo "Nginx install… ${NGINX_DIR}"
+
+    mkdir -p "${ROOT_DIR}/${NGINX_DIR}/sites-available"
+    mkdir -p "${ROOT_DIR}/${NGINX_DIR}/sites-enabled"
+
+    install -v config/nginx-http-srb2kart.conf "${ROOT_DIR}/${NGINX_DIR}/sites-available" -m 644
+
+    ln -s "${ROOT_DIR}/${NGINX_DIR}/sites-available/nginx-http-srb2kart.conf" "${ROOT_DIR}/${NGINX_DIR}/sites-available/nginx-http-srb2kart.conf"
+
+    echo -e "[IMPORTANT] Make sure the line \n\tinclude sites-enabled/*;\n is added to '${ROOT_DIR}/${NGINX_DIR}/nginx.conf''s 'http' block!"
     
     if "${SYSTEMD_INSTALL}" && ( systemctl is-active nginx.service >/dev/null 2>&1 ); then
         echo "[systemd] restarting nginx…"
