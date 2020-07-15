@@ -6,5 +6,10 @@ FILE="$( pwd )/.TMP_PASS"
 
 echo "${PASS}" > "$FILE"
 
+LOG_FILE="${STRASHBOT_USER_HOME}/${SRB2KART_DIR}/log.txt"
+if [ -f "${LOG_FILE}" ]; then
+    chmod 704 "${LOG_FILE}"
+fi
+
 #sudo nice -n -20 su -c "${SRB2KART_EXE} -dedicated -password ${PASS} -room 33 " ${STRASHBOT_USER}
 ${SRB2KART_EXE} -dedicated -password ${PASS} -room 33

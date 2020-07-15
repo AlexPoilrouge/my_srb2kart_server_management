@@ -36,6 +36,11 @@ TIME_MAPS_DIR="maps"
 
 
 _update(){
+    _LOG_FILE="log.txt"
+    if [ -f "${_LOG_FILE}" ]; then
+        chmod 704 "${_LOG_FILE}"
+    fi
+
     DL_ZIP="${INSTALLED_ADDONS_DIR}/strashbot_addons.zip"
     DL_README="${INSTALLED_ADDONS_DIR}/README.txt"
     rm -f "${DL_ZIP}" 2>/dev/null 2>&1
@@ -271,6 +276,7 @@ case "$CMD" in
 "GET_LOG")
     _LOG_FILE="log.txt"
     if [ -f "${_LOG_FILE}" ]; then
+        chmod 704 "${_LOG_FILE}"
         echo -n "${_LOG_FILE}"
     else
         exit 8
