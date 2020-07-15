@@ -1,6 +1,6 @@
 
 server{
-    server_name ${SRB2K_ADDRESS};
+    server_name ${SRB2K_ADDR};
 
     location ~* ^\/(.+\..+)$ {
         root ${STRASHBOT_USER_HOME}/${SRB2KART_DIR};
