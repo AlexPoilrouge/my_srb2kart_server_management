@@ -169,7 +169,7 @@ if "${NGINX_INSTALL}"; then
 
     install -v config/nginx-http-srb2kart.conf "${ROOT_DIR}/${NGINX_DIR}/sites-available" -m 644
 
-    ln -s "${ROOT_DIR}/${NGINX_DIR}/sites-available/nginx-http-srb2kart.conf" "${ROOT_DIR}/${NGINX_DIR}/sites-available/nginx-http-srb2kart.conf"
+    ln -s "${ROOT_DIR}/${NGINX_DIR}/sites-available/nginx-http-srb2kart.conf" "${ROOT_DIR}/${NGINX_DIR}/sites-enabled/nginx-http-srb2kart.conf"
 
     echo -e "[IMPORTANT] Make sure the line \n\tinclude sites-enabled/*;\n is added to '${ROOT_DIR}/${NGINX_DIR}/nginx.conf''s 'http' block!"
     
