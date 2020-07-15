@@ -11,7 +11,7 @@ server{
     location ~* ^\/dl\/(.+\..+)$ {
         root ${STRASHBOT_USER_HOME}/${SRB2KART_DIR}/addons;
 
-        try_files \$uri /tmp/$1;
+        try_files $uri /tmp/$1;
     }
 
     location ~* ^\/tmp\/(.+\..+)$ {
