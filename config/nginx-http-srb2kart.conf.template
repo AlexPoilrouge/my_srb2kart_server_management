@@ -3,7 +3,7 @@ server{
     server_name ${SRB2K_ADDR};
 
     location ~* ^\/.srb2kart\/(.+\..+)$ {
-        root ${STRASHBOT_USER_HOME}/${SRB2KART_DIR};
+        root ${STRASHBOT_USER_HOME};
 
         try_files $uri /dl/$1;
     }
