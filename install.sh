@@ -147,6 +147,7 @@ mkdir -p "${SRB2KART_F_DIR}"
 
 install -v ./{addon_script.sh,record_lmp_read.py} "${SRB2KART_F_DIR}" -m 700
 install -v ./config/serv/{dkartconfig.cfg,kartserv.cfg,startup.cfg,server_start.sh} "${SRB2KART_F_DIR}" -m 700
+#preventing override
 if ! [ -f "${SRB2KART_F_DIR}/startup.cfg" ]; then
     install -v ./config/serv/startup.cfg "${SRB2KART_F_DIR}" -m 704
 else
