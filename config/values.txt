@@ -2,6 +2,7 @@ STRASHBOT_USER:strashbot
 SERVICE_INSTALL_PATH:/etc/systemd/system
 SUDOERS_DIR:/etc/sudoers.d/
 SRB2KART_EXE:/usr/bin/srb2kart
+SRB2KART_LAUNCH_ARGS:-bandwidth 2000000 -room 33
 SRB2KART_DIR:.srb2kart
 SRB2K_SERVICE_START_CMD:/bin/systemctl start srb2kart_serv.service
 SRB2K_SERVICE_STOP_CMD:/bin/systemctl stop srb2kart_serv.service

@@ -12,4 +12,4 @@ if [ -f "${LOG_FILE}" ]; then
 fi
 
 #sudo nice -n -20 su -c "${SRB2KART_EXE} -dedicated -password ${PASS} -room 33 " ${STRASHBOT_USER}
-${SRB2KART_EXE} -dedicated -password ${PASS} -room 33
+${SRB2KART_EXE} -dedicated -password ${PASS} ${SRB2KART_LAUNCH_ARGS}
