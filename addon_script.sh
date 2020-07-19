@@ -107,7 +107,6 @@ case "$CMD" in
     _STATE_FILE="state.txt"
     touch "${_STATE_FILE}"
     chmod 704 "${_STATE_FILE}"
-    echo -e "UNKNOWN\n0\n0" > "${_STATE_FILE}"
 
     _update
 ;;
