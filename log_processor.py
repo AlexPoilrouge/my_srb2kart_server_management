@@ -94,7 +94,7 @@ if __name__ == "__main__":
 
         if len(line) == 0:
             break
-        elif data.processLine(line)
+        elif data.processLine(line) :
 
             if len(sys.argv) <= 1 :
                 print(data.strData())
