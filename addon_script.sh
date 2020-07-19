@@ -43,7 +43,7 @@ _update(){
 
     _STATE_FILE="state.txt"
     if [ -f "${_STATE_FILE}" ]; then
-        chmod 704
+        chmod 704 "${_STATE_FILE}"
     fi
 
     DL_ZIP="${INSTALLED_ADDONS_DIR}/strashbot_addons.zip"
