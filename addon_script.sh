@@ -41,6 +41,11 @@ _update(){
         chmod 704 "${_LOG_FILE}"
     fi
 
+    _STATE_FILE="state.txt"
+    if [ -f "${_STATE_FILE}" ]; then
+        chmod 704
+    fi
+
     DL_ZIP="${INSTALLED_ADDONS_DIR}/strashbot_addons.zip"
     DL_README="${INSTALLED_ADDONS_DIR}/README.txt"
     rm -f "${DL_ZIP}" 2>/dev/null 2>&1
@@ -98,6 +103,11 @@ case "$CMD" in
     mkdir -p "${BASE_ADDONS_DIR}"
 
     mkdir -p "${TIME_MAPS_DIR}"
+
+    _STATE_FILE="state.txt"
+    touch "${_STATE_FILE}"
+    chmod 704 "${_STATE_FILE}"
+    echo -e "UNKNOWN\n0\n0" > "${_STATE_FILE}"
 
     _update
 ;;
