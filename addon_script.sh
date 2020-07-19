@@ -128,6 +128,14 @@ case "$CMD" in
         exit 1
     fi
 ;;
+"INFO_SERV")
+    _STATE_FILE="state.txt"
+    if [ -f "${_STATE_FILE}" ]; then
+        cat "${_STATE_FILE}"
+    else
+        exit 27
+    fi
+;;
 "LIST")
     _TEST=false
     echo "**[Pending]**"

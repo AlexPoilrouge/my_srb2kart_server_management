@@ -7,9 +7,14 @@ FILE="$( pwd )/.TMP_PASS"
 echo "${PASS}" > "$FILE"
 
 LOG_FILE="${STRASHBOT_USER_HOME}/${SRB2KART_DIR}/log.txt"
-if [ -f "${LOG_FILE}" ]; then
-    chmod 704 "${LOG_FILE}"
-fi
+touch "${LOG_FILE}"
+chmod 704 "${LOG_FILE}"
+
+STATE_FILE"${STRASHBOT_USER_HOME}/${SRB2KART_DIR}/state.txt"
+touch "${STATE_FILE}"
+chmod 704 "${STATE_FILE}"
 
 #sudo nice -n -20 su -c "${SRB2KART_EXE} -dedicated -password ${PASS} -room 33 " ${STRASHBOT_USER}
+trap 'kill $(jobs -p)' EXIT
+( tail -f "${LOG_FILE}" | "${STRASHBOT_USER_HOME}/${SRB2KART_DIR}/log_processor.py" "${STATE_FILE}" ) &
 ${SRB2KART_EXE} -dedicated -password ${PASS} ${SRB2KART_LAUNCH_ARGS}
