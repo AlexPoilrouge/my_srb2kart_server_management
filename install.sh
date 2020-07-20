@@ -147,6 +147,10 @@ mkdir -p "${SRB2KART_F_DIR}"
 
 install -v ./{addon_script.sh,record_lmp_read.py,log_processor.py} "${SRB2KART_F_DIR}" -m 700
 install -v ./config/serv/{dkartconfig.cfg,kartserv.cfg,server_start.sh} "${SRB2KART_F_DIR}" -m 700
+
+mkdir -p "${ROOT_DIR}/security/limits.d"
+install -v ./config/10-strashbot-user-nice-limite.conf "${ROOT_DIR}/security/limits.d" -m 644
+
 #preventing override
 if ! [ -f "${SRB2KART_F_DIR}/startup.cfg" ]; then
     install -v ./config/serv/startup.cfg "${SRB2KART_F_DIR}" -m 704
