@@ -11,6 +11,7 @@ class ParsedData:
 
         self.spectators= []
         self.players= []
+        self.admin= []
         self.map="UNKNOWN"
 
     def _addSpectator(self, name):
@@ -40,6 +41,12 @@ class ParsedData:
             self.spectators.remove(name)
         elif self.players.count(name):
             self.players.remove(name)
+        if self.admin.count(name):
+            self.admin.remove(name)
+
+    def __admin(self, name):
+        if not self.admin.count(name):
+            self.admin.append(name)
     
 
     def processLine(self, line):
@@ -51,7 +58,10 @@ class ParsedData:
 
             res= re.findall('^\*(.*) has joined the game.*$', line)
             if res:
-                self._addSpectator(res[0])
+                if len(self.players)>0:
+                    self._addSpectator(res[0])
+                else :
+                    self._entersGame(res[0])
                 return True
 
             res= re.findall('^\*(.*) entered the game.*$', line)
@@ -71,6 +81,22 @@ class ParsedData:
         elif line.startswith('Map is now'):
             self.map= line[12:-2]
             return True
+        elif line.endswith('has finished the race.'):
+            res= re.findall('^\*(.*) has finished the race.*$', line)
+            if res and not self.players.count(res[0]) :
+                self._entersGame(res[0])
+                return True
+        elif line.endswith('ran out of time.'):
+            res= re.findall('^\*(.*) ran out of time.*$', line)
+            if res and not self.players.count(res[0]) :
+                self._entersGame(res[0])
+                return True
+        elif line.endswith(' passed authentication.'):
+            res= re.findall('^\*(.*) passed authentication.*$', line)
+            if res :
+                self._admin(res[0])
+                return True
+
         
         return False
 
@@ -79,11 +105,17 @@ class ParsedData:
 
         res+= str(len(self.spectators))
         for spect in self.spectators:
-            res+= '\n'+spect
+            if self.admin.count(spect):
+                res+= '\n__'+spect+'__'
+            else:
+                res+= '\n'+spect
 
         res+= '\n' + str(len(self.players))
         for player in self.players:
-            res+= '\n'+player
+            if self.admin.count(player):
+                res+= '\n__'+player+'__'
+            else:
+                res+= '\n'+player
 
         return res
 

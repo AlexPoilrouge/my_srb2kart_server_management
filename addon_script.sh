@@ -27,6 +27,8 @@ TMP_FILE="tmp_load.cfg"
 DL_FILE="dl_load.cfg"
 BASE_FILE="base_load.cfg"
 
+_STATE_FILE="state.txt"
+
 ADDONS_DIR="addons"
 PENDING_ADDONS_DIR="${ADDONS_DIR}/tmp"
 INSTALLED_ADDONS_DIR="${ADDONS_DIR}/dl"
@@ -41,7 +43,6 @@ _update(){
         chmod 704 "${_LOG_FILE}"
     fi
 
-    _STATE_FILE="state.txt"
     if [ -f "${_STATE_FILE}" ]; then
         chmod 704 "${_STATE_FILE}"
     fi
@@ -104,7 +105,6 @@ case "$CMD" in
 
     mkdir -p "${TIME_MAPS_DIR}"
 
-    _STATE_FILE="state.txt"
     touch "${_STATE_FILE}"
     chmod 704 "${_STATE_FILE}"
 
@@ -116,15 +116,21 @@ case "$CMD" in
     done
 ;;
 "START_SERV")
+    echo -e "UNKNOWN\n0\n0" > "${_STATE_FILE}"
+    
     sudo systemctl start "${SERV_SERVICE}"
 ;;
 "STOP_SERV")
     sudo systemctl stop "${SERV_SERVICE}"
 
+    echo -e "UNKNOWN\n0\n0" > "${_STATE_FILE}"
+
     _update
 ;;
 "RESTART_SERV")
     _update
+
+    echo -e "UNKNOWN\n0\n0" > "${_STATE_FILE}"
 
     sudo systemctl restart "${SERV_SERVICE}"
 ;;
@@ -138,7 +144,6 @@ case "$CMD" in
     fi
 ;;
 "INFO_SERV")
-    _STATE_FILE="state.txt"
     if [ -f "${_STATE_FILE}" ]; then
         cat "${_STATE_FILE}"
     else
