@@ -121,6 +121,13 @@ case "$CMD" in
     sudo systemctl start "${SERV_SERVICE}"
 ;;
 "STOP_SERV")
+    if [ "$2" != "FORCE" ] && [ -f "${_STATE_FILE}" ] && 
+       ( [ "$( sed '2q;d' ${_STATE_FILE} )" -gt 0 ] || [ "$( sed '3q;d' ${_STATE_FILE} )" -gt 0 ] );
+    then
+        echo "populated"
+        exit 0
+    fi
+
     sudo systemctl stop "${SERV_SERVICE}"
 
     echo -e "UNKNOWN\n0\n0" > "${_STATE_FILE}"
@@ -128,6 +135,13 @@ case "$CMD" in
     _update
 ;;
 "RESTART_SERV")
+    if [ "$2" != "FORCE" ] && [ -f "${_STATE_FILE}" ] && 
+       ( [ "$( sed '2q;d' ${_STATE_FILE} )" -gt 0 ] || [ "$( sed '3q;d' ${_STATE_FILE} )" -gt 0 ] );
+    then
+        echo "populated"
+        exit 0
+    fi
+    
     _update
 
     echo -e "UNKNOWN\n0\n0" > "${_STATE_FILE}"
