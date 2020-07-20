@@ -124,7 +124,7 @@ case "$CMD" in
     if [ "$2" != "FORCE" ] && [ -f "${_STATE_FILE}" ] && 
        ( [ "$( sed '2q;d' ${_STATE_FILE} )" -gt 0 ] || [ "$( sed '3q;d' ${_STATE_FILE} )" -gt 0 ] );
     then
-        echo "populated"
+        echo -n "populated"
         exit 0
     fi
 
@@ -138,7 +138,7 @@ case "$CMD" in
     if [ "$2" != "FORCE" ] && [ -f "${_STATE_FILE}" ] && 
        ( [ "$( sed '2q;d' ${_STATE_FILE} )" -gt 0 ] || [ "$( sed '3q;d' ${_STATE_FILE} )" -gt 0 ] );
     then
-        echo "populated"
+        echo -n "populated"
         exit 0
     fi
     
