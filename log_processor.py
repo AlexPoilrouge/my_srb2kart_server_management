@@ -32,7 +32,7 @@ class ParsedData:
         if self.spectators.count(oldName):
             i= self.spectators.index(oldName)
             self.spectators[i]= newName
-        elif self.players.count(name):
+        elif self.players.count(oldName):
             i= self.players.index(oldName)
             self.players[i]= newName
 
