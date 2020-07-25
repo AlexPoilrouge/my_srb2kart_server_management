@@ -9,44 +9,46 @@ class ParsedData:
     def __init__(self):
         print("init")
 
-        self.spectators= []
-        self.players= []
-        self.admin= []
+        self.spectators= set()
+        self.players= set()
+        self.admin= set()
         self.map="UNKNOWN"
 
     def _addSpectator(self, name):
-        if self.players.count(name):
-            self.players.remove(name)
+        self.players.discard(name)
 
-        if not self.spectators.count(name):
-            self.spectators.append(name)
+        self.spectators.add(name)
 
     def _entersGame(self, name):
-        if self.spectators.count(name):
-            self.spectators.remove(name)
+        self.spectators.discard(name)
 
-        if not self.players.count(name):
-            self.players.append(name)
+        self.players.add(name)
 
     def _renaming(self, oldName, newName):
-        if self.spectators.count(oldName):
-            i= self.spectators.index(oldName)
-            self.spectators[i]= newName
-        elif self.players.count(oldName):
-            i= self.players.index(oldName)
-            self.players[i]= newName
+        if oldName != newName:
+            if oldName in self.players :
+                self.players.discard(oldName)
+                self.players.add(newName)
+
+            if newName in self.players :
+                self.spectators.discard(oldName)
+                self.spectators.discard(newName)
+            elif oldName in self.spectators :
+                self.spectators.discard(oldName)
+                self.spectators.add(newName)
+
+            if oldName in self.admin :
+                self.admin.discard(oldName)
+                self.admin.add(newName)
 
     def _left(self, name):
-        if self.spectators.count(name):
-            self.spectators.remove(name)
-        elif self.players.count(name):
-            self.players.remove(name)
-        if self.admin.count(name):
-            self.admin.remove(name)
+        self.spectators.discard(name)
+        self.players.discard(name)
+        self.admin.discard(name)
+        
 
     def __admin(self, name):
-        if not self.admin.count(name):
-            self.admin.append(name)
+        self.admin.add(name)
     
 
     def processLine(self, line):
@@ -83,12 +85,12 @@ class ParsedData:
             return True
         elif line.endswith('has finished the race.'):
             res= re.findall('^\*(.*) has finished the race.*$', line)
-            if res and not self.players.count(res[0]) :
+            if res and not (res[0] in self.players) :
                 self._entersGame(res[0])
                 return True
         elif line.endswith('ran out of time.'):
             res= re.findall('^\*(.*) ran out of time.*$', line)
-            if res and not self.players.count(res[0]) :
+            if res and not not (res[0] in self.players) :
                 self._entersGame(res[0])
                 return True
         elif line.endswith(' passed authentication.'):
@@ -105,14 +107,14 @@ class ParsedData:
 
         res+= str(len(self.spectators))
         for spect in self.spectators:
-            if self.admin.count(spect):
+            if spect in self.admin:
                 res+= '\n__'+spect+'__'
             else:
                 res+= '\n'+spect
 
         res+= '\n' + str(len(self.players))
         for player in self.players:
-            if self.admin.count(player):
+            if player in self.admin:
                 res+= '\n__'+player+'__'
             else:
                 res+= '\n'+player
