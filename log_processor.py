@@ -13,9 +13,11 @@ class ParsedData:
         self.players= set()
         self.admin= set()
         self.map="UNKNOWN"
+        self.inRaceCheck= set()
 
     def _addSpectator(self, name):
         self.players.discard(name)
+        self.inRaceCheck.discard(name)
 
         self.spectators.add(name)
 
@@ -41,11 +43,30 @@ class ParsedData:
                 self.admin.discard(oldName)
                 self.admin.add(newName)
 
+            if oldName in self.inRaceCheck :
+                self.inRaceCheck.discard(oldName)
+                self.inRaceCheck;add(newName)
+
     def _left(self, name):
         self.spectators.discard(name)
         self.players.discard(name)
         self.admin.discard(name)
+        self.inRaceCheck.discard(name)
+
+    def _checkRacers(self):
+        tmp= self.players & self.inRaceCheck
+        b= (tmp <= self.players)
         
+        self.players= tmp
+
+        return b
+
+    def _talked(self, name):
+        if not (name in self.spectators) and (not name in self.players) :
+            self._addSpectator(name)
+            return True
+        
+        return False
 
     def __admin(self, name):
         self.admin.add(name)
@@ -83,21 +104,34 @@ class ParsedData:
         elif line.startswith('Map is now'):
             self.map= line[12:-2]
             return True
-        elif line.endswith('has finished the race.'):
-            res= re.findall('^\*(.*) has finished the race.*$', line)
-            if res and not (res[0] in self.players) :
-                self._entersGame(res[0])
-                return True
-        elif line.endswith('ran out of time.'):
-            res= re.findall('^\*(.*) ran out of time.*$', line)
-            if res and not not (res[0] in self.players) :
-                self._entersGame(res[0])
-                return True
+        elif line.endswith('has finished the race.\n'):
+            res= re.findall('^(.*) has finished the race.*$', line)
+            if res :
+                self.inRaceCheck.add(res[0])
+                if not (res[0] in self.players) :
+                    self._entersGame(res[0])
+                    return True
+        elif line.endswith('ran out of time.\n'):
+            res= re.findall('^(.*) ran out of time.*$', line)
+            if res :
+                self.inRaceCheck.add(res[0])
+                if not (res[0] in self.players) :
+                    self._entersGame(res[0])
+                    return True
+        elif line.startswith("The round has ended."):
+            return self._checkRacers()
+        elif line.startswith("Speeding off to level..."):
+            self.inRaceCheck.clear()
+            return False
         elif line.endswith(' passed authentication.'):
             res= re.findall('^\*(.*) passed authentication.*$', line)
             if res :
                 self._admin(res[0])
                 return True
+        elif line.startswith('<'):
+            res= re.findall('^<(.*)> .*$', line)
+            if res :
+                return self._talked(res[0])
 
         
         return False
