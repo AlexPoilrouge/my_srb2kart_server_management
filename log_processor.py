@@ -119,7 +119,8 @@ class ParsedData:
                     self._entersGame(res[0])
                     return True
         elif line.startswith("The round has ended."):
-            return self._checkRacers()
+            if len(self.players)>1 :
+                return self._checkRacers()
         elif line.startswith("Speeding off to level..."):
             self.inRaceCheck.clear()
             return False
