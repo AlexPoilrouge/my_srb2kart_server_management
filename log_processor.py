@@ -45,7 +45,7 @@ class ParsedData:
 
             if oldName in self.inRaceCheck :
                 self.inRaceCheck.discard(oldName)
-                self.inRaceCheck;add(newName)
+                self.inRaceCheck.add(newName)
 
     def _left(self, name):
         self.spectators.discard(name)
