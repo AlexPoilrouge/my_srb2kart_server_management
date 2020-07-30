@@ -108,14 +108,14 @@ class ParsedData:
             res= re.findall('^(.*) has finished the race.*$', line)
             if res :
                 self.inRaceCheck.add(res[0])
-                if not (res[0] in self.players) :
+                if res[0] in self.spectators or not (res[0] in self.players) :
                     self._entersGame(res[0])
                     return True
         elif line.endswith('ran out of time.\n'):
             res= re.findall('^(.*) ran out of time.*$', line)
             if res :
                 self.inRaceCheck.add(res[0])
-                if not (res[0] in self.players) :
+                if res[0] in self.spectators or not (res[0] in self.players) :
                     self._entersGame(res[0])
                     return True
         elif line.startswith("The round has ended."):
