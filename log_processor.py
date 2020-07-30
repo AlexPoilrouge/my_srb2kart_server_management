@@ -62,8 +62,9 @@ class ParsedData:
         return b
 
     def _talked(self, name):
-        if not (name in self.spectators) and (not name in self.players) :
-            self._addSpectator(name)
+        n= name if not ( name in self.admin and name.startswith('@') ) else name[1:]
+        if not (n in self.spectators) and (not n in self.players) :
+            self._addSpectator(n)
             return True
         
         return False
