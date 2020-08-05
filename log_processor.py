@@ -62,7 +62,7 @@ class ParsedData:
         return b
 
     def _talked(self, name):
-        n= name if not ( name in self.admin and name.startswith('@') ) else name[1:]
+        n= name if not ( name.startswith('@') and name[1:] in self.admin ) else name[1:]
         if not (n in self.spectators) and (not n in self.players) :
             self._addSpectator(n)
             return True
@@ -124,10 +124,10 @@ class ParsedData:
         elif line.startswith("Speeding off to level..."):
             self.inRaceCheck.clear()
             return False
-        elif line.endswith(' passed authentication.'):
-            res= re.findall('^\*(.*) passed authentication.*$', line)
+        elif line.endswith(' passed authentication.\n'):
+            res= re.findall('^(.*) passed authentication.*$', line)
             if res :
-                self._admin(res[0])
+                self.admin.add(res[0])
                 return True
         elif line.startswith('<'):
             res= re.findall('^<(.*)> .*$', line)
