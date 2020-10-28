@@ -27,6 +27,9 @@ TMP_FILE="tmp_load.cfg"
 DL_FILE="dl_load.cfg"
 BASE_FILE="base_load.cfg"
 
+MEMBERS_FILE="members.txt"
+WELCOME_FILE="welcome.txt"
+
 _STATE_FILE="state.txt"
 
 ADDONS_DIR="addons"
@@ -550,6 +553,95 @@ and rename the file '${_TMP}-guest.lmp'."        > README.txt
 
     echo "RECORD_REMOVED - done"
     exit 0
+;;
+"REGISTER")
+    if [ "$#" -lt 2 ]; then
+        echo "ERROR - Need Discord id"
+        exit 28
+    fi
+
+    DISCORD_ID="$2"
+
+    touch "${MEMBERS_FILE}"
+    touch "${WELCOME_FILE}"
+    NUM_AND_LINE="$(grep -n "${DISCORD_ID}" "${MEMBERS_FILE}" | head -n 1)"
+    LINE_INFOS="$(echo ${NUM_AND_LINE} | cut -d: -f2-)"
+    NUM_LINE="$(echo ${NUM_AND_LINE}  | cut -d: -f1)"
+    NEW_TOKEN="$( </dev/urandom tr -dc '0123456789azertyuiopqsdfghjklmwxcvbnAZERTYUIOPQSDFGHJKLMWXCVBN' | head -c8 )"
+    WELCOME_TOKEN="$( </dev/urandom tr -dc '0123456789azertyuiopqsdfghjklmwxcvbnAZERTYUIOPQSDFGHJKLMWXCVBN' | head -c4 ):$( </dev/urandom tr -dc '0123456789azertyuiopqsdfghjklmwxcvbnAZERTYUIOPQSDFGHJKLMWXCVBN' | head -c4 )"
+
+    if [ -z "${NUM_LINE}" ]; then
+        echo "${NEW_TOKEN};0;${DISCORD_ID};$(echo "${WELCOME_TOKEN}" | cut -d: -f1)" >> "${MEMBERS_FILE}"
+        echo "${WELCOME_TOKEN}" >> "${WELCOME_FILE}"
+
+        echo "NEW_MEMBER ${NEW_TOKEN}"
+    else
+        SCORE="$(echo "${LINE_INFOS}" | cut -d';' -f2)"
+        OLD_WELCOME1="$(echo "${LINE_INFOS}" | cut -d';' -f4 | cut -d: -f1)"
+        
+        sed -i "${NUM_LINE}s/.*/${NEW_TOKEN};${SCORE};${DISCORD_ID};$(echo "${WELCOME_TOKEN}" | cut -d: -f1)/" "${MEMBERS_FILE}"
+
+        WELCOME_NUM_LINE="$(grep -n "${OLD_WELCOME1}" "${WELCOME_FILE}" | head -n 1 | cut -d: -f1)"
+        sed -i "${WELCOME_NUM_LINE}s/.*/${WELCOME_TOKEN}/" "${WELCOME_FILE}"
+
+        echo "CHANGE_MEMBER ${NEW_TOKEN}"
+    fi
+
+    exit 0
+;;
+"IS_REGISTERED")
+    if [ "$#" -lt 2 ]; then
+        echo "ERROR - Need Discord id"
+        exit 29
+    fi
+
+    DISCORD_ID="$2"
+
+    TOKEN="$(grep "${DISCORD_ID}" "${MEMBERS_FILE}" | cut -d';' -f1 )"
+
+    if [ -z "${TOKEN}" ]; then
+        echo "UNREGISTERED"
+    else
+        echo "REGISTERED"
+    fi
+
+    exit 0
+;;
+"CLEAR_SCORE")
+    if [ "$#" -lt 2 ]; then
+        touch "${MEMBERS_FILE}"
+        touch "${MEMBERS_FILE}_"
+        while read L; do
+            DISCORD_ID="$(echo "$L" | cut -d';' -f3)"
+            TOKEN="$(echo "$L" | cut -d';' -f1)"
+            WELCOME1="$(echo "$L" | cut -d';' -f4)"
+            echo "${TOKEN};0;${DISCORD_ID};${WELCOME1}" >> "${MEMBERS_FILE}_"
+        done < "${MEMBERS_FILE}"
+
+        mv "${MEMBERS_FILE}_" "${MEMBERS_FILE}"
+
+        echo "SCORES_CLEARED"
+
+        exit 0
+    else
+        DISCORD_ID="$2"
+
+        touch "${MEMBERS_FILE}"
+        LINE="$(grep "${DISCORD_ID}" "${MEMBERS_FILE}")"
+
+        if [ -z "${LINE}" ]; then
+            echo "UNREGISTERED_MEMBER"
+            exit 30
+        fi
+        TOKEN="$(echo "${LINE}" | cut -d';' -f1)"
+        WELCOME1="$(echo "${LINE}" | cut -d';' -f4)"
+
+        sed -i "${NUM_LINE}s/.*/${TOKEN};0;${DISCORD_ID};${WELCOME1}/" ${MEMBERS_FILE}
+
+        echo "INDIVIDUAL_SCORE_CLEARED"
+
+        exit 0
+    fi
 ;;
 "UPDATE")
     _update
