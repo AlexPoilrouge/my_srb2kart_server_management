@@ -477,7 +477,7 @@ case "$CMD" in
     _TMP="${_TMP[14]}"
     echo "To challenge a ghost from this archives, copy the .lmp file into the subfolder /replay/kart of your srb2kart folder,\
 and rename the file '${_TMP}-guest.lmp'."        > README.txt
-    _ZIP="${MAP_DIR}_record.zip"
+    _ZIP="${TIME_MAPS_DIR}/${MAP_DIR}/${MAP_DIR}_record.zip"
     rm -rf "${_ZIP}" 2>/dev/null
     zip "${_ZIP}" README.txt >/dev/null 2>&1
 
