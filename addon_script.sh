@@ -27,8 +27,9 @@ TMP_FILE="tmp_load.cfg"
 DL_FILE="dl_load.cfg"
 BASE_FILE="base_load.cfg"
 
-MEMBERS_FILE="members.txt"
-WELCOME_FILE="welcome.txt"
+LUAFILES_DIR="luafiles"
+MEMBERS_FILE="${LUAFILES_DIR}/members.txt"
+WELCOME_FILE="${LUAFILES_DIR}/welcome.txt"
 
 _STATE_FILE="state.txt"
 
@@ -562,9 +563,10 @@ and rename the file '${_TMP}-guest.lmp'."        > README.txt
 
     DISCORD_ID="$2"
 
+    mkdir -p "${LUAFILES_DIR}"
     touch "${MEMBERS_FILE}"
     touch "${WELCOME_FILE}"
-    NUM_AND_LINE="$(grep -n "${DISCORD_ID}" "${MEMBERS_FILE}" | head -n 1)"
+    NUM_AND_LINE="$(grep -n "${DISCORD_ID}" "${MEMBERS_FILE}"  2>/dev/null | head -n 1)"
     LINE_INFOS="$(echo ${NUM_AND_LINE} | cut -d: -f2-)"
     NUM_LINE="$(echo ${NUM_AND_LINE}  | cut -d: -f1)"
     NEW_TOKEN="$( </dev/urandom tr -dc '0123456789azertyuiopqsdfghjklmwxcvbnAZERTYUIOPQSDFGHJKLMWXCVBN' | head -c8 )"
@@ -574,17 +576,17 @@ and rename the file '${_TMP}-guest.lmp'."        > README.txt
         echo "${NEW_TOKEN};0;${DISCORD_ID};$(echo "${WELCOME_TOKEN}" | cut -d: -f1)" >> "${MEMBERS_FILE}"
         echo "${WELCOME_TOKEN}" >> "${WELCOME_FILE}"
 
-        echo "NEW_MEMBER ${NEW_TOKEN}"
+        echo "NEW_MEMBER ${NEW_TOKEN} ${WELCOME_TOKEN}"
     else
         SCORE="$(echo "${LINE_INFOS}" | cut -d';' -f2)"
         OLD_WELCOME1="$(echo "${LINE_INFOS}" | cut -d';' -f4 | cut -d: -f1)"
         
         sed -i "${NUM_LINE}s/.*/${NEW_TOKEN};${SCORE};${DISCORD_ID};$(echo "${WELCOME_TOKEN}" | cut -d: -f1)/" "${MEMBERS_FILE}"
 
-        WELCOME_NUM_LINE="$(grep -n "${OLD_WELCOME1}" "${WELCOME_FILE}" | head -n 1 | cut -d: -f1)"
+        WELCOME_NUM_LINE="$(grep -n "${OLD_WELCOME1}" "${WELCOME_FILE}"  2>/dev/null | head -n 1 | cut -d: -f1)"
         sed -i "${WELCOME_NUM_LINE}s/.*/${WELCOME_TOKEN}/" "${WELCOME_FILE}"
 
-        echo "CHANGE_MEMBER ${NEW_TOKEN}"
+        echo "CHANGE_MEMBER ${NEW_TOKEN} ${WELCOME_TOKEN}"
     fi
 
     exit 0
@@ -597,7 +599,7 @@ and rename the file '${_TMP}-guest.lmp'."        > README.txt
 
     DISCORD_ID="$2"
 
-    TOKEN="$(grep "${DISCORD_ID}" "${MEMBERS_FILE}" | cut -d';' -f1 )"
+    TOKEN="$(grep "${DISCORD_ID}" "${MEMBERS_FILE}"  2>/dev/null | cut -d';' -f1 )"
 
     if [ -z "${TOKEN}" ]; then
         echo "UNREGISTERED"
@@ -609,6 +611,7 @@ and rename the file '${_TMP}-guest.lmp'."        > README.txt
 ;;
 "CLEAR_SCORE")
     if [ "$#" -lt 2 ]; then
+        mkdir -p "${LUAFILES_DIR}"
         touch "${MEMBERS_FILE}"
         touch "${MEMBERS_FILE}_"
         while read L; do
@@ -627,7 +630,7 @@ and rename the file '${_TMP}-guest.lmp'."        > README.txt
         DISCORD_ID="$2"
 
         touch "${MEMBERS_FILE}"
-        LINE="$(grep "${DISCORD_ID}" "${MEMBERS_FILE}")"
+        LINE="$(grep "${DISCORD_ID}" "${MEMBERS_FILE}" 2>/dev/null)"
 
         if [ -z "${LINE}" ]; then
             echo "UNREGISTERED_MEMBER"
