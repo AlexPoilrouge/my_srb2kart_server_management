@@ -3,7 +3,7 @@
 echoerr() { echo "$@" 1>&2; }
 
 SCRIPT_DIR="$( dirname "$( realpath "$0" )" )"
-EXTENSIONS=(pk3 wad lua kart pk7)
+EXTENSIONS=(pk7 kart lua wad pk3)
 
 PYTHON_LMP_ATTACK_SCRIPT="record_lmp_read.py"
 
