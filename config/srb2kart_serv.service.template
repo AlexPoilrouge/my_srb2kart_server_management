@@ -1,3 +1,6 @@
+[Install]
+WantedBy=multi-user.target
+
 [Unit]
 Description=SRB2 Kart Server
 After=local-fs.target network.target
