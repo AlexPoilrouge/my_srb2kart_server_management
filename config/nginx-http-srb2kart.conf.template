@@ -2,10 +2,10 @@
 server{
     server_name ${SRB2K_ADDR};
 
-    location ~* ^\/.srb2kart\/strashbot_addons.zip$ {
+    location ~* ^\/.srb2kart\/(.+\.zip)$ {
         root ${STRASHBOT_USER_HOME}/${SRB2KART_DIR}/addons;
 
-        try_files $uri strashbot_addons.zip;
+        try_files /$1 =404;
     }
 
     location ~* ^\/.srb2kart\/(.+\..+)$ {
