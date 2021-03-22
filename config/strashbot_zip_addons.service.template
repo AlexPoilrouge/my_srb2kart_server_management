@@ -5,7 +5,7 @@ WantedBy=multi-user.target
 Description=updates strashbot's srb2kart addons zip archive
 
 [Service]
-Type=oneshot
+Type=simple
 User=${STRASHBOT_USER}
 WorkingDirectory=${STRASHBOT_USER_HOME}
 ExecStart=${STRASHBOT_USER_HOME}/${SRB2KART_DIR}/zipping_addons.sh ${STRASHBOT_USER_HOME}/${SRB2KART_DIR}/addons
