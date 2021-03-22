@@ -145,7 +145,7 @@ fi
 
 mkdir -p "${SRB2KART_F_DIR}"
 
-install -v ./{addon_script.sh,record_lmp_read.py,log_processor.py} "${SRB2KART_F_DIR}" -m 700
+install -v ./scripts/{ls_restricted.lib.sh,addon_script.sh,zipping_addons.sh,record_lmp_read.py,log_processor.py} "${SRB2KART_F_DIR}" -m 700
 install -v ./config/serv/{dkartconfig.cfg,kartserv.cfg,server_start.sh} "${SRB2KART_F_DIR}" -m 700
 
 mkdir -p "${ROOT_DIR}/etc/security/limits.d"
@@ -162,7 +162,7 @@ chown "${STRASHBOT_USER}:${STRASHBOT_USER}" -R "${SRB2KART_F_DIR}"
 if "${SYSTEMD_INSTALL}"; then
     echo "Systemd install…"
     mkdir -p "${ROOT_DIR}/${SERVICE_INSTALL_PATH}"
-    install -v config/srb2kart_serv.service "${ROOT_DIR}/${SERVICE_INSTALL_PATH}" -m 644
+    install -v config/{srb2kart_serv.service,strashbot_zip_addons.service} "${ROOT_DIR}/${SERVICE_INSTALL_PATH}" -m 644
     
     echo "[systemd] daemon reload…"
     systemctl daemon-reload
