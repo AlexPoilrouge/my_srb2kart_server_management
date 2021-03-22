@@ -66,7 +66,7 @@ _update(){
             echo "wait" >> "${BASE_FILE}"
         done
 
-    sudo systemctl start strashbot_zip_addons.service
+    sudo systemctl restart strashbot_zip_addons.service
 }
 
 CFG_CMD_BLACKLIST=("addfile" "alias" "bind" "toggle" "changeconfig" "exec" "loadconfig" "runsoc" "saveconfig" "exitgame" "quit" "demote" "password" "promote" "connect" "cheats" "runscripts" "addons_folder" "addons_option" "addons_search_case" "addons_search_type" "maxsend")

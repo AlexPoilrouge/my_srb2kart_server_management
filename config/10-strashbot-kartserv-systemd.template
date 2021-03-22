@@ -7,3 +7,5 @@ ${STRASHBOT_USER} ALL=(ALL) NOPASSWD: ${SRB2K_SERVICE_RESTART_CMD}
 ${STRASHBOT_USER} ALL=(ALL) NOPASSWD: ${SRB2KART_EXE} -dedicated *
 
 ${STRASHBOT_USER} ALL=(ALL) NOPASSWD: /bin/systemctl start strashbot_zip_addons.service
+${STRASHBOT_USER} ALL=(ALL) NOPASSWD: /bin/systemctl restart strashbot_zip_addons.service
+${STRASHBOT_USER} ALL=(ALL) NOPASSWD: /bin/systemctl stop strashbot_zip_addons.service
