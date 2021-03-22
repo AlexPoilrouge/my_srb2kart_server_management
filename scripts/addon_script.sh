@@ -3,21 +3,12 @@
 echoerr() { echo "$@" 1>&2; }
 
 SCRIPT_DIR="$( dirname "$( realpath "$0" )" )"
-EXTENSIONS=(pk3 wad lua kart pk7)
 
 PYTHON_LMP_ATTACK_SCRIPT="record_lmp_read.py"
 
 SERV_SERVICE="srb2kart_serv.service"
 
-ls_restricted() {
-    for i in ${EXTENSIONS[@]}; do
-        if [ "$2" != "" ]; then
-            (ls $1/* | grep -i "$2" | grep -i ".${i}$") 2>/dev/null
-        else
-            (ls $1/* | grep -i ".${i}$") 2>/dev/null
-        fi
-    done
-}
+source "${SCRIPT_DIR}/ls_restricted.lib.sh"
 
 cd "${SCRIPT_DIR}"
 
@@ -51,13 +42,6 @@ _update(){
         chmod 704 "${_STATE_FILE}"
     fi
 
-    DL_ZIP="${INSTALLED_ADDONS_DIR}/strashbot_addons.zip"
-    DL_README="${INSTALLED_ADDONS_DIR}/README.txt"
-    rm -f "${DL_ZIP}" 2>/dev/null 2>&1
-    echo "These addons are to be copied in the 'DOWNLOAD' folder of your SRB2Kart folder…" > "${DL_README}"
-    zip "${DL_ZIP}" -j "${DL_README}" >/dev/null 2>&1
-    rm -f "${DL_README}" 2>/dev/null 2>&1
-
 
     echo "wait" > "${TMP_FILE}"
     ( ls_restricted "${PENDING_ADDONS_DIR}" ) | while read -r L; do
@@ -72,8 +56,6 @@ _update(){
             chmod 704 "${L}"
             echo "addfile \"${L}\"" >> "${DL_FILE}"
             echo "wait" >> "${DL_FILE}"
-
-            zip -jur "${DL_ZIP}" "${L}" >/dev/null 2>&1
         done
 
 
@@ -82,9 +64,9 @@ _update(){
             chmod 704 "${L}"
             echo "addfile \"${L}\"" >> "${BASE_FILE}"
             echo "wait" >> "${BASE_FILE}"
-
-            zip -jur "${DL_ZIP}" "${L}" >/dev/null 2>&1
         done
+
+    sudo systemctl start strashbot_zip_addons.service
 }
 
 CFG_CMD_BLACKLIST=("addfile" "alias" "bind" "toggle" "changeconfig" "exec" "loadconfig" "runsoc" "saveconfig" "exitgame" "quit" "demote" "password" "promote" "connect" "cheats" "runscripts" "addons_folder" "addons_option" "addons_search_case" "addons_search_type" "maxsend")
