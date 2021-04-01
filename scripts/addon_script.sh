@@ -8,6 +8,8 @@ PYTHON_LMP_ATTACK_SCRIPT="record_lmp_read.py"
 
 PYTHON_CLIP_MANAGEMENT_SCRIPT="clip_manager.py"
 
+PYTHON_PATH="/bin/python3"
+
 SERV_SERVICE="srb2kart_serv.service"
 
 source "${SCRIPT_DIR}/ls_restricted.lib.sh"
@@ -352,7 +354,7 @@ case "$CMD" in
         exit 0
     else
         echo "=== ${MAP_DIR} ==="
-        ( python "${PYTHON_LMP_ATTACK_SCRIPT}" "${TIME_MAPS_DIR}/${MAP_DIR}" | tr '\0' ' ' ) |  while read -r REC; do
+        ( ${PYTHON_PATH} "${PYTHON_LMP_ATTACK_SCRIPT}" "${TIME_MAPS_DIR}/${MAP_DIR}" | tr '\0' ' ' ) |  while read -r REC; do
             REC="${REC// /_}"
             REC_TAB=(${REC//::::/ })
 
@@ -411,7 +413,7 @@ case "$CMD" in
         exit 13
     fi
 
-    REC="$( python "${PYTHON_LMP_ATTACK_SCRIPT}" "$2" )"
+    REC="$( ${PYTHON_PATH} "${PYTHON_LMP_ATTACK_SCRIPT}" "$2" )"
     REC_TAB=(${REC//::::/ })
 
     if [ "${REC_TAB[0]}" != "SUCCESS" ]; then
@@ -458,7 +460,7 @@ case "$CMD" in
     fi
 
     _TMP="$( ls "${TIME_MAPS_DIR}/${MAP_DIR}/"*.lmp 2>/dev/null | grep -m1 .lmp )"
-    _TMP="$( python "${PYTHON_LMP_ATTACK_SCRIPT}" "${_TMP}")"
+    _TMP="$( ${PYTHON_PATH} "${PYTHON_LMP_ATTACK_SCRIPT}" "${_TMP}")"
     _TMP=(${_TMP//::::/ })
     _TMP="${_TMP[14]}"
     echo "To challenge a ghost from this archives, copy the .lmp file into the subfolder /replay/kart of your srb2kart folder,\
@@ -470,7 +472,7 @@ and rename the file '${_TMP}-guest.lmp'."        > README.txt
     _C=0
     ( ls -1  "${TIME_MAPS_DIR}/${MAP_DIR}/"*.lmp 2>/dev/null ) |  while read -r F; do
         _PF="$( realpath "${F}" )"
-        REC="$( python "${PYTHON_LMP_ATTACK_SCRIPT}" "${_PF}" | tr '\0' ' ' )"
+        REC="$( ${PYTHON_PATH} "${PYTHON_LMP_ATTACK_SCRIPT}" "${_PF}" | tr '\0' ' ' )"
         REC="${REC// /_}"
         REC_TAB=(${REC//::::/ })
 
@@ -517,7 +519,7 @@ and rename the file '${_TMP}-guest.lmp'."        > README.txt
         _C=0
         ( ls -1  "${TIME_MAPS_DIR}/${MAP_DIR}/"*.lmp 2>/dev/null ) |  while read -r F; do
             _PF="$( realpath "${F}" )"
-            REC=$( python "${PYTHON_LMP_ATTACK_SCRIPT}" "${_PF}" | tr '\0' ' ' )
+            REC=$( ${PYTHON_PATH} "${PYTHON_LMP_ATTACK_SCRIPT}" "${_PF}" | tr '\0' ' ' )
             REC="${REC// /_}"
             REC_TAB=(${REC//::::/ })
             T_REC=4294967295
@@ -647,7 +649,7 @@ and rename the file '${_TMP}-guest.lmp'."        > README.txt
     CLIP_DESCRIPTION="$4"
 
     CLIP_PROCESS=""
-    if ! CLIP_PROCESS="$( python "${PYTHON_CLIP_MANAGEMENT_SCRIPT}" "${CLIP_DATA_DIR}" ADD "${CLIP_URL}" ${CLIP_USER_ID} ${CLIP_DESCRIPTION} 2>/dev/null )"; then
+    if ! CLIP_PROCESS="$( ${PYTHON_PATH} "${PYTHON_CLIP_MANAGEMENT_SCRIPT}" "${CLIP_DATA_DIR}" ADD "${CLIP_URL}" ${CLIP_USER_ID} ${CLIP_DESCRIPTION} 2>/dev/null )"; then
         readarray -t CLIP_TAB <<< "$( echo "${CLIP_PROCESS}" | sed -z 's/::::/\n/g' )"
 
         case "${CLIP_TAB[0]}" in
@@ -687,7 +689,7 @@ and rename the file '${_TMP}-guest.lmp'."        > README.txt
     CLIP_USER_ID="$3"
 
     CLIP_PROCESS=""
-    if ! CLIP_PROCESS="$( python "${PYTHON_CLIP_MANAGEMENT_SCRIPT}" "${CLIP_DATA_DIR}" RM "${CLIP_ID}" ${CLIP_USER_ID} 2>/dev/null )"; then
+    if ! CLIP_PROCESS="$( ${PYTHON_PATH} "${PYTHON_CLIP_MANAGEMENT_SCRIPT}" "${CLIP_DATA_DIR}" RM "${CLIP_ID}" ${CLIP_USER_ID} 2>/dev/null )"; then
         readarray -t CLIP_TAB <<< "$( echo "${CLIP_PROCESS}" | sed -z 's/::::/\n/g' )"
         case "${CLIP_TAB[0]}" in
         "BAD_USER")
@@ -714,7 +716,7 @@ and rename the file '${_TMP}-guest.lmp'."        > README.txt
 "CLIP_CHECK")
     mkdir -p "${CLIP_DATA_DIR}"
     CLIP_PROCESS=""
-    if ! CLIP_PROCESS="$( python "${PYTHON_CLIP_MANAGEMENT_SCRIPT}" "${CLIP_DATA_DIR}" CHECK 2>/dev/null )"; then
+    if ! CLIP_PROCESS="$( ${PYTHON_PATH} "${PYTHON_CLIP_MANAGEMENT_SCRIPT}" "${CLIP_DATA_DIR}" CHECK 2>/dev/null )"; then
         readarray -t CLIP_TAB <<< "$( echo "${CLIP_PROCESS}" | sed -z 's/::::/\n/g' )"
         case "${CLIP_TAB[0]}" in
         "ERROR")
@@ -739,7 +741,7 @@ and rename the file '${_TMP}-guest.lmp'."        > README.txt
 
     CLIP_ID="$2"
     CLIP_PROCESS=""
-    if ! CLIP_PROCESS="$( python "${PYTHON_CLIP_MANAGEMENT_SCRIPT}" "${CLIP_DATA_DIR}" CLIP_INFO "${CLIP_ID}" 2>/dev/null )"; then
+    if ! CLIP_PROCESS="$( ${PYTHON_PATH} "${PYTHON_CLIP_MANAGEMENT_SCRIPT}" "${CLIP_DATA_DIR}" CLIP_INFO "${CLIP_ID}" 2>/dev/null )"; then
         readarray -t CLIP_TAB <<< "$( echo "${CLIP_PROCESS}" | sed -z 's/::::/\n/g' )"
         case "${CLIP_TAB[0]}" in
         "ERROR")
@@ -782,7 +784,7 @@ and rename the file '${_TMP}-guest.lmp'."        > README.txt
     mkdir -p "${CLIP_DATA_DIR}"
 
     CLIP_PROCESS=""
-    if ! CLIP_PROCESS="$( python "${PYTHON_CLIP_MANAGEMENT_SCRIPT}" "${CLIP_DATA_DIR}" OUTDATED_CLIPS 2>/dev/null )"; then
+    if ! CLIP_PROCESS="$( ${PYTHON_PATH} "${PYTHON_CLIP_MANAGEMENT_SCRIPT}" "${CLIP_DATA_DIR}" OUTDATED_CLIPS 2>/dev/null )"; then
         readarray -t CLIP_TAB <<< "$( echo "${CLIP_PROCESS}" | sed -z 's/::::/\n/g' )"
         case "${CLIP_TAB[0]}" in
         "ERROR")
@@ -825,7 +827,7 @@ and rename the file '${_TMP}-guest.lmp'."        > README.txt
     CLIP_ID="$2"
     USER_ID="$3"
     CLIP_PROCESS=""
-    if ! CLIP_PROCESS="$( python "${PYTHON_CLIP_MANAGEMENT_SCRIPT}" "${CLIP_DATA_DIR}" EDIT_DESCRIPTION "${CLIP_ID}" "${USER_ID}" "$4" 2>/dev/null )"; then
+    if ! CLIP_PROCESS="$( ${PYTHON_PATH} "${PYTHON_CLIP_MANAGEMENT_SCRIPT}" "${CLIP_DATA_DIR}" EDIT_DESCRIPTION "${CLIP_ID}" "${USER_ID}" "$4" 2>/dev/null )"; then
         readarray -t CLIP_TAB <<< "$( echo "${CLIP_PROCESS}" | sed -z 's/::::/\n/g' )"
         case "${CLIP_TAB[0]}" in
         "BAD_USER")
