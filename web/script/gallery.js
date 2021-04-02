@@ -138,8 +138,6 @@ function displayer_close(){
 
 function gallery(){
 
-    console.log("pfff")
-
     displayer= $("div.display")
 
     displayer.hide()

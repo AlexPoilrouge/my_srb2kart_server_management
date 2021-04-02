@@ -24,17 +24,14 @@ function populate(json_dir_url, $parent, done, pageNum=1){
         var picPerPage= data.entries_per_page
         var num_pages= Math.floor(num_entries/picPerPage)+((num_entries%picPerPage)?1:0)
         var p_n= (pageNum<1)?1:((pageNum>num_pages)?num_pages:pageNum)
-        console.log("oh "+data.number)
 
         var json_page_url= json_dir_url+"/gallery"+p_n+".json"
         $.getJSON(json_page_url, function(data){
             var r= 0
             $.each( data, function( key, val ) {
-                console.log("key: "+key+"; val: "+val)
-                if(key==="entries"){
+                if(key==="number"){
                     $.each(val, function (id, element) {
                         if(id && element && element.type && element.url){
-                            console.log("add "+element.url)
                             var a=$("<a class=\"gallery-element\" id=\""+id+"\" src=\""+element.url+"\" src-type=\""+element.type+"\"></a>").appendTo($parent)
                             if(element.description && element.description.length>0){
                                 $("<span hidden class=\"gallery-element-description\">"+element.description+"</span>").appendTo($(a))
