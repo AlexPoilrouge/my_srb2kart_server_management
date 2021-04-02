@@ -192,7 +192,7 @@ if "${NGINX_INSTALL}"; then
 fi
 
 if "${WEB_INSTALL}"; then
-    mkdir -p "${SRB2KART_F_DIR}/web/{script,json}"
+    mkdir -p "${SRB2KART_F_DIR}/web/"{script,json}
 
     install -v web/gallery.html "${SRB2KART_F_DIR}/web" -m 644
     install -v web/script/{gallery.css,gallery.js,populate.js} "${SRB2KART_F_DIR}/web/script"  -m 644
