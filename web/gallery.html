@@ -26,10 +26,8 @@
 
     <script>
         $( document ).ready(function(){
-            console.log("ui?")
 
             var urlParams = new URLSearchParams(window.location.search)
-            console.log("has page param? "+urlParams.has('page'))
             var _p;
             var pageNum= (urlParams.has('page'))?
                     ((isNaN(_p=parseInt(urlParams.get('page'))))?

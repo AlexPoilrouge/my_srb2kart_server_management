@@ -28,19 +28,15 @@ function populate(json_dir_url, $parent, done, pageNum=1){
         var json_page_url= json_dir_url+"/gallery"+p_n+".json"
         $.getJSON(json_page_url, function(data){
             var r= 0
-            $.each( data, function( key, val ) {
-                if(key==="number"){
-                    $.each(val, function (id, element) {
-                        if(id && element && element.type && element.url){
-                            var a=$("<a class=\"gallery-element\" id=\""+id+"\" src=\""+element.url+"\" src-type=\""+element.type+"\"></a>").appendTo($parent)
-                            if(element.description && element.description.length>0){
-                                $("<span hidden class=\"gallery-element-description\">"+element.description+"</span>").appendTo($(a))
-                            }
-                            if(element.timestamp && element.timestamp.length>0){
-                                $("<time hidden class=\"gallery-element-timestamp\">"+element.timestamp+"</time>").appendTo($(a))
-                            }
-                        }
-                    });
+            $.each( data, function( id, element ) {
+                if(id && element && element.type && element.url){
+                    var a=$("<a class=\"gallery-element\" id=\""+id+"\" src=\""+element.url+"\" src-type=\""+element.type+"\"></a>").appendTo($parent)
+                    if(element.description && element.description.length>0){
+                        $("<span hidden class=\"gallery-element-description\">"+element.description+"</span>").appendTo($(a))
+                    }
+                    if(element.timestamp && element.timestamp.length>0){
+                        $("<time hidden class=\"gallery-element-timestamp\">"+element.timestamp+"</time>").appendTo($(a))
+                    }
                 }
             });
 
