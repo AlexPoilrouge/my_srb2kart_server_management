@@ -766,7 +766,7 @@ and rename the file '${_TMP}-guest.lmp'."        > README.txt
             fi
 
             AVAILABILITY="REACHABLE"
-            if [ "${CLIP_TAB[6]}" -gt 1 ]; then
+            if [ "${CLIP_TAB[6]}" -ge 1 ]; then
                 AVAILABILITY="OUTDATED"
             fi
 
