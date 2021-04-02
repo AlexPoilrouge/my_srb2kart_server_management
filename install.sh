@@ -196,7 +196,7 @@ if "${WEB_INSTALL}"; then
     mkdir -p "${SRB2KART_F_DIR}/web/"{script,json}
 
     install -v web/{gallery.html,index.html} "${SRB2KART_F_DIR}/web" -m 644
-    install -v web/script/{gallery.css,gallery.js,populate.js} "${SRB2KART_F_DIR}/web/script"  -m 644
+    install -v web/script/{gallery.css,strashbot.css,gallery.js,populate.js} "${SRB2KART_F_DIR}/web/script"  -m 644
 
     wget -P "${SRB2KART_F_DIR}/web/script" "https://code.jquery.com/jquery-3.6.0.min.js"
     
