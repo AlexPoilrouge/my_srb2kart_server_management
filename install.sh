@@ -30,6 +30,7 @@ depend_check "sudo"
 depend_check "find"
 depend_check "useradd"
 depend_check "envsubst"
+depend_check "wget"
 depend_check "srb2kart"
 
 
@@ -196,6 +197,8 @@ if "${WEB_INSTALL}"; then
 
     install -v web/gallery.html "${SRB2KART_F_DIR}/web" -m 644
     install -v web/script/{gallery.css,gallery.js,populate.js} "${SRB2KART_F_DIR}/web/script"  -m 644
+
+    wget -P "${SRB2KART_F_DIR}/web/script" "https://code.jquery.com/jquery-3.6.0.min.js"
     
     chown "${STRASHBOT_USER}:${STRASHBOT_USER}" -R "${SRB2KART_F_DIR}"
 
