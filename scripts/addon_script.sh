@@ -6,6 +6,10 @@ SCRIPT_DIR="$( dirname "$( realpath "$0" )" )"
 
 PYTHON_LMP_ATTACK_SCRIPT="record_lmp_read.py"
 
+PYTHON_CLIP_MANAGEMENT_SCRIPT="clip_manager.py"
+
+PYTHON_PATH="/bin/python3"
+
 SERV_SERVICE="srb2kart_serv.service"
 
 source "${SCRIPT_DIR}/ls_restricted.lib.sh"
@@ -30,6 +34,8 @@ INSTALLED_ADDONS_DIR="${ADDONS_DIR}/dl"
 BASE_ADDONS_DIR="${ADDONS_DIR}/Packs"
 
 TIME_MAPS_DIR="maps"
+
+CLIP_DATA_DIR="${SCRIPT_DIR}/web"
 
 
 _update(){
@@ -348,7 +354,7 @@ case "$CMD" in
         exit 0
     else
         echo "=== ${MAP_DIR} ==="
-        ( python "${PYTHON_LMP_ATTACK_SCRIPT}" "${TIME_MAPS_DIR}/${MAP_DIR}" | tr '\0' ' ' ) |  while read -r REC; do
+        ( ${PYTHON_PATH} "${PYTHON_LMP_ATTACK_SCRIPT}" "${TIME_MAPS_DIR}/${MAP_DIR}" | tr '\0' ' ' ) |  while read -r REC; do
             REC="${REC// /_}"
             REC_TAB=(${REC//::::/ })
 
@@ -407,7 +413,7 @@ case "$CMD" in
         exit 13
     fi
 
-    REC="$( python "${PYTHON_LMP_ATTACK_SCRIPT}" "$2" )"
+    REC="$( ${PYTHON_PATH} "${PYTHON_LMP_ATTACK_SCRIPT}" "$2" )"
     REC_TAB=(${REC//::::/ })
 
     if [ "${REC_TAB[0]}" != "SUCCESS" ]; then
@@ -454,7 +460,7 @@ case "$CMD" in
     fi
 
     _TMP="$( ls "${TIME_MAPS_DIR}/${MAP_DIR}/"*.lmp 2>/dev/null | grep -m1 .lmp )"
-    _TMP="$( python "${PYTHON_LMP_ATTACK_SCRIPT}" "${_TMP}")"
+    _TMP="$( ${PYTHON_PATH} "${PYTHON_LMP_ATTACK_SCRIPT}" "${_TMP}")"
     _TMP=(${_TMP//::::/ })
     _TMP="${_TMP[14]}"
     echo "To challenge a ghost from this archives, copy the .lmp file into the subfolder /replay/kart of your srb2kart folder,\
@@ -466,7 +472,7 @@ and rename the file '${_TMP}-guest.lmp'."        > README.txt
     _C=0
     ( ls -1  "${TIME_MAPS_DIR}/${MAP_DIR}/"*.lmp 2>/dev/null ) |  while read -r F; do
         _PF="$( realpath "${F}" )"
-        REC="$( python "${PYTHON_LMP_ATTACK_SCRIPT}" "${_PF}" | tr '\0' ' ' )"
+        REC="$( ${PYTHON_PATH} "${PYTHON_LMP_ATTACK_SCRIPT}" "${_PF}" | tr '\0' ' ' )"
         REC="${REC// /_}"
         REC_TAB=(${REC//::::/ })
 
@@ -513,7 +519,7 @@ and rename the file '${_TMP}-guest.lmp'."        > README.txt
         _C=0
         ( ls -1  "${TIME_MAPS_DIR}/${MAP_DIR}/"*.lmp 2>/dev/null ) |  while read -r F; do
             _PF="$( realpath "${F}" )"
-            REC=$( python "${PYTHON_LMP_ATTACK_SCRIPT}" "${_PF}" | tr '\0' ' ' )
+            REC=$( ${PYTHON_PATH} "${PYTHON_LMP_ATTACK_SCRIPT}" "${_PF}" | tr '\0' ' ' )
             REC="${REC// /_}"
             REC_TAB=(${REC//::::/ })
             T_REC=4294967295
@@ -628,12 +634,229 @@ and rename the file '${_TMP}-guest.lmp'."        > README.txt
         exit 0
     fi
 ;;
+"CLIP_ADD")
+    if [ "$#" -lt 2 ]; then
+        echo "ERROR - clip url not provided"
+        exit 31
+    elif [ "$#" -lt 3 ]; then
+        echo "ERROR - user id not provided"
+        exit 32
+    fi
+    mkdir -p "${CLIP_DATA_DIR}"
+
+    CLIP_URL="$2"
+    CLIP_USER_ID="$3"
+    CLIP_DESCRIPTION="$4"
+
+    CLIP_PROCESS=""
+    if ! CLIP_PROCESS="$( ${PYTHON_PATH} "${PYTHON_CLIP_MANAGEMENT_SCRIPT}" "${CLIP_DATA_DIR}" ADD "${CLIP_URL}" ${CLIP_USER_ID} ${CLIP_DESCRIPTION} 2>/dev/null )"; then
+        readarray -t CLIP_TAB <<< "$( echo "${CLIP_PROCESS}" | sed -z 's/::::/\n/g' )"
+
+        case "${CLIP_TAB[0]}" in
+        "UNSUPPORTED_TYPE")
+            echo "BAD_TYPE - ${CLIP_TAB[1]}"
+            exit 33
+            ;;
+        "ALREADY_IN_DATABASE")
+            echo "ALREADY_ADDED - ${CLIP_TAB[2]}"
+            exit 35
+            ;;
+        "ERROR")
+            echo "ERROR - ${CLIP_TAB[1]}"
+            exit 37
+            ;;
+        *)
+            echo "UNKOWN_ERROR - ${CLIP_TAB[1]}"
+            exit 38
+            ;;
+        esac
+    else
+        echo "CLIP_ADDED"
+        exit 0
+    fi
+;;
+"CLIP_RM")
+    if [ "$#" -lt 2 ]; then
+        echo "ERROR - clip id not provided"
+        exit 39
+    elif [ "$#" -lt 3 ]; then
+        echo "ERROR - user id not provided"
+        exit 32
+    fi
+    mkdir -p "${CLIP_DATA_DIR}"
+
+    CLIP_ID="$2"
+    CLIP_USER_ID="$3"
+
+    CLIP_PROCESS=""
+    if ! CLIP_PROCESS="$( ${PYTHON_PATH} "${PYTHON_CLIP_MANAGEMENT_SCRIPT}" "${CLIP_DATA_DIR}" RM "${CLIP_ID}" ${CLIP_USER_ID} 2>/dev/null )"; then
+        readarray -t CLIP_TAB <<< "$( echo "${CLIP_PROCESS}" | sed -z 's/::::/\n/g' )"
+        case "${CLIP_TAB[0]}" in
+        "BAD_USER")
+            echo "BAD_USER_ID - ${CLIP_TAB[1]}"
+            exit 34
+            ;;
+        "NO_SUCH_CLIP")
+            echo "CLIP_NOT_FOUND - ${CLIP_TAB[1]}"
+            exit 36
+            ;;
+        "ERROR")
+            echo "ERROR - ${CLIP_TAB[1]}"
+            exit 37
+            ;;
+        *)
+            echo "UNKOWN_ERROR - ${CLIP_TAB[1]}"
+            exit 38
+        esac
+    else
+        echo "CLIP_REMOVED"
+        exit 0
+    fi
+;;
+"CLIP_CHECK")
+    mkdir -p "${CLIP_DATA_DIR}"
+    CLIP_PROCESS=""
+    if ! CLIP_PROCESS="$( ${PYTHON_PATH} "${PYTHON_CLIP_MANAGEMENT_SCRIPT}" "${CLIP_DATA_DIR}" CHECK 2>/dev/null )"; then
+        readarray -t CLIP_TAB <<< "$( echo "${CLIP_PROCESS}" | sed -z 's/::::/\n/g' )"
+        case "${CLIP_TAB[0]}" in
+        "ERROR")
+            echo "ERROR - ${CLIP_TAB[1]}"
+            exit 37
+            ;;
+        *)
+            echo "UNKOWN_ERROR - ${CLIP_TAB[1]}"
+            exit 38
+        esac
+    else
+        echo "CLIPS_CHECKED"
+        exit 0
+    fi
+;;
+"CLIP_INFO")
+    if [ "$#" -lt 2 ]; then
+        echo "ERROR - clip id not provided"
+        exit 39
+    fi
+    mkdir -p "${CLIP_DATA_DIR}"
+
+    CLIP_ID="$2"
+    CLIP_PROCESS=""
+    if ! CLIP_PROCESS="$( ${PYTHON_PATH} "${PYTHON_CLIP_MANAGEMENT_SCRIPT}" "${CLIP_DATA_DIR}" CLIP_INFO "${CLIP_ID}" 2>/dev/null )"; then
+        readarray -t CLIP_TAB <<< "$( echo "${CLIP_PROCESS}" | sed -z 's/::::/\n/g' )"
+        case "${CLIP_TAB[0]}" in
+        "ERROR")
+            echo "ERROR - ${CLIP_TAB[1]}"
+            exit 37
+            ;;
+        "NO_SUCH_CLIP")
+            echo "CLIP_NOT_FOUND - ${CLIP_TAB[1]}"
+            exit 36
+            ;;
+        *)
+            echo "UNKOWN_ERROR - ${CLIP_TAB[1]}"
+            exit 38
+        esac
+    else
+        readarray -t CLIP_TAB <<< "$( echo "${CLIP_PROCESS}" | sed -z 's/::::/\n/g' )"
+        case "${CLIP_TAB[0]}" in
+        "CLIP_INFO")
+            if [ "${#CLIP_TAB[@]}" -lt 7 ]; then
+                echo "UNEXPECTED_RESULT - ${CLIP_TAB[@]}"
+                exit 40
+            fi
+
+            AVAILABILITY="REACHABLE"
+            if [ "${CLIP_TAB[6]}" -ge 1 ]; then
+                AVAILABILITY="OUTDATED"
+            fi
+
+            echo "CLIP_INFO - ${CLIP_TAB[1]} - ${CLIP_TAB[2]} - ${CLIP_TAB[3]} - ${CLIP_TAB[4]} - ${CLIP_TAB[5]} - ${AVAILABILITY}"
+            exit 0
+            ;;
+        *)
+            echo "UNKOWN_RESULT - ${CLIP_TAB[@]}"
+            exit 41
+            ;;
+        esac
+    fi
+;;
+"OUTDATED_CLIPS")
+    mkdir -p "${CLIP_DATA_DIR}"
+
+    CLIP_PROCESS=""
+    if ! CLIP_PROCESS="$( ${PYTHON_PATH} "${PYTHON_CLIP_MANAGEMENT_SCRIPT}" "${CLIP_DATA_DIR}" OUTDATED_CLIPS 2>/dev/null )"; then
+        readarray -t CLIP_TAB <<< "$( echo "${CLIP_PROCESS}" | sed -z 's/::::/\n/g' )"
+        case "${CLIP_TAB[0]}" in
+        "ERROR")
+            echo "ERROR - ${CLIP_TAB[1]}"
+            exit 37
+            ;;
+        *)
+            echo "UNKOWN_ERROR - ${CLIP_TAB[1]}"
+            exit 38
+        esac
+    else
+        readarray -t CLIP_TAB <<< "$( echo "${CLIP_PROCESS}" | sed -z 's/::::/\n/g' )"
+        case "${CLIP_TAB[0]}" in
+        "OUTDATED_CLIPS")
+            if [ "${#CLIP_TAB[@]}" -lt 2 ]; then
+                echo "UNEXPECTED_RESULT - ${CLIP_TAB[@]}"
+                exit 40
+            fi
+
+            echo "OUTDATED_CLIPS - ${CLIP_TAB[1]} - ${CLIP_TAB[2]}"
+            exit 0
+        ;;
+        *)
+            echo "UNKOWN_RESULT - ${CLIP_TAB[@]}"
+            exit 41
+        ;;
+        esac
+    fi
+;;
+"EDIT_DESCRIPTION")
+    if [ "$#" -lt 2 ]; then
+        echo "ERROR - clip id not provided"
+        exit 39
+    elif [ "$#" -lt 3 ]; then
+        echo "ERROR - user id not provided"
+        exit 32
+    fi
+    mkdir -p "${CLIP_DATA_DIR}"
+
+    CLIP_ID="$2"
+    USER_ID="$3"
+    CLIP_PROCESS=""
+    if ! CLIP_PROCESS="$( ${PYTHON_PATH} "${PYTHON_CLIP_MANAGEMENT_SCRIPT}" "${CLIP_DATA_DIR}" EDIT_DESCRIPTION "${CLIP_ID}" "${USER_ID}" "$4" 2>/dev/null )"; then
+        readarray -t CLIP_TAB <<< "$( echo "${CLIP_PROCESS}" | sed -z 's/::::/\n/g' )"
+        case "${CLIP_TAB[0]}" in
+        "BAD_USER")
+            echo "BAD_USER_ID - ${CLIP_TAB[1]}"
+            exit 34
+            ;;
+        "ERROR")
+            echo "ERROR - ${CLIP_TAB[1]}"
+            exit 37
+            ;;
+        "NO_SUCH_CLIP")
+            echo "CLIP_NOT_FOUND - ${CLIP_TAB[1]}"
+            exit 36
+            ;;
+        *)
+            echo "UNKOWN_ERROR - ${CLIP_TAB[1]}"
+            exit 38
+        esac
+    else
+        echo "DESCRIPTION_UPDATED"
+        exit 0
+    fi
+;;
 "UPDATE")
     _update
 ;;
 *)
         echo "ERROR - Invalid $0 command…"
-        exit 999
+        exit 255
 ;;
 esac
 
