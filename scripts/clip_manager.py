@@ -374,11 +374,11 @@ if __name__ == "__main__" :
             print("ERROR::::user id must be provided")
             exit(7)
         elif len(sys.argv)<=5:
-            exit(_edit_description(d,sys.argv[3],sys.args[4],""))
+            exit(_edit_description(d,sys.argv[3],sys.argv[4],""))
         else:
             desc= ' '.join(sys.argv[5:])
             desc= (desc[:247]+'[…]') if (len(desc)>250) else desc
-            exit(_edit_description(d,sys.argv[3],sys.args[4],desc))
+            exit(_edit_description(d,sys.argv[3],sys.argv[4],desc))
     elif sys.argv[2]=="OUTDATED_CLIPS":
         exit (_list_outdated())
 
