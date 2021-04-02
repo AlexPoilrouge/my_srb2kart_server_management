@@ -1,6 +1,7 @@
 
 server{
     server_name ${STRASHBOT_WEB_DOMAIN};
+    index index.html;
 
     location / {
         root ${STRASHBOT_USER_HOME}/${SRB2KART_DIR}/web;
