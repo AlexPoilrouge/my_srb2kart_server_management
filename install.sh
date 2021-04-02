@@ -185,9 +185,32 @@ if "${NGINX_INSTALL}"; then
 
     echo -e "[IMPORTANT] Make sure the line \n\tinclude sites-enabled/*;\n is added to '${ROOT_DIR}/${NGINX_DIR}/nginx.conf''s 'http' block!"
     
-    if "${SYSTEMD_INSTALL}" && ( systemctl is-active nginx.service >/dev/null 2>&1 ); then
+    if "${SYSTEMD_INSTALL}" && ! "${WEB_INSTALL}" && ( systemctl is-active nginx.service >/dev/null 2>&1 ); then
         echo "[systemd] restarting nginx…"
         systemctl restart nginx.service
+    fi
+fi
+
+if "${WEB_INSTALL}"; then
+    mkdir -p "${SRB2KART_F_DIR}/web/{script,json}"
+
+    install -v web/gallery.html "${SRB2KART_F_DIR}/web" -m 644
+    install -v web/script/{gallery.css,gallery.js,populate.js} "${SRB2KART_F_DIR}/web/script"  -m 644
+    
+    chown "${STRASHBOT_USER}:${STRASHBOT_USER}" -R "${SRB2KART_F_DIR}"
+
+    if ! "${NGINX_INSTALL}"; then
+        echo "[WARNING]: 'web_install' can't be complete without 'nginx_install'"
+    else
+        install -v config/nginx-http-strashbot.conf "${ROOT_DIR}/${NGINX_DIR}/sites-available" -m 644
+        ln -sf "${ROOT_DIR}/${NGINX_DIR}/sites-available/nginx-http-strashbot.conf" "${ROOT_DIR}/${NGINX_DIR}/sites-enabled/nginx-http-strashbot.conf"
+
+        echo -e "[IMPORTANT] Make sure the line \n\tinclude sites-enabled/*;\n is added to '${ROOT_DIR}/${NGINX_DIR}/nginx.conf''s 'http' block!"
+    
+        if "${SYSTEMD_INSTALL}" && ( systemctl is-active nginx.service >/dev/null 2>&1 ); then
+            echo "[systemd] restarting nginx…"
+            systemctl restart nginx.service
+        fi
     fi
 fi
 
