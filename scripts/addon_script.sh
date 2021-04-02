@@ -637,10 +637,12 @@ and rename the file '${_TMP}-guest.lmp'."        > README.txt
 "CLIP_ADD")
     if [ "$#" -lt 2 ]; then
         echo "ERROR - clip url not provided"
-        exit 31
+        exit 0
+        #exit 31
     elif [ "$#" -lt 3 ]; then
         echo "ERROR - user id not provided"
-        exit 32
+        exit 0
+        #exit 32
     fi
     mkdir -p "${CLIP_DATA_DIR}"
 
@@ -655,19 +657,23 @@ and rename the file '${_TMP}-guest.lmp'."        > README.txt
         case "${CLIP_TAB[0]}" in
         "UNSUPPORTED_TYPE")
             echo "BAD_TYPE - ${CLIP_TAB[1]}"
-            exit 33
+            exit 0
+            #exit 33
             ;;
         "ALREADY_IN_DATABASE")
             echo "ALREADY_ADDED - ${CLIP_TAB[2]}"
-            exit 35
+            exit 0
+            #exit 35
             ;;
         "ERROR")
             echo "ERROR - ${CLIP_TAB[1]}"
-            exit 37
+            exit 0
+            #exit 37
             ;;
         *)
             echo "UNKOWN_ERROR - ${CLIP_TAB[1]}"
-            exit 38
+            exit 0
+            #exit 38
             ;;
         esac
     else
@@ -678,10 +684,12 @@ and rename the file '${_TMP}-guest.lmp'."        > README.txt
 "CLIP_RM")
     if [ "$#" -lt 2 ]; then
         echo "ERROR - clip id not provided"
-        exit 39
+        exit 0
+        #exit 39
     elif [ "$#" -lt 3 ]; then
         echo "ERROR - user id not provided"
-        exit 32
+        exit 0
+        #exit 32
     fi
     mkdir -p "${CLIP_DATA_DIR}"
 
@@ -694,19 +702,23 @@ and rename the file '${_TMP}-guest.lmp'."        > README.txt
         case "${CLIP_TAB[0]}" in
         "BAD_USER")
             echo "BAD_USER_ID - ${CLIP_TAB[1]}"
-            exit 34
+            exit 0
+            #exit 34
             ;;
         "NO_SUCH_CLIP")
             echo "CLIP_NOT_FOUND - ${CLIP_TAB[1]}"
-            exit 36
+            exit 0
+            #exit 36
             ;;
         "ERROR")
             echo "ERROR - ${CLIP_TAB[1]}"
-            exit 37
+            exit 0
+            #exit 37
             ;;
         *)
             echo "UNKOWN_ERROR - ${CLIP_TAB[1]}"
-            exit 38
+            exit 0
+            #exit 38
         esac
     else
         echo "CLIP_REMOVED"
@@ -721,11 +733,13 @@ and rename the file '${_TMP}-guest.lmp'."        > README.txt
         case "${CLIP_TAB[0]}" in
         "ERROR")
             echo "ERROR - ${CLIP_TAB[1]}"
-            exit 37
+            exit 0
+            #exit 37
             ;;
         *)
             echo "UNKOWN_ERROR - ${CLIP_TAB[1]}"
-            exit 38
+            exit 0
+            #exit 38
         esac
     else
         echo "CLIPS_CHECKED"
@@ -735,7 +749,8 @@ and rename the file '${_TMP}-guest.lmp'."        > README.txt
 "CLIP_INFO")
     if [ "$#" -lt 2 ]; then
         echo "ERROR - clip id not provided"
-        exit 39
+        exit 0
+            #exit 39
     fi
     mkdir -p "${CLIP_DATA_DIR}"
 
@@ -746,15 +761,18 @@ and rename the file '${_TMP}-guest.lmp'."        > README.txt
         case "${CLIP_TAB[0]}" in
         "ERROR")
             echo "ERROR - ${CLIP_TAB[1]}"
-            exit 37
+            exit 0
+            #exit 37
             ;;
         "NO_SUCH_CLIP")
             echo "CLIP_NOT_FOUND - ${CLIP_TAB[1]}"
-            exit 36
+            exit 0
+            #exit 36
             ;;
         *)
             echo "UNKOWN_ERROR - ${CLIP_TAB[1]}"
-            exit 38
+            exit 0
+            #exit 38
         esac
     else
         readarray -t CLIP_TAB <<< "$( echo "${CLIP_PROCESS}" | sed -z 's/::::/\n/g' )"
@@ -762,7 +780,8 @@ and rename the file '${_TMP}-guest.lmp'."        > README.txt
         "CLIP_INFO")
             if [ "${#CLIP_TAB[@]}" -lt 7 ]; then
                 echo "UNEXPECTED_RESULT - ${CLIP_TAB[@]}"
-                exit 40
+                exit 0
+                #exit 40
             fi
 
             AVAILABILITY="REACHABLE"
@@ -775,7 +794,8 @@ and rename the file '${_TMP}-guest.lmp'."        > README.txt
             ;;
         *)
             echo "UNKOWN_RESULT - ${CLIP_TAB[@]}"
-            exit 41
+            exit 0
+            #exit 41
             ;;
         esac
     fi
@@ -789,11 +809,13 @@ and rename the file '${_TMP}-guest.lmp'."        > README.txt
         case "${CLIP_TAB[0]}" in
         "ERROR")
             echo "ERROR - ${CLIP_TAB[1]}"
-            exit 37
+            exit 0
+            #exit 37
             ;;
         *)
             echo "UNKOWN_ERROR - ${CLIP_TAB[1]}"
-            exit 38
+            exit 0
+            #exit 38
         esac
     else
         readarray -t CLIP_TAB <<< "$( echo "${CLIP_PROCESS}" | sed -z 's/::::/\n/g' )"
@@ -801,7 +823,8 @@ and rename the file '${_TMP}-guest.lmp'."        > README.txt
         "OUTDATED_CLIPS")
             if [ "${#CLIP_TAB[@]}" -lt 2 ]; then
                 echo "UNEXPECTED_RESULT - ${CLIP_TAB[@]}"
-                exit 40
+                exit 0
+                #exit 40
             fi
 
             echo "OUTDATED_CLIPS - ${CLIP_TAB[1]} - ${CLIP_TAB[2]}"
@@ -809,7 +832,8 @@ and rename the file '${_TMP}-guest.lmp'."        > README.txt
         ;;
         *)
             echo "UNKOWN_RESULT - ${CLIP_TAB[@]}"
-            exit 41
+            exit 0
+            #exit 41
         ;;
         esac
     fi
@@ -817,10 +841,12 @@ and rename the file '${_TMP}-guest.lmp'."        > README.txt
 "EDIT_DESCRIPTION")
     if [ "$#" -lt 2 ]; then
         echo "ERROR - clip id not provided"
-        exit 39
+        exit 0
+        #exit 39
     elif [ "$#" -lt 3 ]; then
         echo "ERROR - user id not provided"
-        exit 32
+        exit 0
+        #exit 32
     fi
     mkdir -p "${CLIP_DATA_DIR}"
 
@@ -832,19 +858,23 @@ and rename the file '${_TMP}-guest.lmp'."        > README.txt
         case "${CLIP_TAB[0]}" in
         "BAD_USER")
             echo "BAD_USER_ID - ${CLIP_TAB[1]}"
-            exit 34
+            exit 0
+            #exit 34
             ;;
         "ERROR")
             echo "ERROR - ${CLIP_TAB[1]}"
-            exit 37
+            exit 0
+            #exit 37
             ;;
         "NO_SUCH_CLIP")
             echo "CLIP_NOT_FOUND - ${CLIP_TAB[1]}"
-            exit 36
+            exit 0
+            #exit 36
             ;;
         *)
             echo "UNKOWN_ERROR - ${CLIP_TAB[1]}"
-            exit 38
+            exit 0
+            #exit 38
         esac
     else
         echo "DESCRIPTION_UPDATED"
