@@ -35,7 +35,7 @@ BASE_ADDONS_DIR="${ADDONS_DIR}/Packs"
 
 TIME_MAPS_DIR="maps"
 
-CLIP_DATA_DIR="${SCRIPT_DIR}/web"
+CLIP_DATA_DIR="${SCRIPT_DIR}/web/json"
 
 
 _update(){
@@ -648,8 +648,8 @@ and rename the file '${_TMP}-guest.lmp'."        > README.txt
     CLIP_USER_ID="$3"
     CLIP_DESCRIPTION="$4"
 
-    CLIP_PROCESS=""
-    if ! CLIP_PROCESS="$( ${PYTHON_PATH} "${PYTHON_CLIP_MANAGEMENT_SCRIPT}" "${CLIP_DATA_DIR}" ADD "${CLIP_URL}" ${CLIP_USER_ID} ${CLIP_DESCRIPTION} 2>/dev/null )"; then
+    CLIP_PROCESS="$( ${PYTHON_PATH} "${PYTHON_CLIP_MANAGEMENT_SCRIPT}" "${CLIP_DATA_DIR}" ADD "${CLIP_URL}" ${CLIP_USER_ID} ${CLIP_DESCRIPTION} 2>/dev/null )"
+    if [ -n "${CLIP_PROCESS}" ]; then
         readarray -t CLIP_TAB <<< "$( echo "${CLIP_PROCESS}" | sed -z 's/::::/\n/g' )"
 
         case "${CLIP_TAB[0]}" in
@@ -688,8 +688,8 @@ and rename the file '${_TMP}-guest.lmp'."        > README.txt
     CLIP_ID="$2"
     CLIP_USER_ID="$3"
 
-    CLIP_PROCESS=""
-    if ! CLIP_PROCESS="$( ${PYTHON_PATH} "${PYTHON_CLIP_MANAGEMENT_SCRIPT}" "${CLIP_DATA_DIR}" RM "${CLIP_ID}" ${CLIP_USER_ID} 2>/dev/null )"; then
+    CLIP_PROCESS="$( ${PYTHON_PATH} "${PYTHON_CLIP_MANAGEMENT_SCRIPT}" "${CLIP_DATA_DIR}" RM "${CLIP_ID}" ${CLIP_USER_ID} 2>/dev/null )"
+    if [ -n "${CLIP_PROCESS}" ]; then
         readarray -t CLIP_TAB <<< "$( echo "${CLIP_PROCESS}" | sed -z 's/::::/\n/g' )"
         case "${CLIP_TAB[0]}" in
         "BAD_USER")
@@ -715,8 +715,8 @@ and rename the file '${_TMP}-guest.lmp'."        > README.txt
 ;;
 "CLIP_CHECK")
     mkdir -p "${CLIP_DATA_DIR}"
-    CLIP_PROCESS=""
-    if ! CLIP_PROCESS="$( ${PYTHON_PATH} "${PYTHON_CLIP_MANAGEMENT_SCRIPT}" "${CLIP_DATA_DIR}" CHECK 2>/dev/null )"; then
+    CLIP_PROCESS="$( ${PYTHON_PATH} "${PYTHON_CLIP_MANAGEMENT_SCRIPT}" "${CLIP_DATA_DIR}" CHECK 2>/dev/null )"
+    if [ -n "${CLIP_PROCESS}" ]; then
         readarray -t CLIP_TAB <<< "$( echo "${CLIP_PROCESS}" | sed -z 's/::::/\n/g' )"
         case "${CLIP_TAB[0]}" in
         "ERROR")
@@ -740,8 +740,8 @@ and rename the file '${_TMP}-guest.lmp'."        > README.txt
     mkdir -p "${CLIP_DATA_DIR}"
 
     CLIP_ID="$2"
-    CLIP_PROCESS=""
-    if ! CLIP_PROCESS="$( ${PYTHON_PATH} "${PYTHON_CLIP_MANAGEMENT_SCRIPT}" "${CLIP_DATA_DIR}" CLIP_INFO "${CLIP_ID}" 2>/dev/null )"; then
+    CLIP_PROCESS="$( ${PYTHON_PATH} "${PYTHON_CLIP_MANAGEMENT_SCRIPT}" "${CLIP_DATA_DIR}" CLIP_INFO "${CLIP_ID}" 2>/dev/null )"
+    if [ -n "${CLIP_PROCESS}" ]; then
         readarray -t CLIP_TAB <<< "$( echo "${CLIP_PROCESS}" | sed -z 's/::::/\n/g' )"
         case "${CLIP_TAB[0]}" in
         "ERROR")
@@ -783,8 +783,8 @@ and rename the file '${_TMP}-guest.lmp'."        > README.txt
 "OUTDATED_CLIPS")
     mkdir -p "${CLIP_DATA_DIR}"
 
-    CLIP_PROCESS=""
-    if ! CLIP_PROCESS="$( ${PYTHON_PATH} "${PYTHON_CLIP_MANAGEMENT_SCRIPT}" "${CLIP_DATA_DIR}" OUTDATED_CLIPS 2>/dev/null )"; then
+    CLIP_PROCESS="$( ${PYTHON_PATH} "${PYTHON_CLIP_MANAGEMENT_SCRIPT}" "${CLIP_DATA_DIR}" OUTDATED_CLIPS 2>/dev/null )"
+    if [ -n "${CLIP_PROCESS}" ]; then
         readarray -t CLIP_TAB <<< "$( echo "${CLIP_PROCESS}" | sed -z 's/::::/\n/g' )"
         case "${CLIP_TAB[0]}" in
         "ERROR")
@@ -826,8 +826,8 @@ and rename the file '${_TMP}-guest.lmp'."        > README.txt
 
     CLIP_ID="$2"
     USER_ID="$3"
-    CLIP_PROCESS=""
-    if ! CLIP_PROCESS="$( ${PYTHON_PATH} "${PYTHON_CLIP_MANAGEMENT_SCRIPT}" "${CLIP_DATA_DIR}" EDIT_DESCRIPTION "${CLIP_ID}" "${USER_ID}" "$4" 2>/dev/null )"; then
+    CLIP_PROCESS="$( ${PYTHON_PATH} "${PYTHON_CLIP_MANAGEMENT_SCRIPT}" "${CLIP_DATA_DIR}" EDIT_DESCRIPTION "${CLIP_ID}" "${USER_ID}" "$4" 2>/dev/null )"
+    if [ -n "${CLIP_PROCESS}" ]; then
         readarray -t CLIP_TAB <<< "$( echo "${CLIP_PROCESS}" | sed -z 's/::::/\n/g' )"
         case "${CLIP_TAB[0]}" in
         "BAD_USER")
