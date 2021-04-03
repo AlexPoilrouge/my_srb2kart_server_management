@@ -195,7 +195,7 @@ fi
 if "${WEB_INSTALL}"; then
     mkdir -p "${SRB2KART_F_DIR}/web/"{script,json}
 
-    rm -f "${SRB2KART_F_DIR}/web/scripts/*"
+    rm -f "${SRB2KART_F_DIR}/web/script/*"
 
     install -v web/{gallery.html,index.html} "${SRB2KART_F_DIR}/web" -m 644
     install -v web/script/{gallery.css,strashbot.css,gallery.js,populate.js} "${SRB2KART_F_DIR}/web/script"  -m 644
