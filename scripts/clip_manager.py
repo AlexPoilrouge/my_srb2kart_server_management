@@ -169,6 +169,9 @@ def _check_clips(dataDir):
 
         conn.close()
 
+        if (ret==0):
+            print("CLIPS_CHECKED")
+
         return ret
     else:
         print("ERROR::::Can't establish connection with database")
@@ -209,6 +212,9 @@ def _add_clip(dataDir, url, objType, userId, desc=""):
 
         conn.close()
 
+        if (ret==0):
+            print("CLIP_ADDED::::"+str(c_id))
+
         return ret
     else:
         print("ERROR::::Can't establish connection with database")
@@ -236,6 +242,9 @@ def _rm_clip(dataDir, clipId, userId):
         ret= __generateJSONs(conn, dataDir)
 
         conn.close()
+
+        if (ret==0):
+            print("CLIP_REMOVED")
 
         return ret
     else:
@@ -293,6 +302,10 @@ def _edit_description(dataDir, clipId, userId, desc):
         ret=__generateJSONs(conn, dataDir)
 
         conn.close()
+
+        if (ret==0):
+            print("DESCRIPTION_UPDATED")
+
         return ret
     else:
         print("ERROR::::Can't establish connection with database")

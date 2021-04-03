@@ -670,6 +670,10 @@ and rename the file '${_TMP}-guest.lmp'."        > README.txt
             exit 0
             #exit 37
             ;;
+        "CLIP_ADDED")
+            echo "CLIP_ADDED - ${CLIP_TAB[1]}"
+            exit 0
+            ;;
         *)
             echo "UNKOWN_ERROR - ${CLIP_TAB[1]}"
             exit 0
@@ -677,8 +681,10 @@ and rename the file '${_TMP}-guest.lmp'."        > README.txt
             ;;
         esac
     else
-        echo "CLIP_ADDED"
+        echo "UNKOWN_ERROR - bad response"
         exit 0
+        #exit 38
+        ;;
     fi
 ;;
 "CLIP_RM")
@@ -715,14 +721,19 @@ and rename the file '${_TMP}-guest.lmp'."        > README.txt
             exit 0
             #exit 37
             ;;
+        "CLIP_REMOVED")
+            echo "CLIP_REMOVED"
+            exit 0
+            ;;
         *)
             echo "UNKOWN_ERROR - ${CLIP_TAB[1]}"
             exit 0
             #exit 38
         esac
     else
-        echo "CLIP_REMOVED"
+        echo "UNKOWN_ERROR - bad response"
         exit 0
+        #exit 38
     fi
 ;;
 "CLIP_CHECK")
@@ -736,14 +747,19 @@ and rename the file '${_TMP}-guest.lmp'."        > README.txt
             exit 0
             #exit 37
             ;;
+        "CLIPS_CHECKED")
+            echo "CLIPS_CHECKED"
+            exit 0
+            ;;
         *)
             echo "UNKOWN_ERROR - ${CLIP_TAB[1]}"
             exit 0
             #exit 38
         esac
     else
-        echo "CLIPS_CHECKED"
+        echo "UNKOWN_ERROR - ${CLIP_TAB[1]}"
         exit 0
+        #exit 38
     fi
 ;;
 "CLIP_INFO")
@@ -769,14 +785,6 @@ and rename the file '${_TMP}-guest.lmp'."        > README.txt
             exit 0
             #exit 36
             ;;
-        *)
-            echo "UNKOWN_ERROR - ${CLIP_TAB[1]}"
-            exit 0
-            #exit 38
-        esac
-    else
-        readarray -t CLIP_TAB <<< "$( echo "${CLIP_PROCESS}" | sed -z 's/::::/\n/g' )"
-        case "${CLIP_TAB[0]}" in
         "CLIP_INFO")
             if [ "${#CLIP_TAB[@]}" -lt 7 ]; then
                 echo "UNEXPECTED_RESULT - ${CLIP_TAB[@]}"
@@ -793,11 +801,14 @@ and rename the file '${_TMP}-guest.lmp'."        > README.txt
             exit 0
             ;;
         *)
-            echo "UNKOWN_RESULT - ${CLIP_TAB[@]}"
+            echo "UNKOWN_ERROR - ${CLIP_TAB[1]}"
             exit 0
-            #exit 41
-            ;;
+            #exit 38
         esac
+    else
+        echo "UNKOWN_ERROR - bad response"
+        exit 0
+        #exit 38
     fi
 ;;
 "OUTDATED_CLIPS")
@@ -812,14 +823,6 @@ and rename the file '${_TMP}-guest.lmp'."        > README.txt
             exit 0
             #exit 37
             ;;
-        *)
-            echo "UNKOWN_ERROR - ${CLIP_TAB[1]}"
-            exit 0
-            #exit 38
-        esac
-    else
-        readarray -t CLIP_TAB <<< "$( echo "${CLIP_PROCESS}" | sed -z 's/::::/\n/g' )"
-        case "${CLIP_TAB[0]}" in
         "OUTDATED_CLIPS")
             if [ "${#CLIP_TAB[@]}" -lt 2 ]; then
                 echo "UNEXPECTED_RESULT - ${CLIP_TAB[@]}"
@@ -831,11 +834,14 @@ and rename the file '${_TMP}-guest.lmp'."        > README.txt
             exit 0
         ;;
         *)
-            echo "UNKOWN_RESULT - ${CLIP_TAB[@]}"
+            echo "UNKOWN_ERROR - ${CLIP_TAB[1]}"
             exit 0
-            #exit 41
-        ;;
+            #exit 38
         esac
+    else
+        echo "UNKOWN_ERROR - ${CLIP_TAB[1]}"
+        exit 0
+        #exit 38
     fi
 ;;
 "EDIT_DESCRIPTION")
@@ -871,14 +877,19 @@ and rename the file '${_TMP}-guest.lmp'."        > README.txt
             exit 0
             #exit 36
             ;;
+        "DESCRIPTION_UPDATED")
+            echo "DESCRIPTION_UPDATED"
+            exit 0
+            ;;
         *)
             echo "UNKOWN_ERROR - ${CLIP_TAB[1]}"
             exit 0
             #exit 38
         esac
     else
-        echo "DESCRIPTION_UPDATED"
+        echo "UNKOWN_ERROR - ${CLIP_TAB[1]}"
         exit 0
+        #exit 38
     fi
 ;;
 "UPDATE")

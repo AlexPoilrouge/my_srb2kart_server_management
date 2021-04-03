@@ -195,10 +195,12 @@ fi
 if "${WEB_INSTALL}"; then
     mkdir -p "${SRB2KART_F_DIR}/web/"{script,json}
 
+    rm -f "${SRB2KART_F_DIR}/web/scripts/*"
+
     install -v web/{gallery.html,index.html} "${SRB2KART_F_DIR}/web" -m 644
     install -v web/script/{gallery.css,strashbot.css,gallery.js,populate.js} "${SRB2KART_F_DIR}/web/script"  -m 644
 
-    wget -P "${SRB2KART_F_DIR}/web/script" "https://code.jquery.com/jquery-3.6.0.min.js"
+    wget -P "${SRB2KART_F_DIR}/web/script" wget --backups=1 "https://code.jquery.com/jquery-3.6.0.min.js"
     
     chown "${STRASHBOT_USER}:${STRASHBOT_USER}" -R "${SRB2KART_F_DIR}"
 

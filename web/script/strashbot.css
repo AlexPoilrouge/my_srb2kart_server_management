@@ -1,6 +1,14 @@
 html body{
-    color: blanchedalmond;
-    background-color: black;
+    color: #ffebcd;
+    background-color: #000000;
     text-align: center;
+}
+
+a {
+    color: #7373e2;
+}
+
+a:visited {
+    color: #ab7cd4;
 }
 
