@@ -684,7 +684,6 @@ and rename the file '${_TMP}-guest.lmp'."        > README.txt
         echo "UNKOWN_ERROR - bad response"
         exit 0
         #exit 38
-        ;;
     fi
 ;;
 "CLIP_RM")
