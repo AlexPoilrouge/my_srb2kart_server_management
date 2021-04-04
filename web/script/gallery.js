@@ -17,7 +17,7 @@ function process_source(element){
     var source= $(element).attr('src')
     var source_type= $(element).attr('src-type')
     if (source) {
-        if (['gif','video'].includes(source_type)){
+        if (source_type==="gif"){
             var c= $("<canvas></canvas>").appendTo(element)[0]
             isC = !!(c.getContext && c.getContext('2d'))
             var img= new Image()
@@ -26,6 +26,19 @@ function process_source(element){
                 var hratio= c.height/img.height
                 c.width= img.width*hratio
                 c.getContext('2d').drawImage(img, 0,0, c.width, c.height)
+                delete img
+            }
+        }
+        else if(source_type==="video"){
+            var c= $("<canvas></canvas>").appendTo($('div#yolo'))[0]
+            isC = !!(c.getContext && c.getContext('2d'))
+            var v= document.createElement("video")
+            v.setAttribute("src",source)
+            v.onloadeddata= function(){
+                var hratio= c.height/v.videoHeight
+                c.width= v.videoWidth*hratio
+                c.getContext('2d').drawImage(v, 0,0,c.width,c.height)
+                delete v
             }
         }
         else if (source_type==='youtube'){
