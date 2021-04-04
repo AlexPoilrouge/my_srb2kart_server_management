@@ -30,7 +30,7 @@ function process_source(element){
             }
         }
         else if(source_type==="video"){
-            var c= $("<canvas></canvas>").appendTo($('div#yolo'))[0]
+            var c= $("<canvas></canvas>").appendTo(element)[0]
             isC = !!(c.getContext && c.getContext('2d'))
             var v= document.createElement("video")
             v.setAttribute("src",source)
