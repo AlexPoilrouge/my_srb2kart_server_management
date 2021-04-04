@@ -17,7 +17,7 @@ function process_source(element){
     var source= $(element).attr('src')
     var source_type= $(element).attr('src-type')
     if (source) {
-        if (source_type in ['gif','video']){
+        if (['gif','video'].includes(source_type)){
             var c= $("<canvas></canvas>").appendTo(element)[0]
             isC = !!(c.getContext && c.getContext('2d'))
             var img= new Image()
