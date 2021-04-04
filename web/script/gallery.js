@@ -66,7 +66,7 @@ function update_displayer(){
             break;
             case "video":
                 displayer.children("div.display-content").append(
-                    "<video controls src=\">"+source+"\">Your browser does not support the video tag.</video>"
+                    "<video controls src=\""+source+"\">Your browser does not support the video tag.</video>"
                 )
             break;
             case "youtube":
