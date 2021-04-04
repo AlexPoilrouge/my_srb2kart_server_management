@@ -17,7 +17,7 @@ function process_source(element){
     var source= $(element).attr('src')
     var source_type= $(element).attr('src-type')
     if (source) {
-        if (source_type==='gif'){
+        if (source_type in ['gif','video']){
             var c= $("<canvas></canvas>").appendTo(element)[0]
             isC = !!(c.getContext && c.getContext('2d'))
             var img= new Image()
@@ -63,6 +63,11 @@ function update_displayer(){
         switch (source_type){
             case "gif":
                 displayer.children("div.display-content").append("<img src=\""+source+"\"/>")
+            break;
+            case "video":
+                displayer.children("div.display-content").append(
+                    "<video controls src=\">"+source+"\">Your browser does not support the video tag.</video>"
+                )
             break;
             case "youtube":
                 displayer.children("div.display-content").append(

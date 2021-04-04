@@ -75,13 +75,15 @@ div.display div.display-content{
 }
 
 div.display div.display-content img,
+div.display div.display-content video,
 div.display div.display-content iframe{
     display: block;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 16px;
 }
-div.display div.display-content img{
+div.display div.display-content img,
+div.display div.display-content video{
     width: auto;
 }
 div.display div.display-content iframe{

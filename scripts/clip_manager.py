@@ -255,6 +255,8 @@ def _rm_clip(dataDir, clipId, userId):
 def _processable_url(url):
     if re.match('^https?\:\/\/(w{3}\.)?.+\..{1,8}\/.*\.gif$', url):
         return 'gif'
+    elif re.match('^https?\:\/\/(w{3}\.)?.+\..{1,8}\/.*\.((webm)|(mp4)|(ogg))$', url):
+        return 'video'
     elif re.match('^https?\:\/\/(w{3}\.)?((youtube\.com.*(\?v=|\/embed\/))|(youtu\.be\/))(.{11})$', url):
         return 'youtube'
     elif re.match('^https?\:\/\/(w{3}\.)?streamable\.com\/(.*)?$', url):
