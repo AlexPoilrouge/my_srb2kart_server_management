@@ -86,6 +86,7 @@ div.display div.display-content img,
 div.display div.display-content video{
     width: auto;
     max-height: 80vh;
+    max-width: 80vw;
 }
 div.display div.display-content iframe{
     min-width: 80vw;
