@@ -5,19 +5,76 @@
   <meta charset="utf-8">
 
   <title>StrashBot.fr</title>
-  <meta name="Dr_Nope" content="StrashBot Karting">
+  <meta content="StrashBot Karting">
 
   <link rel="stylesheet" type="text/css" href="script/strashbot.css"/>
+  <script src="./script/jquery-3.6.0.min.js"></script>
 
 </head>
 
 <body>
-    <h1>StrashBot Karting</h1>
-    <br/>
-    <br/>
-    <br/>
-    <ul>
-        <li><b><a href="gallery.html">Strashthèque</a></b> : gallerie de clips du serveur <em>StrashBot Karting</em></li>
-    </ul>
+    <header>
+      <hr/>
+      <span id="strashbot">StrashBot</span> <span id="karting">Karting</span>
+      <hr/>
+    </header>
+    <summary>
+      <span class="menu-default">Serveur Fr 🇫🇷 “<em>Sonic Robo Blast 2 Kart<a class="wiki" href="https://wiki.srb2.org/wiki/SRB2Kart"></a></em>”</span>
+      <span class="menu-desc" id="strashteque-sum" hidden>Gallerie de clips.</span>
+    </summary>
+    <hr/>
+    <nav class="menu">
+      <ul>
+        <li><a id="strashteque" href="gallery.html"><img src="https://api.iconify.design/dashicons:editor-video.svg?color=white"/>Strashtèque</a></li>
+      </ul>
+    </nav>
+    <aside></aside>
+
+    <script>
+      $( document ).ready(function(){
+        $( "nav.menu ul li a" ).mouseenter( function(){
+          var $base= $( "summary span.menu-default" )
+          $base.finish()
+          var _b_css= $base.css('left')
+          $base.animate({"left": '200vw'}, 200, function(){
+            $( this ).hide()
+            $( this ).css('left', _b_css)
+          })
+
+          var id= $( this ).attr('id')+"-sum"
+          $( "summary span.menu-desc" ).finish()
+          var $elem= $( "summary span.menu-desc#"+id )
+          var _elem_css= $elem.css("left")
+          $elem.css("left", "-200vw")
+          $elem.show()
+          $elem.animate({"left": "50%"}, 200, function(){
+            $( this ).show()
+            $( this ).css("left", "50%")
+          })
+        })
+
+
+        $( "nav.menu ul li a" ).mouseleave( function(){
+          var id= $( this ).attr('id')+"-sum"
+          var $elem= $( "summary span.menu-desc#"+id )
+          $( "summary span.menu-desc" ).finish()
+          var _elem_css= $elem.css("left")
+          $elem.animate({"left": '-200vw'}, 200, function(){
+            $( this ).hide()
+            $( this ).css('left', _elem_css)
+          })
+
+          var $base= $( "summary span.menu-default" )
+          $base.finish()
+          var _b_css= $base.css('left')
+          $base.css('left', '200vw')
+          $base.show()
+          $base.animate({"left": "50%"}, 200, function(){
+            $( this ).show()
+            $( this ).css("left", "50%")
+          })
+        })
+      })
+    </script>
 </body>
 </html>

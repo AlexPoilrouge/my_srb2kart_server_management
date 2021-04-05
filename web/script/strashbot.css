@@ -4,11 +4,86 @@ html body{
     text-align: center;
 }
 
+header{
+    font-size: 10vh;
+}
+
+header span#karting{
+    font-family: system-ui;
+    font-style: oblique;
+}
+
 a {
     color: #7373e2;
 }
 
 a:visited {
     color: #ab7cd4;
+}
+
+a.wiki{
+    text-decoration: none;
+}
+a.wiki::after{
+    vertical-align: super;
+    font-size: xx-small;
+    content: "[W]";
+}
+
+hr{
+    margin-top: 3vh;
+    margin-bottom: 3vh;
+}
+
+
+summary{
+    padding-top: 1vh;
+    height: 5vh;
+    position: relative;
+    overflow-x: hidden;
+}
+summary span.menu-desc,
+summary span.menu-default
+{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 50vw;
+    transform: translate(-50%, -50%);
+}
+
+nav.menu{
+    margin-top: 12vh;
+}
+
+nav.menu a {
+    text-decoration: none;
+    font-size: 3.5vh;
+    padding: 2vh;
+    border-radius: 5vh;
+    border-style: solid;
+    border-color: blanchedalmond;
+    border-width: 0.7vh;
+    background-color: rgba(255, 255, 255, 0.180);
+}
+
+nav.menu a:hover{
+    font-size: 3.8vh;
+    border-style: solid;
+    padding: 2.5vh;
+}
+
+nav.menu a:visited{
+    background-color: rgba(255, 255, 255, 0.222);
+    color: rgb(173, 166, 154);
+}
+
+nav.menu ul li{
+    list-style: none;
+}
+
+nav.menu ul li a img{
+    height: 7vh;
+    vertical-align: -2.3vh;
 }
 
