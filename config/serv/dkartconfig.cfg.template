@@ -29,4 +29,5 @@ kartcheck "Yes"
 kartminimap "4"
 servername "[EU/Fr] …StrashBot ‚Karting"
 masterserver "ms.srb2.org:28900"
+motd "${SRB2K_MOTD}"
 
