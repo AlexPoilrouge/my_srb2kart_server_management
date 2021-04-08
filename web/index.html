@@ -7,7 +7,7 @@
   <title>StrashBot.fr</title>
   <meta content="StrashBot Karting">
 
-  <link rel="stylesheet" type="text/css" href="script/strashbot.css"/>
+  <link rel="stylesheet" type="text/css" href="script/strashbot.css?v=6"/>
   <script src="./script/jquery-3.6.0.min.js"></script>
 
 </head>
@@ -23,12 +23,17 @@
       <span class="menu-desc" id="strashteque-sum" hidden>Gallerie de clips.</span>
     </summary>
     <hr/>
-    <nav class="menu">
-      <ul>
-        <li><a id="strashteque" href="gallery.html"><img src="https://api.iconify.design/dashicons:editor-video.svg?color=white"/>Strashtèque</a></li>
-      </ul>
-    </nav>
-    <aside></aside>
+    <div class="content">
+      <nav class="menu">
+        <ul>
+          <li style="padding-right: 5vh;"><a id="strashteque" href="gallery.html"><img src="https://api.iconify.design/dashicons:editor-video.svg?color=white"/>Strashthèque</a></li>
+        </ul>
+      </nav>
+      <aside>
+        <img class="img-default" id="base-img" src="img/strashbot.png">
+        <img class="link-img" id="strashteque-img" src="img/clips.png" hidden>
+      </aside>
+    </div>
 
     <script>
       $( document ).ready(function(){
@@ -40,10 +45,13 @@
             $( this ).hide()
             $( this ).css('left', _b_css)
           })
+          $base_img= $( "aside img.img-default" )
+          $base_img.finish()
+          $base_img.fadeOut(200)
 
-          var id= $( this ).attr('id')+"-sum"
+          var id= $( this ).attr('id')
           $( "summary span.menu-desc" ).finish()
-          var $elem= $( "summary span.menu-desc#"+id )
+          var $elem= $( "summary span.menu-desc#"+id+"-sum" )
           var _elem_css= $elem.css("left")
           $elem.css("left", "-200vw")
           $elem.show()
@@ -51,18 +59,24 @@
             $( this ).show()
             $( this ).css("left", "50%")
           })
+          $elem_img= $( "aside img#"+id+"-img" )
+          $( "aside img.link-img" ).finish()
+          $elem_img.fadeIn(200)
         })
 
 
         $( "nav.menu ul li a" ).mouseleave( function(){
-          var id= $( this ).attr('id')+"-sum"
-          var $elem= $( "summary span.menu-desc#"+id )
+          var id= $( this ).attr('id')
+          var $elem= $( "summary span.menu-desc#"+id+"-sum" )
           $( "summary span.menu-desc" ).finish()
           var _elem_css= $elem.css("left")
           $elem.animate({"left": '-200vw'}, 200, function(){
             $( this ).hide()
             $( this ).css('left', _elem_css)
           })
+          $elem_img= $( "aside img#"+id+"-img" )
+          $( "aside img.link-img" ).finish()
+          $elem_img.fadeOut(200)
 
           var $base= $( "summary span.menu-default" )
           $base.finish()
@@ -73,8 +87,12 @@
             $( this ).show()
             $( this ).css("left", "50%")
           })
+          $base_img= $( "aside img.img-default" )
+          $base_img.finish()
+          $base_img.fadeIn(200)
         })
       })
     </script>
+
 </body>
 </html>

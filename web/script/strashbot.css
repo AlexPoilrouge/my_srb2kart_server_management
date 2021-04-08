@@ -26,7 +26,7 @@ a.wiki{
 }
 a.wiki::after{
     vertical-align: super;
-    font-size: xx-small;
+    font-size: 2vh;
     content: "[W]";
 }
 
@@ -39,8 +39,9 @@ hr{
 summary{
     padding-top: 1vh;
     height: 5vh;
+    font-size: 3vh;
     position: relative;
-    overflow-x: hidden;
+    overflow: hidden;
 }
 summary span.menu-desc,
 summary span.menu-default
@@ -52,8 +53,16 @@ summary span.menu-default
     transform: translate(-50%, -50%);
 }
 
+div.content{
+    width: 100%;
+    overflow-x: hidden;
+}
+
 nav.menu{
+    float: left;
+    text-align: right;
     margin-top: 12vh;
+    width: 50%;
 }
 
 nav.menu a {
@@ -85,5 +94,28 @@ nav.menu ul li{
 nav.menu ul li a img{
     height: 7vh;
     vertical-align: -2.3vh;
+}
+
+aside{
+    text-align: left;
+    margin-left: 50%;
+    width:50%;
+    position: relative;
+    height: 60vh;
+    overflow-y: hidden;
+}
+
+aside img{
+    width: 45vw;
+    height: auto;
+    /* max-height: 60vh; */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -webkit-mask-image: url('../img/mask.png');
+    -webkit-mask-size: 45vw auto;
+    mask-image: url('../img/mask.png');
+    mask-size: 45vw auto;  
 }
 
