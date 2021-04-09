@@ -62,7 +62,7 @@ nav.menu{
     float: left;
     text-align: right;
     width: 50%;
-    min-height: 60vh;
+    min-height: 55vh;
 }
 
 nav.menu a {
@@ -112,7 +112,7 @@ aside{
     margin-left: 50%;
     width:50%;
     position: relative;
-    min-height: 60vh;
+    min-height: 55vh;
     overflow-y: hidden;
 }
 
@@ -128,5 +128,12 @@ aside img{
     -webkit-mask-size: 45vw auto;
     mask-image: url('../img/mask.png');
     mask-size: 45vw auto;  
+}
+
+footer{
+    font-size: min(1vh,1vw);
+    text-align: center;
+    min-height: min(5vh,5vw);
+    padding: min(1vh, 1vw);
 }
 

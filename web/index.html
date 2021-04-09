@@ -43,6 +43,21 @@
         <img class="link-img" id="strashteque-img" src="img/clips.png" hidden>
       </aside>
     </div>
+    
+    <footer>
+      <span class="foot-default">
+        Charizard (© Nintendo / Game Freak) sprite from <a href="https://mb.srb2.org/threads/dirks-character-pack-r11-megamix-edition.26232/"><em>DirkTheHusky</em>'s character Pack</a>;
+        Donkey Kong (© Nintendo) sprite from <a href="https://mb.srb2.org/threads/donkey-kong.25876/"><em>Gregeroni's</em> character mod</a>;
+        Sol Badguy (© Ark System's Work) sprite from <a href="https://mb.srb2.org/threads/ultimep-character-pack-v3-2.29262/"><em>UltimeP's</em> character Pack</a>;
+        Horn sprite from <a href="https://mb.srb2.org/threads/hornmod-championship-edition.26378/"><em>Tyron's</em> HORNMOD</a>;
+        Remaining sprites from <a href="https://wiki.srb2.org/wiki/SRB2Kart"><em>KartKrew's SRB2Kart</em></a> release;
+      </span>
+      <span class="footnote" id="strashteque-foot" hidden>
+        Jax (© Riot Games) sprite from <a href="https://mb.srb2.org/threads/jax-from-league-of-legends.29682/"><em>Comodore's</em> character mod</a>;
+        May (© Ark System's Work) sprite from <a href="https://mb.srb2.org/threads/ultimep-character-pack-v3-2.29262/"><em>UltimeP's</em> character Pack</a>;
+        Darth Sidious (© Lucas Film) sprite from <a href="https://mb.srb2.org/threads/darth-sidious-v1-3.29742/"><em>Dr_Nope's</em> character mod</a>;
+      </span>
+    </footer>
 
     <script>
       $( document ).ready(function(){
@@ -57,6 +72,9 @@
           $base_img= $( "aside img.img-default" )
           $base_img.finish()
           $base_img.fadeOut(200)
+          $base_foot= $("footer span.foot-default")
+          $base_foot.finish()
+          $base_foot.hide()
 
           var id= $( this ).attr('id')
           $( "summary span.menu-desc" ).finish()
@@ -71,6 +89,9 @@
           $elem_img= $( "aside img#"+id+"-img" )
           $( "aside img.link-img" ).finish()
           $elem_img.fadeIn(200)
+          $elem_foot= $( "footer span#"+id+"-foot" )
+          $elem_foot.finish()
+          $elem_foot.show()
         })
 
 
@@ -86,6 +107,9 @@
           $elem_img= $( "aside img#"+id+"-img" )
           $( "aside img.link-img" ).finish()
           $elem_img.fadeOut(200)
+          $elem_foot= $( "footer span#"+id+"-foot" )
+          $elem_foot.finish()
+          $elem_foot.hide()
 
           var $base= $( "summary span.menu-default" )
           $base.finish()
@@ -99,9 +123,12 @@
           $base_img= $( "aside img.img-default" )
           $base_img.finish()
           $base_img.fadeIn(200)
+          $base_foot= $("footer span.foot-default")
+          $base_foot.finish()
+          $base_foot.show()
+
         })
       })
     </script>
-
 </body>
 </html>
