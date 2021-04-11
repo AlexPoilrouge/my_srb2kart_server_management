@@ -204,13 +204,15 @@ if "${WEB_INSTALL}"; then
     
     chown "${STRASHBOT_USER}:${STRASHBOT_USER}" -R "${SRB2KART_F_DIR}"
 
+    echo -e "\e[1m\e[33m[IMPORTANT]\e[0m: images resources ('${SRB2KART_F_DIR}/web/img') aren't installed by this process. You must fetch the resources manually…"
+
     if ! "${NGINX_INSTALL}"; then
-        echo "[WARNING]: 'web_install' can't be complete without 'nginx_install'"
+        echo -e "\e[1m\e[33m[WARNING]\e[0m: 'web_install' can't be complete without 'nginx_install'"
     else
         install -v config/nginx-http-strashbot.conf "${ROOT_DIR}/${NGINX_DIR}/sites-available" -m 644
         ln -sf "${ROOT_DIR}/${NGINX_DIR}/sites-available/nginx-http-strashbot.conf" "${ROOT_DIR}/${NGINX_DIR}/sites-enabled/nginx-http-strashbot.conf"
 
-        echo -e "[IMPORTANT] Make sure the line \n\tinclude sites-enabled/*;\n is added to '${ROOT_DIR}/${NGINX_DIR}/nginx.conf''s 'http' block!"
+        echo -e "\e[1m\e[33m[IMPORTANT]\e[0m Make sure the line \n\tinclude sites-enabled/*;\n is added to '${ROOT_DIR}/${NGINX_DIR}/nginx.conf''s 'http' block!"
     
         if "${SYSTEMD_INSTALL}" && ( systemctl is-active nginx.service >/dev/null 2>&1 ); then
             echo "[systemd] restarting nginx…"
