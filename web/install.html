@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Guide d'installation SRB2Kart - StrashBot.fr</title>
+
+    <meta content="Guide d'installation SRB2Kart"/>
+    <meta name="description" content="Installer SRB2Kart"/>
+    <meta name="author" content="Dr_Nope"/>
+    <meta property="og:site_name" content="Installation SRB2Kart"/>
+    <meta property="og:title" content="StrashBot.fr - Installation SRB2Kart"/>
+    <meta property="og:description" content="Guide d'installation SRB2Kart"/>
+    <meta property="og:image" content="http://strashbot.fr/img/install_thumb.png">
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="http://strashbot.fr/install.html"/>
+
+    <link rel="stylesheet" type="text/css" href="script/install.css?v=0005" />
+    <link rel="stylesheet" type="text/css" href="script/key.css" />
+    <script src="./script/jquery-3.6.0.min.js"></script>
+    <script src="./script/various.js"></script>
+</head>
+
+<body>
+    <header>
+        <div class="strashbot-header">
+            <a href="index.html"><span id="strashbot">StrashBot</span> <span id="karting">Karting</span></a> > Installation SRB2Kart
+        </div>
+    </header>
+
+    <div class="content">
+        <main>
+            <div>
+                <div class="header-img"></div>
+                <h1 id="about">À propos</h1>
+                <p>“<em>SRB2Kart</em>” est un jeu de course Mario Kart like, fan-made, libre et gratuit (GNU GPL2.0), disponible sur PC.</p>
+                <p>Le jeu est en fait un mod de “<em>Sonic Robo Blast 2</em>” devenu standalone, développé par l'équipe “<em>KartKrew</em>”.
+                    Il s'inscrit donc dans une généalogie de mods remontant jusqu'à “<em>Doom II</em>”.
+                    C'est pourquoi, même si le jeu est en une sortie relativement récente (novembre 2018), son moteur, lui est vieux d'une trentaine
+                    d'années !
+                    De fait, les graphismes du jeu sont extrêmement datés, et pourraient être qualifiés “d'archaïques” par les plus cyniques.
+                    Par conséquent, si pour vous la qualité et l'intérêt d'un jeu vidéo sont indissociables de sa qualité graphique et technique,
+                    clairement, passez votre chemin.
+                </p>
+                <p>Si vous êtes prêt à franchir le cap du choc visuel des sprites et textures (très) basse résolution, sachez qu'un jeu de course
+                    dynamique, au gameplay mêlant habilement des aspects techniques avec le bordel engendré par la guerre des items propre au genre
+                    vous tend les bras.
+                    De plus, le jeu en ligne est porté par un écosystème de mods qui garantit des expériences propres à chaque serveur pour des
+                    heures de fun.
+                </p>
+                <div class="figure-container">
+                    <div class="figure">
+                        <input id="img1" class="img-toggle" type="checkbox">
+                        <label for="img1" class="lbl-img-toggle">
+                            <div class="screen">
+                                <img class="target-img" src="img/install/kart0038.png"/>
+                            </div>
+                        </label>
+                        <span>Et zépartiiiii</span>
+                    </div>
+                    <div class="figure">
+                        <input id="img2" class="img-toggle" type="checkbox">
+                        <label for="img2" class="lbl-img-toggle">
+                            <div class="screen">
+                                <img class="target-img" src="img/install/kart0039.png"/>
+                            </div>
+                        </label>
+                        <span>Une esthétique aujourd'hui bien singulière</span>
+                    </div>
+                </div>
+                <h2 id="systems">Sur quel système?</h2>
+                <p>Son moteur étant ancestral et sous licence libre, <em>SRB2Kart</em> a pu être compilé et rendu disponible sur
+                    Windows, MacOS, & Linux.
+                    Cela étant dit, ce guide concerne principalement la version Windows.
+                    Des mentions seront faites pour les joueurs Linux, qui devraient être suffisamment débrouillards.
+                    En revanche, les joueurs Mac étant relativement rares sur ce jeu, et ne jouissant pas de certains avantages comme des
+                    “<em>exe mods</em>”, ce guide omet cette version, par manque d'informations utiles à fournir ( pardon 😥 ).
+                </p>
+
+                <h1 id="base-install">Installation de base</h1>
+                <p>L'installation de <em>SRB2Kart</em> sous Windows est classique et relativement simple :</p>
+                    <ol>
+                        <li>Créez un dossier dans vos fichiers personnels qui sera destiné à contenir votre installation</li>
+                        <li>Téléchargez <a href="https://github.com/STJr/Kart-Public/releases/download/v1.3/srb2kart-v13-Installer.exe">l'installateur</a>
+                            depuis le <a href="https://github.com/STJr/Kart-Public">github de KartKrew</a> ou le
+                            <a href="https://mb.srb2.org/threads/srb2kart.25868/">SRB2 Message Board</a> et placez le dans ce nouveau dossier</li>
+                        <li>Exécutez l'installateur et suivez les instructions</li>
+                    </ol>
+                <p>Et voilà, vous êtes prêt à jouer à la version “<em>vanilla</em>“ de <em>SRB2Kart</em>!</p>
+                <div class="folding-note" id="base-install-linux">
+                    <input id="foldible" class="folding-toggle" type="checkbox">
+                    <label for="foldible" class="folding-title">Linux</label>
+                    <div class="folding-content">
+                        <p>Il faudra <a href="http://wiki.srb2.org/wiki/Source_code_compiling">compiler</a> vous-même le code depuis
+                            <a href="https://github.com/STJr/Kart-Public">les sources</a> !
+                        </p>
+                        <p>Attention toutefois, car la compilation du code source, ne fournit pas certaines données nécessaire au lancement
+                            du jeu. Ces données sont à chercher et installer séparément. À notre connaissance, la source pour obtenir ces
+                            données, est à l'intérieur de l'installateur Windows de <em>SRB2Kart</em>. Il faudra donc procéder comme suit :
+                        </p>
+                        <ol>
+                            <li>Télécharger
+                                <a href="https://github.com/STJr/Kart-Public/releases/download/v1.3/srb2kart-v13-Installer.exe">l'installateur Windows.</a>
+                            </li>
+                            <li>Extraire/désarchiver son contenu.</li>
+                            <li>Installer/copier tous les fichiers <code>*.kart</code>, les fichiers
+                                <code>srb2.srb</code> <code>mdls.dat</code> ainsi que le dossier
+                                <code>mdls</code> et son contenu dans votre système, au sein d'un nouveau dossier système (droits root nécessaires):
+                                <code>/usr/share/games/SRB2Kart</code>
+                             </li>
+                        </ol>
+                        <p>Certains paquets d'installation sont cependant disponibles pour certaines distributions, comme par exemple
+                            <a href="https://launchpad.net/~kartkrew/+archive/ubuntu/srb2kart">Ubuntu</a> ou
+                            <a href="https://aur.archlinux.org/packages/srb2kart/">Archlinux</a>.
+                        </p>
+                        <p>
+                            Pour un guide (anglais) plus détaillé, vous pouvez consulter
+                            <a href="https://kart.moe/building-srb2-kart-for-linux/">celui-ci</a>.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="figure-container">
+                    <div class="figure">
+                        <input id="img3" class="img-toggle" type="checkbox">
+                        <label for="img3" class="lbl-img-toggle">
+                            <div class="screen">
+                                <img class="target-img" src="img/install/kart0043.png"/>
+                            </div>
+                        </label>
+                        <span>Toujours le bordel…</span>
+                    </div>
+                </div>
+
+                <h1 id="exe_mods">Installer les exe mods</h1>
+                <h2 id="about_exe_mods">“Exe mods” ?</h2>
+                <p>Précédemment, on a rapidement évoqué le cas de “<em>mods</em>” pour modifier le gameplay et le déroulement des courses en ligne.
+                    Hé bien… ce n'est pas du tout du même type de mod dont il s'agit ici!
+                </p>
+                <p> <em>SRB2Kart</em> étant sous licence libre, chacun est libre de modifier le code source du jeu à sa guise.
+                    Les “<em>exe mods</em>“ sont en réalité des modifications du code source qui engendrent donc des versions alternatives
+                    de l'exécutable du jeu.
+                    Ces exécutables apportent donc des fonctionnalités ou alternatives directement dans le cœur du jeu, et apportent donc des
+                    changements au sein du jeu, dans des parties qui ne sont pas modifiables par des mods sous forme d'addons.
+                    De par leur nature “d'exécutables alternatif”, pour pouvoir installer et jouer sous un <em>exe mod</em> donné, celui-ci doit donc
+                    remplacer l'exécutable d'origine ( <code>sr2kart.exe</code> ) au sein de votre installation de <em>SRB2Kart</em>.
+                </p>
+                <p>
+                    Ci-après, sont présentés deux des (rares) <em>exe mods</em> existant pour <em>SRB2Kart</em>. <u>Attention</u> : étant des exécutables
+                    alternatifs, un seul <em>exe mod</em> peut être utilisé à la fois. Faites donc votre choix parmi ceux proposés.
+                </p>
+                <h2 id="azerty_exe">Clavier AZERTY</h2>
+                <p>Comme on l'a déjà dit, le code et donc le moteur de <em>SRB2Kart</em> est vieux, très vieux.
+                    Reliquat d'une époque lointaine ou beaucoup de pilotes, librairies et automatismes, qui aujourd'hui nous semblent tellement
+                    évidents qu'on ne les voit même plus, n'existaient tout simplement pas.
+                    C'est pourquoi, dans <em>SRB2Kart</em>, le mapping des touches du clavier est codé “en dur” de façon brute au cœur même du jeu.
+                    De fait, il n'est pas possible de modifier dynamiquent, via un addon ou autre, ce mapping.
+                    Or, évidemment, ce mapping des touches est calqué sur le modèle QWERTY.
+                    Par conséquent, jouer à <em>SRB2Kart</em>, c'est subir le mapping QWERTY, même lorsque votre clavier est AZERTY.
+                    Cela peut vite devenir frustrant, notamment vis-à-vis du chat textuel lors de partie en ligne, le principal endroit où l'entré
+                    textuelle est utilisée dans le jeu.
+                </p>
+                <p>Heureusement, des joueurs de <em>StrashBot Karting</em> (comme celui qui écrit ces lignes) ont été frustrés avant vous, et ont décidé de 
+                    <a href="https://github.com/AlexPoilrouge/Kart-Public_azerty">mettre les mains dans ce cambouis</a> vieux de 30 ans.
+                    Ainsi est né “<em>l'exe mod AZERTY</em>” pour <em>SRB2Kart</em>!
+                    Comme vous l'aurez sans doute compris, la seule fonctionnalité de ce mod est de proposer un exécutable alternatif pour le jeu,
+                    où le mapping QWERTY de base du clavier est remplacé par un mapping AZERTY.
+                </p>
+                <p>Attention cependant :</p>
+                <ul>
+                    <li>Seul le mapping des touches est remplacé, aucun caractère spécial n'a été ajouté. Par conséquent certaines lettre que
+                        les Français ont l'habitude d'utiliser n'existe tout simplement pas, et sont remplacées par leurs équivalents “standards”
+                        ('é'→'e'; 'è'→'e'; 'à'→'a'; 'ç'→'c'; 'ù'→'u').
+                    </li>
+                    <li>Certains bugs d'entrée textuelle existent à certains endroits du jeu. Mais rien qui n'impactera votre expérience de jeu.</li>
+                    <li>Ce nouveau mapping affecte effectivement vos commandes de jeu (si par exemple votre touche 'Q' était associée à la commande
+                        d'accélération de votre kart).</li>
+                </ul>
+                <h3 id="azerty_install">Installation</h3>
+                <p>Pour installer “<em>l'exe mod AZERTY</em>” c'est assez simple:</p>
+                <ol>
+                    <li>Si ce n'est pas déjà fait, effectuez une <a href="#base-install">installation de base</a> de <em>SRB2Kart</em>.</li>
+                    <li>Dans le dossier d'installation du jeu, remplacez simplement l'exécutable <code>srb2kart.exe</code> par
+                        <a href="https://github.com/AlexPoilrouge/Kart-Public_azerty/releases/download/1.3-azerty/srb2kart.exe">la version modifiée</a>.
+                    </li>
+                </ol>
+                <p>Et voilà !</p>
+                <div class="folding-note">
+                    <input id="foldible2" class="folding-toggle" type="checkbox">
+                    <label for="foldible2" class="folding-title">Linux</label>
+                    <div class="folding-content">
+                        <p>Pour Linux, c'est un peu plus délicat. Cette fois, vous n'y couperez pas, il faudra compiler
+                            <a href="https://github.com/AlexPoilrouge/Kart-Public_azerty/releases">les sources modifiées</a>!
+                            Essentiellement, l'étape de compilation est strictement la même que pour l'installation de base, mais
+                            avec ces nouvelles sources.
+                        </p>
+                        <ol>
+                            <li>Clonez le répo : <code>git clone https://github.com/AlexPoilrouge/Kart-Public_azerty.git</code></li>
+                            <li>Entrez dans le nouveau dossier cloné : <code>cd Kart-Public_azerty</code></li>
+                            <li>Compilez : <code>make -C src/ LINUX64=1 clean && make -C src/ LINUX64=1</code></li>
+                            <li>Si tout se déroule bien, le nouvel exécutable aura été généré à l'emplacement
+                                <code>Kart-Public_azerty/bin/Linux64/Release/lsdl2srb2kart</code>
+                            </li>
+                        </ol>
+                        <p>Notez que pour pouvoir jouer, comme pour <a href="#base-install-linux">l'installation de base</a>, les données de jeu auront
+                            dû être obtenues et installées séparément.
+                        </p>
+                    </div>
+                </div>
+
+                <h2 id="moe-mansion">Débloquer les FPS avec Moe's Mansion</h2>
+                    <p><em>Moe's Mansion</em> est sans doute <em>l'exe mod</em> le plus populaire, et à raison ! Il offre beaucoup de nouvelles
+                    fonctionnalités intéressantes, dont notamment :</p>
+                    <ul>
+                        <li>Interpolation de frames : lors des courses, l'état du jeu est évalué en 35 tics par seconde. Les frames affichés suivent
+                            donc ce rythme et limite le jeu à 35 fps. L'interpolation de frame offerte par <em>Moe's Mansion</em> permet
+                            s'affranchir de cette limite, bien au-delà des 35 frames par seconde.
+                        </li>
+                        <li>Camera tilting : avec cette fonctionnalité, lors des courses, la caméra pivote en fonction du relief sur lequel se déplace
+                            votre personnage. ⚠ <u>Attention :</u> si vous êtes sujet au “motion sickeness” pensez à la désactiver dans les options du
+                            jeu :
+                            <code>options</code> → <code>bird</code> → <code>screen tilting</code> → <code>camera tilting</code>
+                        </li>
+                        <li>Écran de sélection des personnages retravaillé, pratique pour les serveurs avec beaucoup de personnages.</li>
+                    </ul>
+                    <p>Cet <em>exe mod</em> offre bien d'autres modifications. Consultez
+                        <a href="https://mb.srb2.org/addons/srb2kart-1-3-moe-mansion.42/">le post du message board</a>
+                        associé ou <a href="https://gitlab.com/himie/kart-public/-/tree/moe-mansion">le repo du projet</a>.
+                    </p>
+
+                    <div class="figure-container">
+                        <div class="figure">
+                            <input id="img4" class="img-toggle" type="checkbox">
+                            <label for="img4" class="lbl-img-toggle">
+                                <div class="screen">
+                                    <img class="target-img" src="img/install/kart0044.png"/>
+                                </div>
+                            </label>
+                            <span>L'écran de sélection “<em>grid</em>” de <em>Moe's Mansion</em></span>
+                        </div>
+                        <div class="figure">
+                            <input id="img5" class="img-toggle" type="checkbox">
+                            <label for="img5" class="lbl-img-toggle">
+                                <div class="screen">
+                                    <img class="target-img" src="img/install/kart0046.png"/>
+                                </div>
+                            </label>
+                            <span><code>[Camera tilting - On]</code> - woha ça penche…</span>
+                        </div>
+                    </div>
+
+                    <h3 id="moe-mansion-install">Installation</h3>
+                    <p>L'installation est la même que pour <em>l'exe mod</em> AZERTY, ou tout autre <em>exe mod</em> en général :
+                        remplacez simplement l'exécutable <code>srb2kart.exe</code> par celui de <em>Moe's Mansion</em> dans votre installation :
+                    </p>
+                    <ol>
+                        <li>Si ce n'est pas déjà fait, effectuez une <a href="#base-install">installation de base</a> de <em>SRB2Kart</em>.</li>
+                        <li>Dans le dossier d'installation du jeu, remplacez simplement l'exécutable <code>srb2kart.exe</code> par
+                            <a href="https://kart.moe/moe-mansion/">la version modifiée</a>.
+                        </li>
+                    </ol>
+                    <div class="folding-note">
+                        <input id="foldible3" class="folding-toggle" type="checkbox">
+                        <label for="foldible3" class="folding-title">Linux</label>
+                        <div class="folding-content">
+                            <p>Pour Linux, il vous faut également compiler <em>l'exe mod</em> 
+                                <a href="https://gitlab.com/himie/kart-public.git">depuis les sources</a>.
+                            </p>
+                            <ol>
+                                <li>Clonez le répo : <code>git clone https://gitlab.com/himie/kart-public.git</code></li>
+                                <li>Entrez dans le nouveau dossier cloné : <code>cd kart-public</code></li>
+                                <li>Compilez : <code>make -C src/ LINUX64=1 clean && make -C src/ LINUX64=1</code></li>
+                                <li>Si tout se déroule bien, le nouvel exécutable aura été généré à l'emplacement
+                                    <code>kart-public/bin/Linux64/Release/lsdl2srb2kart</code>
+                                </li>
+                            </ol>
+                            <p>Notez que pour pouvoir jouer, comme pour <a href="#base-install-linux">l'installation de base</a>, les données de jeu
+                                auront dû être obtenues et installées séparément.
+                            </p>
+                        </div>
+                    </div>
+
+                <h2 id="azerty-moe-mansion">Moe's Mansion en AZERTY</h2>
+                    <p>Comme évoqué précédemment, les <em>exe mods</em> sont des exécutables du jeu modifiés.
+                        Il n'est donc pas possible d'utiliser deux <em>exe mods</em> en même temps.
+                        Jusqu'ici, nous avons présenté deux <em>exe mods</em> : AZERTY mod et <em>Moe's Mansion</em>.
+                        A priori, il faudrait donc choisir lequel de ces deux mods vous voudriez utiliser.
+                        Fort heureusement, jusqu'ici, les modifications effectuées sur le code source par ces deux <em>exe mods</em> ne sont pas
+                        conflictuelles !
+                        Par conséquent, il fut, jusqu'à présent, relativement facile de combiner ces deux mods en un nouveau troisième <em>exe mod</em>:
+                        <em>Moe's Mansion (AZERTY)</em>. À vous les 100 fps ET le layout AZERTY!
+                    </p>
+                    <h3 id="azerty-moe-mansion-install">Installation</h3>
+                    <p>L'installation est la même que pour les deux autres <em>exe mods</em>:
+                        remplacez simplement l'exécutable <code>srb2kart.exe</code> par celui de <em>Moe's Mansion (AZERTY)</em> dans votre installation:
+                    </p>
+                    <ol>
+                        <li>Si ce n'est pas déjà fait, effectuez une <a href="#base-install">installation de base</a> de <em>SRB2Kart</em>.</li>
+                        <li>Dans le dossier d'installation du jeu, remplacez simplement l'exécutable <code>srb2kart.exe</code> par
+                            <a href="https://github.com/AlexPoilrouge/Kart-Public_azerty/releases/download/v1.3-moe-mansion-azerty/srb2kart.exe">
+                                la version modifiée
+                            </a>.
+                        </li>
+                    </ol>
+                    <div class="folding-note">
+                        <input id="foldible4" class="folding-toggle" type="checkbox">
+                        <label for="foldible4" class="folding-title">Linux</label>
+                        <div class="folding-content">
+                            <p>Pour Linux, il vous faut toujours compiler <em>l'exe mod</em> 
+                                <a href="https://gitlab.com/himie/kart-public.git">depuis les sources</a>.
+                            </p>
+                            <ol>
+                                <li>Clonez le répo :
+                                    <code>git clone https://github.com/AlexPoilrouge/Kart-Public_azerty/tree/moe-mansion</code>
+                                </li>
+                                <li>Entrez dans le nouveau dossier cloné : <code>cd kart-public</code></li>
+                                <li>Basculez sur la branche <em>moe-mansion</em> : <code>git checkout moe-mansion</code></li>
+                                <li>Compilez : <code>make -C src/ LINUX64=1 clean && make -C src/ LINUX64=1</code></li>
+                                <li>Si tout se déroule bien, le nouvel exécutable aura été généré à l'emplacement
+                                    <code>kart-public/bin/Linux64/Release/lsdl2srb2kart</code>
+                                </li>
+                            </ol>
+                            <p>Notez que pour pouvoir jouer, comme pour <a href="#base-install-linux">l'installation de base</a>, les données de jeu
+                                auront dû être obtenues et installées séparément.
+                            </p>
+                        </div>
+                    </div>
+
+                <h1 id="before-jump">Avant de se lancer</h1>
+                    <p>Voilà !
+                        Si vous avez réussi à suivre ce guide jusqu'ici sans encombre, vous avez tout ce qu'il faut pour vous lancer dans des courses
+                        endiablées de <em>SRB2Kart</em> !
+                        Cependant, quelques détails peuvent vous intéresser au préalable.
+                    </p>
+                    <h2 id="pad-config">Configurer sa manette</h2>
+                    <p>Si votre manette ne fait pas d'histoire pour jouer à d'autres jeux, alors, a priori, l'utiliser pour <em>SRB2Kart</em> ne devrait
+                        pas poser de problème.
+                        Néanmoins, l'implémentation des actions de la manette a été faite en prenant le pad XBox 360 en référence.
+                        De fait, si vous rencontrez quelques comportements qui vous semblent incongrus, essayez d'installer un logiciel qui traduit
+                        vos entrées de controller en actions de controller de XBox 360 virtuel
+                        (<a href="https://www.x360ce.com/">x360ce</a>, par exemple).
+                    </p>
+                    <p>Évidement, vous pouvez tout à fait jouer au clavier, si le cœur vous en dit.
+                        Pour des jeux de ce genre, cependant, beaucoup préfèrent la manette.
+                        Quoiqu'il en soit, un clavier sera de toute façon (presque) nécessaire pour jouer, ne serait-ce que pour entrer du texte,
+                        communiquer, ou utiliser la console.
+                    </p>
+                    <p>En tout cas, si vous jouez à la manette, vous aurez peut-être envie d'altérer la configuration de celle-ci, pour altérer le layout
+                        des actions par rapport aux touches. Mais n'hésitez pas à tester la configuration de base au préalable !
+                        Un bon exemple de configuration pourrait être le suivant :
+                    </p>
+                    <ul>
+                        <li>un bouton (sans doute le plus bas, l'équivalent du A sur) XBox pour accélerer/avancer.</li>
+                        <li>un autre (sans doute équivalent au X sur XBox) pour freiner et/ou effectuer une marche arrière.</li>
+                        <li>un troisième bouton (sans doute équivalent au B sur XBox), pour regarder en arrière.</li>
+                        <li>un quatrième bouton (équivalent au Y sur XBox), en choix libre, pourquoi pas pour sauver le replay en fin de course?</li>
+                        <li>une gâchette (droite?) pour drifter!</li>
+                        <li>l'autre gâchette (gauche?) pour lancer vos items.</li>
+                        <li>ne pas oublier le bouton start pour afficher le menu contextuel lors des courses.</li>
+                        <li>et pourquoi pas le bouton select pour afficher les informations de courses (“show rankings”)?</li>
+                        <li>évidemment les entrées directionnelles en utilisant le joystick gauche.</li>
+                        <li>et enfin, optionnellement, les boutons dit “<em>custom actions (1/2/3)</em>”, qui correspondent à certaines actions qui en général seront
+                            réservées pour certains mods (sur le serveur <em>StrashBot Karting</em>, par exemple, ils servent à afficher des emotes).
+                        </li>
+                    </ul>
+                    <p>Pour modifier et tester une configuration, une bonne façon de faire est de se diriger dans un partie libre en solo, et de
+                        modifier votre configuration depuis les options du “menu start” (accessible au clavier, normalement, via la touche
+                        <kbd>Echap</kbd>). 
+                        Pour lancer une partie libre, lancez <em>SRB2Kart</em>, puis dirigers vous vers <code>multiplayer</code> → <code>offline…</code>
+                        → <code>start</code>.
+                        Dès lors un niveau du jeu se lance.
+                        De là, vous pourrez accéder au menu de changement de configuration du contrôlleur via le “menu start” (<kbd>Echap</kbd>), puis
+                        <code>options</code> → <code>control setup</code> → <code>player 1 controls</code>.
+                    </p>
+                    <p>Une fois dans le menu d'édition des contrôles, le mieux est, pour les actions sus-citées, de repartir de zéro.
+                        Il va donc falloir effacer (en utilisant la touche <kbd>Del</kbd>) les actions: “<code>accelerate</code>”, 
+                        “<code>drift</code>”, “<code>brake</code>”, “<code>use/throw item</code>”, “<code>look backward</code>”,
+                        “<code>show rankings</code>”, “<code>open/close menu (esc)</code>”,
+                        “<code>custom action 1</code>” (tout en bas de page), “<code>custom action 2</code>”, et “<code>custom action 3</code>”.   
+                    </p>
+                    <p>Une fois toute les actions concernées effacées, pour chacune de ces actions, sélectionnez là (validez avec <kbd>Entrée</kbd>),
+                        et appuyez sur la touche de votre manette à laquelle vous voulez faire correspondre l'action sélectionnée.
+                        Une fois fait, allez dans le sous-menu “<code>gamepad options</code>” et assurez-vous que l'action “<code>aim forward/back</code>”
+                        est bien associé à “<code>Y-Axis</code>”, et que “<code>turn left/right</code>” l'est à “<code>X-Axis</code>”.
+                        </p>
+                        <div class="figure-container">
+                            <div class="figure">
+                                <input id="img8" class="img-toggle" type="checkbox">
+                                <label for="img8" class="lbl-img-toggle">
+                                    <div class="screen">
+                                        <img class="target-img" src="img/install/kart0048.png"/>
+                                    </div>
+                                </label>
+                                <span>Configuration de la manette (<code>joyX</code> désigne une touche de la manette).</span>
+                            </div>
+                            <div class="figure">
+                                <input id="img9" class="img-toggle" type="checkbox">
+                                <label for="img9" class="lbl-img-toggle">
+                                    <div class="screen">
+                                        <img class="target-img" src="img/install/kart0049.png"/>
+                                    </div>
+                                </label>
+                                <span>Vérifions les joysticks</span>
+                            </div>
+                        </div>
+                    <p>Ça y'est ! Vous devriez être fin prêt à faire régner la terreur sur les pistes !</p>
+
+                    <h2 id="things-to-know">Quelques petites choses à savoir (mods)</h2>
+                    <p>Jusqu'ici, nous avons évoqué rapidement les “<em>mods</em>” et avons détaillé les “<em>exe mods</em>”.
+                        Revenons-en aux premiers.
+                        Les “<em>mods</em>”, au sens usuel dans <em>SRB2Kart</em>, désigne des add-ons qui, contrairement aux “<em>exe mods</em>”,
+                        sont chargés dynamiquement pendant l'exécution du jeu, potentiellement à n'importe quel moment.
+                        On l'a dit, c'est sur un écosystème de mods que repose la grande force de <em>SRB2Kart</em>, qui permet à la communauté de
+                        proposer un nombre important de personnages et maps additionnels ainsi que de renouveler le gameplay même du jeu.
+                        Mais avant de se jeter à corps perdu dans de le monde des serveurs <em>SRB2Kart</em> saturés de <em>mods</em>, il y a quelques
+                        petites choses que vous devriez savoir :
+                    </p>
+                    <ul>
+                        <li>Les <em>mods</em> peuvent être chargés dynamiquement aussi bien manuellement (via le menu “<code>addons</code>”), que
+                            automatiquement (lorsque vous rejoignez un serveur).
+                        </li>
+                        <li>Lorsqu'un <em>mod</em> est chargé, il n'y a en revanche, aucun moyen de le décharger. Le seul moyen de décharger un
+                            <em>mod</em> est purement et simplement de fermer et relancer le jeu (heureusement, le délai de lancement de <em>SRB2Kart</em>
+                            est relativement court).
+                        </li>
+                        <li>Le jeu vous refusera l'entrée d'un serveur si vous avez des <em>mods</em> déjà chargés qui ne figurent pas sur
+                            le serveur en question.
+                        </li>
+                        <li>Lorsque que vous vous connecterez à un serveur, tous les <em>mods</em> de ce serveur seront téléchargés et stockés
+                            sur votre machine (dans le sous-dossier “<code>DOWNLOAD</code>” de votre dossier d'installation <em>SRB2Kart</em>).
+                        </li>
+                        <li>Les <em>mods</em> chargés étant détectés comme « <em>modifiant le gameplay</em> » (ne concernent donc pas les
+                            maps additionnelles et les personnages supplémentaires standards), empêchent d'accéder au mode “<code>Time Attack</code>”.
+                        </li>
+                    </ul>
+                    <p> De ces quelques faits, on peut en déduire certains corollaires et quelques bonnes pratiques à adopter :</p>
+                    <ul>
+                        <li>Lorsque vous quittez un serveur vous ne pourrez pas en rejoindre un autre sans fermer puis relancer le jeu.</li>
+                        <li>Si vous quittez un serveur et lancez directement une partie locale (“<code>multiplayer</code>” → “<code>offline…</code>”)
+                            tous les <em>mods</em> du serveur en question resteront chargés et appliqués (cela peut être embêtant pour certains
+                            nouveaux joueurs voulant s'entrainer au calme sur certains circuits et qui se retrouvent mystérieusement systématiquement
+                            détruit par une “<em>Self Propelled Bomb</em>” 😅).
+                        </li>
+                        <li>Les <em>mods</em> téléchargés d'un serveur étant stockés, la prochaine fois que vous vous connecterez à ce serveur
+                            la phase de téléchargement pourra être passée (pourvu que vous n'ayez pas supprimé ces <em>mods</em> de votre machine,
+                            et que les mods du serveur n'aient pas été modifiés et mise à jour entre temps).
+                        </li>
+                        <li>Plus vous parcourrez les serveurs, plus votre sous-dossier “<code>DOWNLOAD</code>” de votre installation <em>SRB2Kart</em>
+                            sera volumineux.
+                            Si l'espace mémoire sur votre disque vous fait défaut, pensez à vider ce dossier de temps en temps.
+                            ⚠<u>Attention</u> cependant, supprimer vos <em>mods</em> téléchargés peut rendre certains des replays que vous avez
+                            enregistré non-regardables !
+                        </li>
+                    </ul>
+
+                    <div class="figure-container">
+                        <div class="figure">
+                            <input id="img6" class="img-toggle" type="checkbox">
+                            <label for="img6" class="lbl-img-toggle">
+                                <div class="screen">
+                                    <img class="target-img" src="img/install/kart0045.png"/>
+                                </div>
+                            </label>
+                            <span>Hmmm… il vaut mieux relancer le jeu.</span>
+                        </div>
+                        <div class="figure">
+                            <input id="img7" class="img-toggle" type="checkbox">
+                            <label for="img7" class="lbl-img-toggle">
+                                <div class="screen">
+                                    <img class="target-img" src="img/install/kart0047.png"/>
+                                </div>
+                            </label>
+                            <span>Ces <em>mods</em> vont trop loins…</span>
+                        </div>
+                    </div>
+                    
+                    <p>Vous constaterez de vous-même que la plupart des serveurs sont référencés sur le
+                        “<em><a href="https://ms.kartkrew.org/">Master Server</em></a>” qui est la sorte d'annuaire que vous consulterez, depuis le jeu,
+                        lorsque vous chercherez un serveur à rejoindre.
+                        Si un jour vous vient l'idée d'héberger votre propre serveur et de le référencer, sachez qu'il vous faudra vous conformer
+                        à la politique du “<em><a href="https://ms.kartkrew.org/">Master Server</em></a>”.
+                        Cette politique vous interdit strictement de :
+                    </p>
+                    <ul>
+                        <li>modifier un <em>mod</em> qui n'est pas marqué “<em>reusable</em>” sur le
+                            <a href="https://mb.srb2.org/forums/kart-releases-addons-more-discussion.15/">Message Board</a> (cela inclus le fait
+                            d'extraire des personnages ou autres éléments d'un pack pour en faire un <em>mod</em> standalone) sans consentement
+                            explicite de leur auteur d'origine.
+                        </li>
+                        <li>héberger un <em>mod</em> qui n'est pas le vôtre et qui n'est pas référencé sur le
+                            <a href="https://mb.srb2.org/forums/kart-releases-addons-more-discussion.15/">Message Board</a> sans consentement
+                            explicite de leur auteur d'origine.</li>
+                    </ul>
+                    <p>Enfreindre ces règles risque de faire bannir votre serveur du “<em><a href="https://ms.kartkrew.org/">Master Server</em></a>”
+                        et de vous mettre au ban de la communauté.</p>
+                    <br/><br/><br/>
+                    <p>Et voilà ! Avec cela vous devriez être vraiment fin prêt à en découdre !</p>
+                    <br/>
+                    <div class="credit"><span class="author">Dr_Nope</span></div>
+            </div>
+        </main>
+        <aside>
+            <div>
+            </div>
+        </aside>
+        <footer>
+        </footer>
+    </div>
+   
+    <script>
+        var windw = this;
+
+        various_setWindw(windw)
+
+        $el= $('aside div')
+        $el.populateAsToC($('main div'))
+        $el.followWithinParent()
+    </script>
+</body>
+</html>

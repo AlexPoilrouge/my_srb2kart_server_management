@@ -65,46 +65,46 @@ nav.menu{
     min-height: 55vh;
 }
 
-nav.menu a {
-    /* margin-top: 12vh; */
-    text-decoration: none;
-    font-size: min(3.3vh, 3.3vw);
-    padding: min(2vh, 2vw);
+nav.menu ul{
+    list-style:none;
+    padding: 0;
+    margin-top: 20vh;
+    padding-left: 5vw;
+}
+
+nav.menu ul li a{
+    display: block;
+    height: 30px;
+    list-style:none;
+    padding-right: min(2vh,2vw);
+    font-size: 50%;
+
+    border:solid 1px #ccc;
     border-radius: min(5vh,5vw);
-    border-style: solid;
-    border-color: blanchedalmond;
-    border-width: min(0.7vh,0.7vw);
-    background-color: rgba(255, 255, 255, 0.180);
+    z-index:0;
+    overflow:hidden;
+    position:relative;
+    height: min(7vh, 7vw);
+    margin: min(2vh,2vw) 0 min(2vh,2vw) 0;
+    border-width: min(0.4vh,0.4vw);
+
+    font-size: min(2.5vh,2.5vw);
+    text-decoration: none;
 }
 
-nav.menu a:hover{
-    font-size: min(3.3vh,3.3vw);
-    border-style: solid;
-    padding: min(2.2vh,2.2vw);
-}
-
-nav.menu a:visited{
-    background-color: rgba(255, 255, 255, 0.222);
+nav.menu ul li a:visited{
     color: rgb(173, 166, 154);
 }
 
-nav.menu ul{
-    padding: 0;
-    margin-top: 27vh;
-}
-
-nav.menu ul li{
-    list-style: none;
+nav.menu ul li:hover a{
+    font-weight: bold;
+    background-color: rgba(255, 255, 255, 0.247);
 }
 
 nav.menu ul li a img{
     height: 100%;
     vertical-align: -2.3vh;
-}
-
-nav.menu ul li a img{
-    height: min(7vh,7vw);
-    vertical-align: middle;
+    margin-right: min(1.2vw,1.2vw);
 }
 
 aside{
