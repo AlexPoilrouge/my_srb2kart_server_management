@@ -30,7 +30,7 @@ function populate(json_dir_url, $parent, done, pageNum=1){
             var r= 0
             $.each( data, function( id, element ) {
                 if(id && element && element.type && element.url){
-                    var a=$("<a class=\"gallery-element\" id=\""+id+"\" src=\""+element.url+"\" src-type=\""+element.type+"\"></a>").appendTo($parent)
+                    var a=$("<a class=\"gallery-element\" id=\""+id+"\" src=\""+element.url+"\" src-type=\""+element.type+"\"><div></div></a>").appendTo($parent)
                     if(element.description && element.description.length>0){
                         $("<span hidden class=\"gallery-element-description\">"+element.description+"</span>").appendTo($(a))
                     }
