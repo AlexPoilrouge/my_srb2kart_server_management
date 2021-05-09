@@ -176,6 +176,35 @@ case "$CMD" in
     
     if ! "${_TEST}"; then exit 3; fi
 ;;
+"ADD_FILE")
+    if [ $# -lt 2 ]; then
+        echo "Needs file…"
+        exit 42
+    fi
+
+    SRC_FILE="$2"
+    if ! [ -f "${SRC_FILE}"]; then
+        echo "Needs existing file…"
+    fi
+
+    DEST_DIR="${INSTALLED_ADDONS_DIR}"
+    if systemctl is-active "${SERV_SERVICE}" >/dev/null 2>&1; then
+        DEST_DIR="${PENDING_ADDONS_DIR}"
+    fi
+
+    _TEST=false
+    for ext in ${EXTENSIONS[@]}; do
+        if [[ "${SRC_FILE}" =~ ^.*\."${ext}"$ ]]; then export _TEST=true; fi
+    done
+
+    if ${_TEST}; then
+        cp -rvf "${SRC_FILE}" "${DEST_DIR}/$( basename ${SRC_FILE} )"
+        echo "DONE"
+    else
+        echo "ERROR - bad format"
+        exit 23
+    fi
+;;
 "ADD_URL")
     if [ $# -lt 2 ]; then
         echo "Needs url…"
