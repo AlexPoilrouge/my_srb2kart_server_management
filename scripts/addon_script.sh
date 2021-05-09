@@ -183,7 +183,7 @@ case "$CMD" in
     fi
 
     SRC_FILE="$2"
-    if ! [ -f "${SRC_FILE}"]; then
+    if ! [ -f "${SRC_FILE}" ]; then
         echo "Needs existing file…"
     fi
 
