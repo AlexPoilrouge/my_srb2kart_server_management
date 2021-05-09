@@ -16,9 +16,11 @@ function _extractVideoId(src_type, url){
 function process_source(element){
     var source= $(element).attr('src')
     var source_type= $(element).attr('src-type')
+    var div= $(element).children('div')
     if (source) {
         if (source_type==="gif"){
-            var c= $("<canvas></canvas>").appendTo(element)[0]
+            var c= $("<canvas class=\"gif\"></canvas>").appendTo(div)[0]
+            // $("<img src=\"./img/gallery/gif-icon.png\">").appendTo(c)
             isC = !!(c.getContext && c.getContext('2d'))
             var img= new Image()
             img.src= source
@@ -30,7 +32,7 @@ function process_source(element){
             }
         }
         else if(source_type==="video"){
-            var c= $("<canvas></canvas>").appendTo(element)[0]
+            var c= $("<canvas class=\"vid\"></canvas>").appendTo(div)[0]
             isC = !!(c.getContext && c.getContext('2d'))
             var v= document.createElement("video")
             v.setAttribute("src",source)
@@ -44,18 +46,22 @@ function process_source(element){
         else if (source_type==='youtube'){
             var v_id=_extractVideoId(source_type,source)
             if (v_id){
-                $(element).append("<img src=\"https://img.youtube.com/vi/"+v_id+"/0.jpg\"/>")
+                $(div).append("<img src=\"https://img.youtube.com/vi/"+v_id+"/0.jpg\"/>")
             }
         }
         else if (source_type==="streamable.com"){
             var v_id=_extractVideoId(source_type,source)            
             if (v_id){
-                $(element).append("<img src=\"https://cdn-cf-east.streamable.com/image/"+v_id+".jpg\"/>")
+                $(div).append("<img src=\"https://cdn-cf-east.streamable.com/image/"+v_id+".jpg\"/>")
             }
         }
         else{
-            $(element).append("<img src=\""+source+"\"/>")
+            $(div).append("<img src=\""+source+"\"/>")
         }
+        $(
+            "<img class=\"placeholder\" src=\"\./img/gallery/"
+            +((source_type==='gif')?'gif':'vid')+"-icon.png\"/>"
+        ).appendTo(div)
     }
 }
 
