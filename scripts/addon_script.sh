@@ -185,6 +185,7 @@ case "$CMD" in
     SRC_FILE="$2"
     if ! [ -f "${SRC_FILE}" ]; then
         echo "Needs existing file…"
+        exit 43
     fi
 
     DEST_DIR="${INSTALLED_ADDONS_DIR}"
