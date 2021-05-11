@@ -108,35 +108,21 @@ case "$CMD" in
     done
 ;;
 "START_SERV")
-    echo -e "UNKNOWN\n0\n0" > "${_STATE_FILE}"
+    echo -e "{\"modes\": []}" > "${_STATE_FILE}"
     
     sudo systemctl start "${SERV_SERVICE}"
 ;;
 "STOP_SERV")
-    if [ "$2" != "FORCE" ] && [ -f "${_STATE_FILE}" ] && 
-       ( [ "$( sed '2q;d' ${_STATE_FILE} )" -gt 0 ] || [ "$( sed '3q;d' ${_STATE_FILE} )" -gt 0 ] );
-    then
-        echo -n "populated"
-        exit 0
-    fi
-
     sudo systemctl stop "${SERV_SERVICE}"
 
-    echo -e "UNKNOWN\n0\n0" > "${_STATE_FILE}"
+    echo -e "{\"modes\": []}" > "${_STATE_FILE}"
 
     _update
 ;;
 "RESTART_SERV")
-    if [ "$2" != "FORCE" ] && [ -f "${_STATE_FILE}" ] && 
-       ( [ "$( sed '2q;d' ${_STATE_FILE} )" -gt 0 ] || [ "$( sed '3q;d' ${_STATE_FILE} )" -gt 0 ] );
-    then
-        echo -n "populated"
-        exit 0
-    fi
-    
     _update "RESTARTING"
 
-    echo -e "UNKNOWN\n0\n0" > "${_STATE_FILE}"
+    echo -e "{\"modes\": []}" > "${_STATE_FILE}"
 
     sudo systemctl restart "${SERV_SERVICE}"
 ;;

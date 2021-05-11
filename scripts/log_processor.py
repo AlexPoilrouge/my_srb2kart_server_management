@@ -156,15 +156,87 @@ class ParsedData:
 
         return res
 
+class StrashbotLogParser:
+    MODE= {
+        'NONE': 0b0,
+        'SPBATK': 0b1,
+        'ELIM': 0b10,
+        'FRIEND': 0b100,
+        'JUICEBOX': 0b1000
+    }
+
+    def __init__(self, id='strash'):
+        print("[SbLP] init")
+
+        self.id= id
+        self.mode= self.MODE['NONE']
+        self.mode_manual= self.MODE['NONE']
+        self.ft=0
+
+
+    def _setModeFromInline(self, inline):
+        l= inline.split(' ')
+        for w in l:
+            _w= w if not w.startswith('*') else w[1:]
+            if _w=="MAPLOAD":
+                self.mode= self.MODE['NONE']
+                self.mode_manual= self.MODE['NONE']
+                continue
+            if _w in self.MODE.keys():
+                self.mode= self.mode | self.MODE[_w]
+                if w!=_w:
+                    self.mode_manual= self.mode_manual | self.MODE[_w]
+                continue
+            p= re.compile("^FT([0-9]{1,3})")
+            if p.match(_w):
+                self.ft= int(p.search(_w)[1])
+                continue
+
+
+    def processLine(self, line):
+        if (not line.startswith("<<<")):
+            return False
+        ll= len(self.id)
+        if not ((line[3:(3+ll)]==self.id) and (line[(3+ll):(6+ll)]=="<<<")):
+            return False
+        lL= 6+ll
+        if not line.endswith('>'*(lL)):
+            return False
+        
+        within= ' '.join(filter((lambda e: len(e)>0), line[lL:(-lL)].split(' ')))
+        self._setModeFromInline(within)
+
+        return True
+
+    def strData(self):
+        s="{\"modes\": ["
+        _b= False
+        for k in self.MODE.keys():
+            if (self.mode & self.MODE[k]):
+                if _b:
+                    s= s+', '
+                s= s+"\""
+                if (self.mode_manual & self.MODE[k]):
+                    s=s+'*'
+                s= s+k+"\""
+                _b=True
+        if self.ft>0:
+            s= s+('; ' if _b else '')+"\"Fist To "+str(self.ft)+"\""
+        s= s+"]}"
+
+        return s
+
+        
+
 if __name__ == "__main__":
-    data= ParsedData()
+    # data= ParsedData()
+    data= StrashbotLogParser()
     while True:
         line= sys.stdin.readline()
 
         if len(line) == 0:
             break
-        elif data.processLine(line) :
-
+        elif data.processLine(line.replace('\n','')) :
             if len(sys.argv) <= 1 :
                 print(data.strData())
             else:
@@ -173,6 +245,7 @@ if __name__ == "__main__":
                 f = open(filepath, "w")
                 f.write(data.strData())
                 f.close()
+    # data= StrashbotLogParser()
 
 
 
