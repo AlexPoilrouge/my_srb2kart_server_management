@@ -162,7 +162,8 @@ class StrashbotLogParser:
         'SPBATK': 0b1,
         'ELIM': 0b10,
         'FRIEND': 0b100,
-        'JUICEBOX': 0b1000
+        'JUICEBOX': 0b1000,
+        'ACRO': 0b10000
     }
 
     def __init__(self, id='strash'):
