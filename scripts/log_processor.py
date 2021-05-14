@@ -182,6 +182,7 @@ class StrashbotLogParser:
             if _w=="MAPLOAD":
                 self.mode= self.MODE['NONE']
                 self.mode_manual= self.MODE['NONE']
+                self.ft= 0
                 continue
             if _w in self.MODE.keys():
                 self.mode= self.mode | self.MODE[_w]
