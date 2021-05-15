@@ -223,7 +223,7 @@ class StrashbotLogParser:
                 s= s+k+"\""
                 _b=True
         if self.ft>0:
-            s= s+('; ' if _b else '')+"\"Fist To "+str(self.ft)+"\""
+            s= s+('; ' if _b else '')+"\"First To "+str(self.ft)+"\""
         s= s+"]}"
 
         return s
