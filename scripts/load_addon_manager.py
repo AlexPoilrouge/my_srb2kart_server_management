@@ -14,6 +14,7 @@ class AddonLoadManager:
     ADDON_EXTENSION_LIST= ["pk7", "kart", "lua", "wad", "pk3"]
 
     def __init__(self, dirList='.'):
+        self.dirs= []
         self.files= []
 
         for dir in dirList:
@@ -21,6 +22,7 @@ class AddonLoadManager:
                 self.process(dir)
 
     def process(self, dir):
+        count= 0
         for file in os.listdir(dir):
             b= False
             for ext in AddonLoadManager.ADDON_EXTENSION_LIST:
@@ -30,7 +32,12 @@ class AddonLoadManager:
             
             filepath=dir+'/'+file
             if b and os.path.isfile(filepath):
+                count+= 1
                 self.files.append(filepath)
+        
+        if count>0:
+            self.dirs.append(dir)
+
 
     def _check_line(self, line):
         res= re.search(r"^\s*((\'(.*)\')|(\"(.*)\"))\s*\<\s*((\'(.*)\')|(\"(.*)\"))\s*$", line)
@@ -61,24 +68,50 @@ class AddonLoadManager:
                 elif t_checked_line[0]=='A_BEFORE_B':
                     f_a= t_checked_line[1]
                     f_b= t_checked_line[2]
-                    i_f_a= self.files.index(f_a) if (f_a in self.files) else -1
-                    i_f_b= self.files.index(f_b) if (f_b in self.files) else -1
+
+                    r_f_a= f_a
+                    for file in self.files:
+                        if file.endswith('/'+f_a):
+                            r_f_a= file
+                            break
+                    r_f_b= f_b
+                    for file in self.files:
+                        if file.endswith('/'+f_b):
+                            r_f_b= file
+                            break
+
+                    i_f_a= self.files.index(r_f_a) if (r_f_a in self.files) else -1
+                    i_f_b= self.files.index(r_f_b) if (r_f_b in self.files) else -1
 
                     if (i_f_b<0) or (i_f_a<0) or (i_f_a<i_f_b):
                         continue
 
-                    self.files.remove(f_a)
+                    self.files.remove(dir+'/'+f_a)
                     self.files.insert(i_f_b,f_a)
                 elif t_checked_line[0]=='FIRST':
                     f= t_checked_line[1]
 
-                    self.files.remove(f)
-                    self.files.insert(0,f)
+                    r_f= f
+                    for file in self.files:
+                        if file.endswith('/'+f):
+                            r_f= file
+                            break
+
+                    if r_f in self.files:
+                        self.files.remove(r_f)
+                        self.files.insert(0,r_f)
                 elif t_checked_line[0]=='LAST':
                     f= t_checked_line[1]
 
-                    self.files.remove(f)
-                    self.files.insert(len(f),f)
+                    r_f= f
+                    for file in self.files:
+                        if file.endswith('/'+f):
+                            r_f= file
+                            break
+
+                    if r_f in self.files:
+                        self.files.remove(r_f)
+                        self.files.insert(len(self.files),r_f)
 
 
     def generateLoadFile(self, filename="dl_load.cfg"):
