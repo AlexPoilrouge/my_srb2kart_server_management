@@ -8,6 +8,8 @@ PYTHON_LMP_ATTACK_SCRIPT="record_lmp_read.py"
 
 PYTHON_CLIP_MANAGEMENT_SCRIPT="clip_manager.py"
 
+PYTHON_LOAD_ADDON_MANAGER_SCRIPT="load_addon_manager.py"
+
 PYTHON_PATH="/bin/python3"
 
 SERV_SERVICE="srb2kart_serv.service"
@@ -57,12 +59,19 @@ _update(){
             fi
         done
 
-    echo "wait" > "${DL_FILE}"
-    ( ls_restricted "${INSTALLED_ADDONS_DIR}" ) | while read -r L; do
-            chmod 704 "${L}"
-            echo "addfile \"${L}\"" >> "${DL_FILE}"
-            echo "wait" >> "${DL_FILE}"
-        done
+
+    if ! [ -f "${PYTHON_LOAD_ADDON_MANAGER_SCRIPT}" ]; then
+        echo "wait" > "${DL_FILE}"
+        ( ls_restricted "${INSTALLED_ADDONS_DIR}" ) | while read -r L; do
+                chmod 704 "${L}"
+                echo "addfile \"${L}\"" >> "${DL_FILE}"
+                echo "wait" >> "${DL_FILE}"
+            done
+    else
+        ${PYTHON_PATH} "${PYTHON_LOAD_ADDON_MANAGER_SCRIPT}" "${INSTALLED_ADDONS_DIR}"
+    fi
+    
+    
 
 
     echo "wait" > "${BASE_FILE}"
@@ -311,6 +320,56 @@ case "$CMD" in
 
     mv "${2}" "${_CFG_FILE}"
     chmod 704 "${_CFG_FILE}"
+;;
+"GET_ADDON_ORDER_CONFIG")
+    _AOC_FILE="addon_load_order.txt"
+    if [ -f "$_AOC_FILE" ]; then
+        echo -n "$_AOC_FILE"
+    else
+        exit 44
+    fi
+;;
+"ADD_ADDON_ORDER_CONFIG_URL")
+    if [ $# -lt 2 ]; then
+        echo "Needs url…"
+        exit 46
+    fi
+
+    DL_FILE="new_addon_load_order.txt.cfg"
+    if [[ "$2" =~ ^https?\:\/\/(w{0,3}\.)?[a-zA-Z0-9\.\/\@\_\-]*$ ]]; then
+        wget -O "${DL_FILE}" --progress=dot $2 2>&1 | grep --line-buffered "%" | \
+            sed -u -e "s,\.,,g" | awk '{printf("%4s\n", $2)}'
+        echo "DONE - ${DL_FILE}"
+    else
+        echo "ERROR - bad format"
+        exit 47
+    fi
+;;
+"CHANGE_ADDON_ORDER_CONFIG")
+    if [ $# -lt 2 ]; then
+        echo "No new file given for update…"
+        exit 45
+    fi
+
+    _AOC_FILE="addon_load_order.txt"
+    
+    if ! [ -f "${2}" ]; then
+        echo "Given file ($2) doesn't seem to be a valid path…"
+        exit 48
+    fi
+    
+    _DIFF_FILE="startup.cfg.diff"
+
+    if [ -f "${_AOC_FILE}" ]; then
+        diff -u "${_AOC_FILE}" "$2" > "${_DIFF_FILE}"
+
+        echo -n "$( realpath ${_DIFF_FILE} )"
+    else
+        echo -n "updated"
+    fi
+
+    mv "${2}" "${_AOC_FILE}"
+    chmod 704 "${_AOC_FILE}"    
 ;;
 "CFG_BLACKLIST")
     for i in ${CFG_CMD_BLACKLIST[@]}; do
