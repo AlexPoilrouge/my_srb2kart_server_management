@@ -358,7 +358,7 @@ case "$CMD" in
         exit 48
     fi
     
-    _DIFF_FILE="startup.cfg.diff"
+    _DIFF_FILE="addon_load_order.txt.diff"
 
     if [ -f "${_AOC_FILE}" ]; then
         diff -u "${_AOC_FILE}" "$2" > "${_DIFF_FILE}"
