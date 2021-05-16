@@ -335,7 +335,7 @@ case "$CMD" in
         exit 46
     fi
 
-    DL_FILE="new_addon_load_order.txt.cfg"
+    DL_FILE="new_addon_load_order.txt"
     if [[ "$2" =~ ^https?\:\/\/(w{0,3}\.)?[a-zA-Z0-9\.\/\@\_\-]*$ ]]; then
         wget -O "${DL_FILE}" --progress=dot $2 2>&1 | grep --line-buffered "%" | \
             sed -u -e "s,\.,,g" | awk '{printf("%4s\n", $2)}'
