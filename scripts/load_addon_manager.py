@@ -79,9 +79,6 @@ class AddonLoadManager:
                     except:
                         regex_b= None
 
-                    print("f_a: "+str(f_a)+"; regex_a: "+str(regex_a))
-                    print("f_b: "+str(f_b)+"; regex_v: "+str(regex_b))
-
                     r_f_a= f_a
                     for file in self.files:
                         basename=  os.path.basename(file)
@@ -156,6 +153,5 @@ if __name__ == "__main__":
 
     alm= AddonLoadManager(sys.argv[1:])
     alm.ordering()
-    print(str(alm.files))
-    # alm.generateLoadFile()
+    alm.generateLoadFile()
 
