@@ -163,7 +163,8 @@ class StrashbotLogParser:
         'ELIM': 0b10,
         'FRIEND': 0b100,
         'JUICEBOX': 0b1000,
-        'ACRO': 0b10000
+        'ACRO': 0b10000,
+        'HP': 0b100000
     }
 
     def __init__(self, id='strash'):
