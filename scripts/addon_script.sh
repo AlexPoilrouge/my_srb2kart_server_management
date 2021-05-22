@@ -65,7 +65,7 @@ _update(){
         ( ls_restricted "${INSTALLED_ADDONS_DIR}" ) | while read -r L; do
                 chmod 704 "${L}"
                 echo "addfile \"${L}\"" >> "${DL_FILE}"
-                echo "wait" >> "${DL_FILE}"
+                echo "wait 10" >> "${DL_FILE}"
             done
     else
         ${PYTHON_PATH} "${PYTHON_LOAD_ADDON_MANAGER_SCRIPT}" "${INSTALLED_ADDONS_DIR}"
@@ -78,7 +78,7 @@ _update(){
     ( ls_restricted "${BASE_ADDONS_DIR}" ) | while read -r L; do
             chmod 704 "${L}"
             echo "addfile \"${L}\"" >> "${BASE_FILE}"
-            echo "wait" >> "${BASE_FILE}"
+            echo "wait 10" >> "${BASE_FILE}"
         done
 
     sudo systemctl restart strashbot_zip_addons.service
