@@ -35,6 +35,8 @@ PENDING_ADDONS_DIR="${ADDONS_DIR}/tmp"
 INSTALLED_ADDONS_DIR="${ADDONS_DIR}/dl"
 BASE_ADDONS_DIR="${ADDONS_DIR}/Packs"
 
+ADDON_DELETE_SCHEDULE_FILE="${ADDONS_DIR}/delete.txt"
+
 TIME_MAPS_DIR="maps"
 
 CLIP_DATA_DIR="${SCRIPT_DIR}/web/json"
@@ -50,6 +52,16 @@ _update(){
         chmod 704 "${_STATE_FILE}"
     fi
 
+    if [ -f "${ADDON_DELETE_SCHEDULE_FILE}" ]; then
+        while read L; do
+            if [ -f "${PENDING_ADDONS_DIR}/${L}" ]; then
+                rm -f "${PENDING_ADDONS_DIR}/${L}" 2>/dev/null
+            elif [ -f "${INSTALLED_ADDONS_DIR}/${L}" ]; then
+                rm -f "${INSTALLED_ADDONS_DIR}/${L}" 2>/dev/null
+            fi
+        done < "${ADDON_DELETE_SCHEDULE_FILE}"
+        rm -f "${ADDON_DELETE_SCHEDULE_FILE}"
+    fi 
 
     echo "wait" > "${TMP_FILE}"
     ( ls_restricted "${PENDING_ADDONS_DIR}" ) | while read -r L; do
@@ -193,8 +205,14 @@ case "$CMD" in
         if [[ "${SRC_FILE}" =~ ^.*\."${ext}"$ ]]; then export _TEST=true; fi
     done
 
+    _FILENAME="$( basename ${SRC_FILE} )"
+
+    if [ -f "${ADDON_DELETE_SCHEDULE_FILE}" ]; then
+        sed -i "/^${_FILENAME}$/d" "${ADDON_DELETE_SCHEDULE_FILE}"
+    fi
+
     if ${_TEST}; then
-        cp -rvf "${SRC_FILE}" "${DEST_DIR}/$( basename ${SRC_FILE} )"
+        cp -rvf "${SRC_FILE}" "${DEST_DIR}/${_FILENAME}"
         echo "DONE"
     else
         echo "ERROR - bad format"
@@ -217,8 +235,15 @@ case "$CMD" in
         if [[ "$2" =~ ^https?\:\/\/(w{0,3}\.)?[a-zA-Z0-9\.\/\@\_\-]*\."${ext}"$ ]]; then export _TEST=true; fi
     done
 
+    _FILENAME="${2##*/}"
+
+    if [ -f "${ADDON_DELETE_SCHEDULE_FILE}" ]; then
+        sed -i "/^${_FILENAME}$/d" "${ADDON_DELETE_SCHEDULE_FILE}"
+    fi
+
     if ${_TEST}; then
-        wget -O "${DEST_DIR}/${2##*/}" --progress=dot "$2" 2>&1 | grep --line-buffered "%" | \
+        if [ -f "${DEST_DIR}/${_FILENAME}" ]; then rm -f "${DEST_DIR}/${_FILENAME}" 2>/dev/null; fi
+        wget -O "${DEST_DIR}/${_FILENAME}" --progress=dot "$2" 2>&1 | grep --line-buffered "%" | \
             sed -u -e "s,\.,,g" | awk '{printf("%4s\n", $2)}'
         echo "DONE"
     else
@@ -228,22 +253,45 @@ case "$CMD" in
 ;;
 "REMOVE")
     if [ $# -ge 2 ]; then
-        _DIR="$( realpath "$( dirname "$2" )" )"
-        if [ "${_DIR}" = "${INSTALLED_ADDONS_DIR}" ] || [ "${_DIR}" = "${PENDING_ADDONS_DIR}" ]; then
-            if _RES="$( rm -v $2 2>/dev/null )"; then
+        if [ -f "${PENDING_ADDONS_DIR}/$2" ]; then
+            if _RES="$( rm -v "${PENDING_ADDONS_DIR}/$2" 2>/dev/null )"; then
                 echo "$_RES"
             else
                 echo "Unable to delete such file: \`$2\`…"
                 exit 2
             fi
-        elif _RES="$( ( rm -v "${PENDING_ADDONS_DIR}/$2" || rm -v "${INSTALLED_ADDONS_DIR}/$2" ) 2>/dev/null )"; then
-            echo "$_RES"
-        elif _RES="$( [ "$( realpath "$( dirname "${ADDONS_DIR}/$2" )" )" != "${BASE_ADDONS_DIR}" ] && ( rm -v "${ADDONS_DIR}/$2" 2>/dev/null ) )"; then
-            echo "$_RES"
-        else
-            echo "Unable to delete such file: \`$2\`…"
-            exit 2
+        elif [ -f "${INSTALLED_ADDONS_DIR}/$2" ]; then
+            if systemctl is-active "${SERV_SERVICE}" >/dev/null 2>&1; then
+                if ! grep -Fxq "$2" "${ADDON_DELETE_SCHEDULE_FILE}"; then
+                    echo "$2" >> "${ADDON_DELETE_SCHEDULE_FILE}"
+                fi
+                echo "SCHEDULED_FOR_REMOVAL"
+            else
+                if _RES="$( rm -v "${INSTALLED_ADDONS_DIR}/$2" 2>/dev/null )"; then
+                    echo "$_RES"
+                else
+                    echo "Unable to delete such file: \`$2\`…"
+                    exit 2
+                fi
+            fi
         fi
+    # if [ $# -ge 2 ]; then
+        # _DIR="$( realpath "$( dirname "$2" )" )"
+        # if [ "${_DIR}" = "${INSTALLED_ADDONS_DIR}" ] || [ "${_DIR}" = "${PENDING_ADDONS_DIR}" ]; then
+        #     if _RES="$( rm -v $2 2>/dev/null )"; then
+        #         echo "$_RES"
+        #     else
+        #         echo "Unable to delete such file: \`$2\`…"
+        #         exit 2
+        #     fi
+        # elif _RES="$( ( rm -v "${PENDING_ADDONS_DIR}/$2" || rm -v "${INSTALLED_ADDONS_DIR}/$2" ) 2>/dev/null )"; then
+        #     echo "$_RES"
+        # elif _RES="$( [ "$( realpath "$( dirname "${ADDONS_DIR}/$2" )" )" != "${BASE_ADDONS_DIR}" ] && ( rm -v "${ADDONS_DIR}/$2" 2>/dev/null ) )"; then
+        #     echo "$_RES"
+        # else
+        #     echo "Unable to delete such file: \`$2\`…"
+        #     exit 2
+        # fi
     else
         echo "No given file to delete…"
         exit 2
