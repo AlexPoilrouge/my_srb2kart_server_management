@@ -172,7 +172,13 @@ case "$CMD" in
     echo "${_TMP}"
     echo "**[Downloaded]**"
     _S=""
-    _TMP="$( ( ls_restricted ${INSTALLED_ADDONS_DIR} "$2" ) | while read -r L; do echo -n "${_S}$( basename "${L}" )"; _S=" ";_TEST=true; done )"
+    _TMP="$( ( ls_restricted ${INSTALLED_ADDONS_DIR} "$2" ) | while read -r L; do
+                if [ -f "${ADDON_DELETE_SCHEDULE_FILE}" ] && ( grep -Fxq "$( basename "${L}" )" "${ADDON_DELETE_SCHEDULE_FILE}" ); then
+                    echo -n "${_S}~~$( basename "${L}" )~~"; _S=" ";_TEST=true;
+                else
+                    echo -n "${_S}$( basename "${L}" )"; _S=" ";_TEST=true;
+                fi
+            done )"
     if [ "${_TMP}" != "" ]; then _TEST=true; fi
     echo "${_TMP}"
     echo "**[Base]**"
