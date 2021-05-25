@@ -52,7 +52,7 @@ _update(){
         chmod 704 "${_STATE_FILE}"
     fi
 
-    if [ -f "${ADDON_DELETE_SCHEDULE_FILE}" ]; then
+    if [ -f "${ADDON_DELETE_SCHEDULE_FILE}" ] && ( ( ! systemctl is-active "${SERV_SERVICE}" >/dev/null 2>&1 ) || [ "$1" == "RESTARTING" ] ); then
         while read L; do
             if [ -f "${PENDING_ADDONS_DIR}/${L}" ]; then
                 rm -f "${PENDING_ADDONS_DIR}/${L}" 2>/dev/null
