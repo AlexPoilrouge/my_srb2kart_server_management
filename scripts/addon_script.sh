@@ -284,23 +284,6 @@ case "$CMD" in
             echo "Unable to delete such file: \`$2\`…"
             exit 2
         fi
-    # if [ $# -ge 2 ]; then
-        # _DIR="$( realpath "$( dirname "$2" )" )"
-        # if [ "${_DIR}" = "${INSTALLED_ADDONS_DIR}" ] || [ "${_DIR}" = "${PENDING_ADDONS_DIR}" ]; then
-        #     if _RES="$( rm -v $2 2>/dev/null )"; then
-        #         echo "$_RES"
-        #     else
-        #         echo "Unable to delete such file: \`$2\`…"
-        #         exit 2
-        #     fi
-        # elif _RES="$( ( rm -v "${PENDING_ADDONS_DIR}/$2" || rm -v "${INSTALLED_ADDONS_DIR}/$2" ) 2>/dev/null )"; then
-        #     echo "$_RES"
-        # elif _RES="$( [ "$( realpath "$( dirname "${ADDONS_DIR}/$2" )" )" != "${BASE_ADDONS_DIR}" ] && ( rm -v "${ADDONS_DIR}/$2" 2>/dev/null ) )"; then
-        #     echo "$_RES"
-        # else
-        #     echo "Unable to delete such file: \`$2\`…"
-        #     exit 2
-        # fi
     else
         echo "No given file to delete…"
         exit 2
