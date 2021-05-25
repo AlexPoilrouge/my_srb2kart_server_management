@@ -173,7 +173,7 @@ case "$CMD" in
     echo "**[Downloaded]**"
     _S=""
     _TMP="$( ( ls_restricted ${INSTALLED_ADDONS_DIR} "$2" ) | while read -r L; do
-                if [ -f "${ADDON_DELETE_SCHEDULE_FILE}" ] && ( grep -Fxq "$( basename "${L}" )" "${ADDON_DELETE_SCHEDULE_FILE}" ); then
+                if [ -f "${ADDON_DELETE_SCHEDULE_FILE}" ] && ( grep -Fxq "$( basename "${L}" )" "${ADDON_DELETE_SCHEDULE_FILE}" 2>/dev/null); then
                     echo -n "${_S}~~$( basename "${L}" )~~"; _S=" ";_TEST=true;
                 else
                     echo -n "${_S}$( basename "${L}" )"; _S=" ";_TEST=true;
@@ -268,7 +268,7 @@ case "$CMD" in
             fi
         elif [ -f "${INSTALLED_ADDONS_DIR}/$2" ]; then
             if systemctl is-active "${SERV_SERVICE}" >/dev/null 2>&1; then
-                if ! grep -Fxq "$2" "${ADDON_DELETE_SCHEDULE_FILE}"; then
+                if ! ( grep -Fxq "$2" "${ADDON_DELETE_SCHEDULE_FILE}" 2>/dev/null ); then
                     echo "$2" >> "${ADDON_DELETE_SCHEDULE_FILE}"
                 fi
                 echo "SCHEDULED_FOR_REMOVAL"
@@ -280,6 +280,9 @@ case "$CMD" in
                     exit 2
                 fi
             fi
+        else
+            echo "Unable to delete such file: \`$2\`…"
+            exit 2
         fi
     # if [ $# -ge 2 ]; then
         # _DIR="$( realpath "$( dirname "$2" )" )"
