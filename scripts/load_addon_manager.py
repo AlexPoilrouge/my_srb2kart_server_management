@@ -10,7 +10,7 @@ import pathlib
 import sys
 
 
-IN_BETWEEN_ADDON_LOAD_WAIT_TIME=2
+IN_BETWEEN_ADDON_LOAD_WAIT_TIME=3
 
 class AddonLoadManager:
     ADDON_EXTENSION_LIST= ["pk7", "kart", "lua", "wad", "pk3"]

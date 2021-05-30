@@ -24,7 +24,7 @@ TMP_FILE="tmp_load.cfg"
 DL_FILE="dl_load.cfg"
 BASE_FILE="base_load.cfg"
 
-IN_BETWEEN_ADDON_LOAD_WAIT_TIME="2"
+IN_BETWEEN_ADDON_LOAD_WAIT_TIME="3"
 
 LUAFILES_DIR="luafiles"
 MEMBERS_FILE="${LUAFILES_DIR}/members.txt"
