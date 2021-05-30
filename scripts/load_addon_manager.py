@@ -144,7 +144,7 @@ class AddonLoadManager:
 
         with open(filepath, 'w') as file:
             for addon in self.files:
-                file.write("wait "+IN_BETWEEN_ADDON_LOAD_WAIT_TIME+"\naddfile \""+str(addon)+"\"\n")
+                file.write("wait "+str(IN_BETWEEN_ADDON_LOAD_WAIT_TIME)+"\naddfile \""+str(addon)+"\"\n")
             file.write("wait\n")
 
 
