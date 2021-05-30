@@ -24,6 +24,8 @@ TMP_FILE="tmp_load.cfg"
 DL_FILE="dl_load.cfg"
 BASE_FILE="base_load.cfg"
 
+IN_BETWEEN_ADDON_LOAD_WAIT_TIME="2"
+
 LUAFILES_DIR="luafiles"
 MEMBERS_FILE="${LUAFILES_DIR}/members.txt"
 WELCOME_FILE="${LUAFILES_DIR}/welcome.txt"
@@ -77,7 +79,7 @@ _update(){
         ( ls_restricted "${INSTALLED_ADDONS_DIR}" ) | while read -r L; do
                 chmod 704 "${L}"
                 echo "addfile \"${L}\"" >> "${DL_FILE}"
-                echo "wait 10" >> "${DL_FILE}"
+                echo "wait ${IN_BETWEEN_ADDON_LOAD_WAIT_TIME}" >> "${DL_FILE}"
             done
     else
         ${PYTHON_PATH} "${PYTHON_LOAD_ADDON_MANAGER_SCRIPT}" "${INSTALLED_ADDONS_DIR}"
@@ -90,7 +92,7 @@ _update(){
     ( ls_restricted "${BASE_ADDONS_DIR}" ) | while read -r L; do
             chmod 704 "${L}"
             echo "addfile \"${L}\"" >> "${BASE_FILE}"
-            echo "wait 10" >> "${BASE_FILE}"
+            echo "wait ${IN_BETWEEN_ADDON_LOAD_WAIT_TIME}" >> "${BASE_FILE}"
         done
 
     sudo systemctl restart strashbot_zip_addons.service
