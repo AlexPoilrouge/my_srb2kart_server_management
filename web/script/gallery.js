@@ -117,7 +117,11 @@ function update_displayer(){
 
         var ts= cur_selected.children("time.gallery-element-timestamp")
         if (ts && ts.text()){
-            contentInfo.append(ts.text())
+            contentInfo.append(ts.text()+"<br/>")
+        }
+
+        if (source){
+            contentInfo.append("Direct link: <a href="+source+">[ 🔗 ]</a><br/>")
         }
 
 
