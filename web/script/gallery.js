@@ -121,7 +121,7 @@ function update_displayer(){
         }
 
         if (source){
-            contentInfo.append("Direct link: <a href="+source+">[ 🔗 ]</a><br/>")
+            contentInfo.append("Direct link: <a href=\""+source+"\" target=\"_blank\">[ 🔗 ]</a><br/>")
         }
 
 
