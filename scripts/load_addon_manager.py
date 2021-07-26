@@ -10,6 +10,8 @@ import pathlib
 import sys
 
 
+IN_BETWEEN_ADDON_LOAD_WAIT_TIME=3
+
 class AddonLoadManager:
     ADDON_EXTENSION_LIST= ["pk7", "kart", "lua", "wad", "pk3"]
 
@@ -142,7 +144,7 @@ class AddonLoadManager:
 
         with open(filepath, 'w') as file:
             for addon in self.files:
-                file.write("wait 10\naddfile \""+str(addon)+"\"\n")
+                file.write("wait "+str(IN_BETWEEN_ADDON_LOAD_WAIT_TIME)+"\naddfile \""+str(addon)+"\"\n")
             file.write("wait\n")
 
 
