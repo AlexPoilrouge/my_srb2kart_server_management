@@ -164,7 +164,8 @@ class StrashbotLogParser:
         'FRIEND': 0b100,
         'JUICEBOX': 0b1000,
         'ACRO': 0b10000,
-        'HP': 0b100000
+        'HP': 0b100000,
+        'CRUEL': 0b1000000
     }
 
     def __init__(self, id='strash'):
