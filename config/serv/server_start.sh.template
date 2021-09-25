@@ -19,8 +19,10 @@ touch "${LOG_FILE}"
 chmod 704 "${LOG_FILE}"
 
 STATE_FILE="${STRASHBOT_USER_HOME}/${SRB2KART_DIR}/state.txt"
-touch "${STATE_FILE}"
-chmod 704 "${STATE_FILE}"
+MAPS_FILE="${STRASHBOT_USER_HOME}/${SRB2KART_DIR}/maps.txt"
+SKINS_FILE="${STRASHBOT_USER_HOME}/${SRB2KART_DIR}/skins.txt"
+touch "${STATE_FILE}" "${MAPS_FILE}" "${SKINS_FILE}" 
+chmod 704 "${STATE_FILE}" "${MAPS_FILE}" "${SKINS_FILE}"
 
 trap 'kill $(jobs -p)' EXIT
 ( tail -f "${LOG_FILE}" | "${STRASHBOT_USER_HOME}/${SRB2KART_DIR}/log_processor.py" "${STATE_FILE}" ) &

@@ -7,7 +7,6 @@ import os
 class ParsedData:
 
     def __init__(self):
-        print("init")
 
         self.spectators= set()
         self.players= set()
@@ -168,7 +167,7 @@ class StrashbotLogParser:
         'CRUEL': 0b1000000
     }
 
-    def __init__(self, id='strash'):
+    def __init__(self, dataFile=None, mapFile=None, skinFile=None, id='strash'):
         print("[SbLP] init")
 
         self.id= id
@@ -176,25 +175,159 @@ class StrashbotLogParser:
         self.mode_manual= self.MODE['NONE']
         self.ft=0
 
+        self.dataFile= dataFile
+        self.maps= {}
+        self.mapDataFile= mapFile
+        self.skins= {}
+        self.skinDataFile= skinFile
+
 
     def _setModeFromInline(self, inline):
-        l= inline.split(' ')
-        for w in l:
-            _w= w if not w.startswith('*') else w[1:]
-            if _w=="MAPLOAD":
-                self.mode= self.MODE['NONE']
-                self.mode_manual= self.MODE['NONE']
-                self.ft= 0
-                continue
-            if _w in self.MODE.keys():
-                self.mode= self.mode | self.MODE[_w]
-                if w!=_w:
-                    self.mode_manual= self.mode_manual | self.MODE[_w]
-                continue
-            p= re.compile("^FT([0-9]{1,3})")
-            if p.match(_w):
-                self.ft= int(p.search(_w)[1])
-                continue
+        wst= 0
+
+        p= re.compile("^MAP([A-Z]|[0-9]){2}:{4}")
+        if p.match(inline):
+            self._processMapData(inline)
+        elif inline.startswith("SKIN::::") :
+            self._processSkinData(inline)
+        else:
+            l= inline.split(' ')
+            for w in l:
+                _w= w if not w.startswith('*') else w[1:]
+
+                p= re.compile("^MAP([A-Z]|[0-9]){2}:{4}")
+                if p.match(_w):
+                    self._processMapData(_w)
+                    continue
+                if _w.startswith("SKIN::::") :
+                    self._processSkinData(_w)
+                    continue
+                if _w=="MAP_LIST_DONE" :
+                    wst= wst | 2
+                    continue
+                if _w=="SKIN_LIST_DONE":
+                    wst= wst | 4
+                    continue
+
+                if _w=="MAPLOAD":
+                    self.mode= self.MODE['NONE']
+                    self.mode_manual= self.MODE['NONE']
+                    self.ft= 0
+                    wst= wst | 1
+                    continue
+                if _w in self.MODE.keys():
+                    self.mode= self.mode | self.MODE[_w]
+                    if w!=_w:
+                        self.mode_manual= self.mode_manual | self.MODE[_w]
+                    wst= wst | 1
+                    continue
+                p= re.compile("^FT([0-9]{1,3})")
+                if p.match(_w):
+                    self.ft= int(p.search(_w)[1])
+                    wst= wst | 1
+                    continue
+        
+        if wst & 1 :
+            self._writeData()
+        if wst & 2 :
+            self._writeMapData()
+        if wst & 4 :
+            self._writeSkinData()
+
+
+    def _processMapData(self, textData):
+        sep="::::"
+        mapData= textData.split(sep)
+        if len(mapData)>=7 and len(mapData[0])==5 :
+            mid= mapData[0][-2:]
+            d= [mapData[1],mapData[2],mapData[3],None,None,None]
+            
+            for i in range(3,6):
+                s_n= None
+                try:
+                    s_n= int(mapData[i+1])
+                except ValueError:
+                    print("Error parsing data for map '"+mid+"' (wrong value type, expected number…)")
+                d[i]= s_n
+            self.maps[mid]= d
+
+
+    def _processSkinData(self, textData):
+        sep="::::"
+        skinData= textData.split(sep)
+        if len(skinData)>= 5 and skinData[0]=="SKIN" and len(skinData[2])>0 :
+            d= [skinData[1],None,None]
+            
+            for i in range(1,3):
+                s_n= None
+                try:
+                    s_n= int(skinData[i+2])
+                except ValueError:
+                    print("Error parsing data for map '"+mid+"' (wrong value type, expected number…)")
+                d[i]= s_n
+
+            self.skins[skinData[2]]= d
+
+    def _writeMapData(self):
+        s= "{ \"maps\": {\n"
+
+        for M_Id in self.maps :
+            s= s+"\t"+str(M_Id)+"{\n"
+
+            m= self.maps[M_Id]
+            
+            s= s+"\t\t\"title\":\t\""+m[0]+"\",\n"
+            s= s+"\t\t\"zone\":\t\""+m[1]+"\",\n"
+            s= s+"\t\t\"subtitle\":\t\""+m[2]+"\",\n"
+            t="Discarded"
+            if m[3]!=None :
+                t= "Race" if m[3]==8 else ("Battle" if m[3]==16 else t) 
+            s= s+"\t\t\"type\":\t\""+t+"\",\n"
+            s= s+"\t\t\"sections\":\t"+str(m[4]!=None and bool(m[4] & 32))+",\n"
+            s= s+"\t\t\"hell\":\t"+str(m[5]!=None and (m[5]%2>=1))+",\n"
+
+            s= s+"\t}\n"
+
+        s= s+"} }"
+
+        if self.mapDataFile!=None and len(self.mapDataFile)>0:
+            mapfilename= os.path.basename(self.mapDataFile)
+            mapfilepath= os.path.abspath(os.path.dirname(sys.argv[0]))+'/'+mapfilename
+            mapf = open(mapfilepath, "w")
+            mapf.write(s)
+            mapf.close()
+        else :
+            print(s)
+
+
+    def _writeSkinData(self):
+        s= "{ \"skins\": {\n"
+
+        for S_Name in self.skins :
+            s= s+"\t"+str(S_Name)+"{\n"
+
+            sk= self.skins[S_Name]
+
+            s=s+"\t\t\"realname\":\t\""+sk[0]+",\n"
+
+            if sk[1]!=None:
+                s=s+"\t\t\"speed\":\t\""+str(sk[1])+",\n"
+
+            if sk[2]!=None:
+                s=s+"\t\t\"weight\":\t\""+str(sk[2])+",\n"
+
+            s= s+"\t}\n"
+
+        s= s+"} }"
+
+        if self.skinDataFile!=None and len(self.skinDataFile)>0:
+            skinfilename= os.path.basename(self.skinDataFile)
+            skinfilepath= os.path.abspath(os.path.dirname(sys.argv[0]))+'/'+skinfilename
+            skinf = open(skinfilepath, "w")
+            skinf.write(s)
+            skinf.close()
+        else :
+            print(s)
 
 
     def processLine(self, line):
@@ -212,7 +345,7 @@ class StrashbotLogParser:
 
         return True
 
-    def strData(self):
+    def _writeData(self):
         s="{\"modes\": ["
         _b= False
         for k in self.MODE.keys():
@@ -228,28 +361,31 @@ class StrashbotLogParser:
             s= s+('; ' if _b else '')+"\"First To "+str(self.ft)+"\""
         s= s+"]}"
 
-        return s
+        if self.dataFile!=None and len(self.dataFile)>0:
+                filename= os.path.basename(self.dataFile)
+                filepath= os.path.abspath(os.path.dirname(sys.argv[0]))+'/'+filename
+                f = open(filepath, "w")
+                f.write(s)
+                f.close()
+        else :
+            print(s)
 
         
 
 if __name__ == "__main__":
-    # data= ParsedData()
-    data= StrashbotLogParser()
+    a1= sys.argv[1] if len(sys.argv)>1 else None
+    a2= sys.argv[2] if len(sys.argv)>2 else None
+    a3= sys.argv[3] if len(sys.argv)>3 else None
+
+
+    data= StrashbotLogParser(a1, a2, a3)
     while True:
         line= sys.stdin.readline()
 
         if len(line) == 0:
             break
-        elif data.processLine(line.replace('\n','')) :
-            if len(sys.argv) <= 1 :
-                print(data.strData())
-            else:
-                filename= os.path.basename(sys.argv[1])
-                filepath= os.path.abspath(os.path.dirname(sys.argv[0]))+'/'+filename
-                f = open(filepath, "w")
-                f.write(data.strData())
-                f.close()
-    # data= StrashbotLogParser()
+        else:
+            data.processLine(line.replace('\n',''))
 
 
 
