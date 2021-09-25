@@ -31,6 +31,8 @@ MEMBERS_FILE="${LUAFILES_DIR}/members.txt"
 WELCOME_FILE="${LUAFILES_DIR}/welcome.txt"
 
 _STATE_FILE="state.txt"
+_MAPS_FILE="maps.txt"
+_SKINS_FILE="skins.txt"
 
 ADDONS_DIR="addons"
 PENDING_ADDONS_DIR="${ADDONS_DIR}/tmp"
@@ -1006,6 +1008,20 @@ and rename the file '${_TMP}-guest.lmp'."        > README.txt
         echo "UNKOWN_ERROR - ${CLIP_TAB[1]}"
         exit 0
         #exit 38
+    fi
+;;
+"INFO_MAPS")
+    if [ -f "${_MAPS_FILE}" ]; then
+        cat "${_MAPS_FILE}"
+    else
+        exit 49
+    fi
+;;
+"INFO_SKINS")
+    if [ -f "${_SKINS_FILE}" ]; then
+        cat "${_SKINS_FILE}"
+    else
+        exit 50
     fi
 ;;
 "UPDATE")
