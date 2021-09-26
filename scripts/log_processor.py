@@ -269,10 +269,11 @@ class StrashbotLogParser:
             self.skins[skinData[2]]= d
 
     def _writeMapData(self):
-        s= "{ \"maps\": {\n"
+        s= "{ \"maps\": {"
 
+        i= 0
         for M_Id in self.maps :
-            s= s+"\t"+str(M_Id)+"{\n"
+            s= s+(',' if i>0 else '')+"\n\t\""+str(M_Id)+"\": {\n"
 
             m= self.maps[M_Id]
             
@@ -284,11 +285,13 @@ class StrashbotLogParser:
                 t= "Race" if m[3]==8 else ("Battle" if m[3]==16 else t) 
             s= s+"\t\t\"type\":\t\""+t+"\",\n"
             s= s+"\t\t\"sections\":\t"+str(m[4]!=None and bool(m[4] & 32))+",\n"
-            s= s+"\t\t\"hell\":\t"+str(m[5]!=None and (m[5]%2>=1))+",\n"
+            s= s+"\t\t\"hell\":\t"+str(m[5]!=None and (m[5]%2>=1))+"\n"
 
-            s= s+"\t}\n"
+            s= s+"\t}"
 
-        s= s+"} }"
+            i= i+1
+
+        s= s+"\n} }"
 
         if self.mapDataFile!=None and len(self.mapDataFile)>0:
             mapfilename= os.path.basename(self.mapDataFile)
@@ -301,24 +304,27 @@ class StrashbotLogParser:
 
 
     def _writeSkinData(self):
-        s= "{ \"skins\": {\n"
+        s= "{ \"skins\": {"
 
+        i= 0
         for S_Name in self.skins :
-            s= s+"\t"+str(S_Name)+"{\n"
+            s= s+(',' if i>0 else '')+"\n\t\""+str(S_Name)+"\": {\n"
 
             sk= self.skins[S_Name]
 
-            s=s+"\t\t\"realname\":\t\""+sk[0]+",\n"
+            s=s+"\t\t\"realname\":\t\""+sk[0]+"\",\n"
 
             if sk[1]!=None:
-                s=s+"\t\t\"speed\":\t\""+str(sk[1])+",\n"
+                s=s+"\t\t\"speed\":\t\""+str(sk[1])+"\",\n"
 
             if sk[2]!=None:
-                s=s+"\t\t\"weight\":\t\""+str(sk[2])+",\n"
+                s=s+"\t\t\"weight\":\t\""+str(sk[2])+"\"\n"
 
-            s= s+"\t}\n"
+            s= s+"\t}"
 
-        s= s+"} }"
+            i= i+1
+
+        s= s+"\n} }"
 
         if self.skinDataFile!=None and len(self.skinDataFile)>0:
             skinfilename= os.path.basename(self.skinDataFile)
