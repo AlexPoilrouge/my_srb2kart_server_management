@@ -271,6 +271,8 @@ class StrashbotLogParser:
     def _writeMapData(self):
         s= "{ \"maps\": {"
 
+        json_bool_str= lambda b: 'true' if b else 'false'
+
         i= 0
         for M_Id in self.maps :
             s= s+(',' if i>0 else '')+"\n\t\""+str(M_Id)+"\": {\n"
@@ -284,8 +286,8 @@ class StrashbotLogParser:
             if m[3]!=None :
                 t= "Race" if m[3]==8 else ("Battle" if m[3]==16 else t) 
             s= s+"\t\t\"type\":\t\""+t+"\",\n"
-            s= s+"\t\t\"sections\":\t"+str(m[4]!=None and bool(m[4] & 32))+",\n"
-            s= s+"\t\t\"hell\":\t"+str(m[5]!=None and (m[5]%2>=1))+"\n"
+            s= s+"\t\t\"sections\":\t"+json_bool_str(m[4]!=None and bool(m[4] & 32))+",\n"
+            s= s+"\t\t\"hell\":\t"+json_bool_str(m[5]!=None and (m[5]%2>=1))+"\n"
 
             s= s+"\t}"
 
