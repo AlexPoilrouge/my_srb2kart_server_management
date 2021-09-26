@@ -284,7 +284,7 @@ class StrashbotLogParser:
             s= s+"\t\t\"subtitle\":\t\""+m[2]+"\",\n"
             t="Discarded"
             if m[3]!=None :
-                t= "Race" if m[3]==8 else ("Battle" if m[3]==16 else t) 
+                t= "Race" if (m[3]&8) else ("Battle" if (m[3]&16) else t) 
             s= s+"\t\t\"type\":\t\""+t+"\",\n"
             s= s+"\t\t\"sections\":\t"+json_bool_str(m[4]!=None and bool(m[4] & 32))+",\n"
             s= s+"\t\t\"hell\":\t"+json_bool_str(m[5]!=None and (m[5]%2>=1))+"\n"
