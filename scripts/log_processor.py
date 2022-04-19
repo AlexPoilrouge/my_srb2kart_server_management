@@ -179,6 +179,7 @@ class StrashbotLogParser:
         self.maps= {}
         self.mapDataFile= mapFile
         self.skins= {}
+        self.skin_number_alert= None
         self.skinDataFile= skinFile
 
 
@@ -207,6 +208,10 @@ class StrashbotLogParser:
                     continue
                 if _w=="SKIN_LIST_DONE":
                     wst= wst | 4
+                    continue
+
+                if _w.startswith("SKIN_ALERT_EXCESS::::"):
+                    self._processSkinExcess(_w)
                     continue
 
                 if _w=="MAPLOAD":
@@ -263,10 +268,24 @@ class StrashbotLogParser:
                 try:
                     s_n= int(skinData[i+2])
                 except ValueError:
-                    print("Error parsing data for map '"+mid+"' (wrong value type, expected number…)")
+                    print("Error parsing data for skin '"+skinData[2]+"' (wrong value type, expected number…)")
                 d[i]= s_n
 
             self.skins[skinData[2]]= d
+
+
+    def _processSkinExcess(self, textData):
+        sep="::::"
+        excessData= textData.split(sep)
+        if len(excessData)>=2 and excessData[0]=="SKIN_ALERT_EXCESS" and len(excessData[1])>0 :
+            n= None
+            try:
+                n= int(excessData[1])
+            except ValueError:
+                print("Error parsing data for skin_alert (wrong value type, expected number…)")
+            
+            self.skin_number_alert= n
+
 
     def _writeMapData(self):
         s= "{ \"maps\": {"
@@ -326,7 +345,11 @@ class StrashbotLogParser:
 
             i= i+1
 
-        s= s+"\n} }"
+        s= s+"\n}"
+
+        if self.skin_number_alert!=None and self.skin_number_alert>127 :
+            s= s+",\n  \"alert\":\t\""+str(self.skin_number_alert)+"\""
+        s= s+" }"
 
         if self.skinDataFile!=None and len(self.skinDataFile)>0:
             skinfilename= os.path.basename(self.skinDataFile)
