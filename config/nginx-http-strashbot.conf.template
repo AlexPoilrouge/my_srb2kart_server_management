@@ -6,4 +6,6 @@ server{
     location / {
         root ${STRASHBOT_USER_HOME}/${SRB2KART_DIR}/web;
     }
+
+    include strashbot_web_http_server/*.conf;
 }

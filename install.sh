@@ -152,6 +152,12 @@ install -v ./config/serv/{my_server_config.cfg,kartserv.cfg,server_start.sh} "${
 mkdir -p "${ROOT_DIR}/etc/security/limits.d"
 install -v ./config/10-strashbot-user-nice-limite.conf "${ROOT_DIR}/etc/security/limits.d" -m 644
 
+if check_val "${SRB2KART_LUAFILES_FOLDER}"; then
+    mkdir -p "${ROOT_DIR}/${SRB2KART_LUAFILES_FOLDER}"
+    chown "${STRASHBOT_USER}:${STRASHBOT_USER}" "${ROOT_DIR}/${SRB2KART_LUAFILES_FOLDER}"
+    ln -sf "${SRB2KART_LUAFILES_FOLDER}" "${STRASHBOT_USER_HOME}/.srb2kart/luafiles"
+fi
+
 #preventing override
 if ! [ -f "${SRB2KART_F_DIR}/startup.cfg" ]; then
     install -v ./config/serv/startup.cfg "${SRB2KART_F_DIR}" -m 704
@@ -218,6 +224,8 @@ if "${WEB_INSTALL}"; then
             echo "[systemd] restarting nginx…"
             systemctl restart nginx.service
         fi
+
+        mkdir -p "${ROOT_DIR}/${NGINX_DIR}/strashbot_web_http_server"
     fi
 fi
 
