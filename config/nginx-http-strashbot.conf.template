@@ -8,4 +8,8 @@ server{
     }
 
     include strashbot_web_http_server/*.conf;
+
+    include certbot/in-serverblock-certbot-config.conf;
 }
+
+include certbot/own-serverblock-strashbotfr-https-redirect.conf;
