@@ -202,3 +202,8 @@ div.figure{
     width: 210px;
     vertical-align: top;
 }
+
+p.warning{
+    color: #9F6000;
+  background-color: #FEEFB3;
+}
