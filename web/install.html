@@ -207,30 +207,27 @@
                     </div>
                 </div>
 
-                <h2 id="moe-mansion">Moe's Mansion</h2>
+                <h2 id="moe-mansion">Galaxy</h2>
                     <p class="warning"> ⚠ <u>Important:</u> La dernière release officelle (non modifiée), la <a href="https://github.com/STJr/Kart-Public/releases/tag/v1.6">v1.6</a>, a intégré l'interpollation de FPS.
-                        L'<em>exe mod Moe's Mansion</em> n'est donc plus nécessaire pour bénéficier de l'unlock de FPS!
+                        L'<em>exe mod Moe's Mansion</em> ou <em>Galaxy</em> n'est donc plus nécessaire pour bénéficier de l'unlock de FPS!
                     </p>
-                    <p class="warning"> ⚠ <u>Important:</u> Depuis la dernière release officelle, la <a href="https://github.com/STJr/Kart-Public/releases/tag/v1.6">v1.6</a>, Moe's Mansion n'est plus considéré « à jour »,
-                        il n'est, pour l'instant plus possible de l'utiliser pour les parties en ligne via le <em>Master Server</em>.
+                    <p class="warning"> <u><b>Note:</b></u> Depuis la dernière release officelle, la <a href="https://github.com/STJr/Kart-Public/releases/tag/v1.6">v1.6</a>, Moe's Mansion n'est plus considéré « à jour »,
+                        A l'heure ou ce guide est mis à jour, c'est la release <em>Galaxy</em> de Galactice qui a pris sa place.
                     </p>
-                    <p><em>Moe's Mansion</em> est sans doute <em>l'exe mod</em> le plus populaire, et à raison ! Il offre beaucoup de nouvelles
+                    <p><em>Galaxy</em> est  l'hértier de <em>Moe's Mansion</em>, sans doute <em>l'exe mod</em> le plus populaire, et à raison ! Il offre beaucoup de nouvelles
                     fonctionnalités intéressantes, dont notamment :</p>
                     <ul>
-                        <li>Périmé - Interpolation de frames : lors des courses, l'état du jeu est évalué en 35 tics par seconde. Les frames affichés suivent
-                            donc ce rythme et limite le jeu à 35 fps. L'interpolation de frame offerte par <em>Moe's Mansion</em> permet
-                            s'affranchir de cette limite, bien au-delà des 35 frames par seconde.
-                        </li>
                         <li>Camera tilting : avec cette fonctionnalité, lors des courses, la caméra pivote en fonction du relief sur lequel se déplace
                             votre personnage. ⚠ <u>Attention :</u> si vous êtes sujet au “motion sickeness” pensez à la désactiver dans les options du
                             jeu :
                             <code>options</code> → <code>bird</code> → <code>screen tilting</code> → <code>camera tilting</code>
                         </li>
                         <li>Écran de sélection des personnages retravaillé, pratique pour les serveurs avec beaucoup de personnages.</li>
+                        <li>Commande console pour marquer l'enregisrement de replay directement pendant les course</li>
                     </ul>
                     <p>Cet <em>exe mod</em> offre bien d'autres modifications. Consultez
-                        <a href="https://mb.srb2.org/addons/srb2kart-1-3-moe-mansion.42/">le post du message board</a>
-                        associé ou <a href="https://gitlab.com/himie/kart-public/-/tree/moe-mansion">le repo du projet</a>.
+                        <a href="https://mb.srb2.org/addons/srb2kart-galaxy.4500/">le post du message board</a>
+                        associé ou <a href="https://git.do.srb2.org/Galactice/Kart-Public/-/tree/Galaxy-Redux">le repo du projet</a>.
                     </p>
 
                     <div class="figure-container">
@@ -241,7 +238,7 @@
                                     <img class="target-img" src="img/install/kart0044.png"/>
                                 </div>
                             </label>
-                            <span>L'écran de sélection “<em>grid</em>” de <em>Moe's Mansion</em></span>
+                            <span>L'écran de sélection “<em>grid</em>” de <em>Galaxy</em></span>
                         </div>
                         <div class="figure">
                             <input id="img5" class="img-toggle" type="checkbox">
@@ -256,12 +253,12 @@
 
                     <h3 id="moe-mansion-install">Installation</h3>
                     <p>L'installation est la même que pour <em>l'exe mod</em> AZERTY, ou tout autre <em>exe mod</em> en général :
-                        remplacez simplement l'exécutable <code>srb2kart.exe</code> par celui de <em>Moe's Mansion</em> dans votre installation :
+                        remplacez simplement l'exécutable <code>srb2kart.exe</code> par celui de <em>Galaxy</em> (disponible <a href="https://mb.srb2.org/addons/srb2kart-galaxy.4500/">ici</a>) dans votre installation :
                     </p>
                     <ol>
                         <li>Si ce n'est pas déjà fait, effectuez une <a href="#base-install">installation de base</a> de <em>SRB2Kart</em>.</li>
                         <li>Dans le dossier d'installation du jeu, remplacez simplement l'exécutable <code>srb2kart.exe</code> par
-                            <a href="https://kart.moe/moe-mansion/">la version modifiée</a>.
+                            la version modifiée</a>.
                         </li>
                     </ol>
                     <div class="folding-note">
@@ -269,10 +266,10 @@
                         <label for="foldible3" class="folding-title">Linux</label>
                         <div class="folding-content">
                             <p>Pour Linux, il vous faut également compiler <em>l'exe mod</em> 
-                                <a href="https://gitlab.com/himie/kart-public.git">depuis les sources</a>.
+                                <a href="https://git.do.srb2.org/Galactice/Kart-Public/">depuis les sources</a>.
                             </p>
                             <ol>
-                                <li>Clonez le répo : <code>git clone https://gitlab.com/himie/kart-public.git</code></li>
+                                <li>Clonez le répo : <code>git clone https://git.do.srb2.org/Galactice/Kart-Public.git</code></li>
                                 <li>Entrez dans le nouveau dossier cloné : <code>cd kart-public</code></li>
                                 <li>Compilez : <code>make -C src/ LINUX64=1 clean && make -C src/ LINUX64=1</code></li>
                                 <li>Si tout se déroule bien, le nouvel exécutable aura été généré à l'emplacement
@@ -285,10 +282,7 @@
                         </div>
                     </div>
 
-                <h2 id="azerty-moe-mansion">Moe's Mansion en AZERTY</h2>
-                    <p class="warning"> ⚠ <u>Important:</u> Depuis la dernière release officelle, la <a href="https://github.com/STJr/Kart-Public/releases/tag/v1.6">v1.6</a>, Moe's Mansion n'est plus considéré « à jour »,
-                        <em>l'exe mod Moe + azerty</em> ne l'est donc plus non plus.
-                    </p>
+                <h2 id="azerty-moe-mansion">Galaxy en AZERTY</h2>
                     <p>Comme évoqué précédemment, les <em>exe mods</em> sont des exécutables du jeu modifiés.
                         Il n'est donc pas possible d'utiliser deux <em>exe mods</em> en même temps.
                         Jusqu'ici, nous avons présenté deux <em>exe mods</em> : AZERTY mod et <em>Moe's Mansion</em>.
@@ -296,16 +290,16 @@
                         Fort heureusement, jusqu'ici, les modifications effectuées sur le code source par ces deux <em>exe mods</em> ne sont pas
                         conflictuelles !
                         Par conséquent, il fut, jusqu'à présent, relativement facile de combiner ces deux mods en un nouveau troisième <em>exe mod</em>:
-                        <em>Moe's Mansion (AZERTY)</em>. À vous le Moe's Mansion ET le layout AZERTY!
+                        <em>Galaxy (AZERTY)</em>. À vous Galaxy ET le layout AZERTY!
                     </p>
                     <h3 id="azerty-moe-mansion-install">Installation</h3>
                     <p>L'installation est la même que pour les deux autres <em>exe mods</em>:
-                        remplacez simplement l'exécutable <code>srb2kart.exe</code> par celui de <em>Moe's Mansion (AZERTY)</em> dans votre installation:
+                        remplacez simplement l'exécutable <code>srb2kart.exe</code> par celui de <em>Galaxy (AZERTY)</em> dans votre installation:
                     </p>
                     <ol>
                         <li>Si ce n'est pas déjà fait, effectuez une <a href="#base-install">installation de base</a> de <em>SRB2Kart</em>.</li>
                         <li>Dans le dossier d'installation du jeu, remplacez simplement l'exécutable <code>srb2kart.exe</code> par
-                            <a href="https://github.com/AlexPoilrouge/Kart-Public_azerty/releases/download/v1.3-moe-mansion-azerty/srb2kart.exe">
+                            <a href="https://github.com/AlexPoilrouge/Kart-Public_azerty/releases/download/v1.6-galaxy-azerty/srb2kart.exe">
                                 la version modifiée
                             </a>.
                         </li>
@@ -315,14 +309,14 @@
                         <label for="foldible4" class="folding-title">Linux</label>
                         <div class="folding-content">
                             <p>Pour Linux, il vous faut toujours compiler <em>l'exe mod</em> 
-                                <a href="https://github.com/AlexPoilrouge/Kart-Public_azerty/tree/moe-mansion">depuis les sources</a>.
+                                <a href="https://github.com/AlexPoilrouge/Kart-Public_azerty/tree/v1.6-galaxy-azerty">depuis les sources</a>.
                             </p>
                             <ol>
                                 <li>Clonez le répo :
-                                    <code>git clone https://github.com/AlexPoilrouge/Kart-Public_azerty/tree/moe-mansion</code>
+                                    <code>git clone https://github.com/AlexPoilrouge/Kart-Public_azerty.git</code>
                                 </li>
                                 <li>Entrez dans le nouveau dossier cloné : <code>cd Kart-Public_azerty</code></li>
-                                <li>Basculez sur la branche <em>moe-mansion</em> : <code>git checkout moe-mansion</code></li>
+                                <li>Basculez sur la branche <em>Galaxy-Redux_azerty</em> : <code>git checkout Galaxy-Redux_azerty</code></li>
                                 <li>Compilez : <code>make -C src/ LINUX64=1 clean && make -C src/ LINUX64=1</code></li>
                                 <li>Si tout se déroule bien, le nouvel exécutable aura été généré à l'emplacement
                                     <code>kart-public/bin/Linux64/Release/lsdl2srb2kart</code>
