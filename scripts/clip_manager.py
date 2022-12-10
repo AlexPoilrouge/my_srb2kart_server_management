@@ -36,7 +36,7 @@ def __createTable(connection):
                 userId text,
                 timestamp text,
                 description text DEFAULT '',
-                outdated interger DEFAULT 0 )
+                outdated integer DEFAULT 0 )
             """
         )
         connection.commit()
