@@ -164,7 +164,7 @@ function displayer_close(){
     clear_displayer()
 }
 
-function gallery(){
+function gallery(clip_id){
 
     displayer= $("div.display")
 
@@ -173,13 +173,22 @@ function gallery(){
     $("div.gallery a.gallery-element").each(function(index, element){
         // process_source(element)
 
-        $(element).click(function(){
+        let _show_clip= (elmt) => {
             displayer.show()
 
-            cur_selected= $(this)
+            cur_selected= $(elmt)
 
             update_displayer()
+        }
+
+        $(element).click(function(){
+            _show_clip(this)
         })
+            
+
+        if($(element).attr('id')===`${clip_id}`){
+            _show_clip(element)
+        }
     })
     displayer.click(function(){
         if (displayer.is(":visible")){

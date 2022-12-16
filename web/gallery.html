@@ -14,7 +14,7 @@
     <meta property="og:type" content="website" />
     <meta property="og:url" content="http://strashbot.fr/gallery.html"/>
 
-    <link rel="stylesheet" type="text/css" href="script/gallery.css?v=00019" />
+    <link rel="stylesheet" type="text/css" href="script/gallery.css?v=00021" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="text/javascript" src="./script/api_populate.js"></script>
     <script type="text/javascript"  src="script/gallery.js"></script>
@@ -51,7 +51,7 @@
             
             populate("./kart", $("div.gallery"), {pageNum, clip_id: c_id}).then(result => {
                 if(result.success){
-                    gallery()
+                    gallery(result.target_clip)
                 }
                 else{
                     throw `bad fetch result - ${result.success}`
@@ -59,6 +59,9 @@
             })
             .catch(err => {
                 console.log(`Error: ${err}`)
+                $(
+                    "<span class=\"internal-error\">Error trying to access clips data</span>"
+                ).appendTo($("div.gallery"))
             })
         })
     </script>

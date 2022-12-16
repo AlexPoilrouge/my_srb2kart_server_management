@@ -208,3 +208,8 @@ div#close{
 div#close:hover{
     background-color: rgba(255, 255, 255, 0.7);
 }
+
+span.internal-error{
+    color: red;
+    font-weight: bold;
+}
