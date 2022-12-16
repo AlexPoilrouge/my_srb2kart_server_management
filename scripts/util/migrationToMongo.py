@@ -20,7 +20,7 @@ from pymongo import MongoClient
 sqlite_database_file="./clips.db"
 
 
-MONGO_CONNECTION_STRING = "mongodb://__USERNAME__:__PASSWORD__@__HOST__:27017"
+MONGO_CONNECTION_STRING = "mongodb://__USERNAME__:__PASSWORD__@__HOST__/__DBNAME__"
 mongo_username="strashbot"
 mongo_password="Zpas5wordX_"
 mongo_host="localhost"
@@ -50,7 +50,7 @@ def _get_SQLclipPage(pageNum=1, pageSize=30):
         f_rows= cur.fetchall()
         
         return f_rows
-    else
+    else:
         return None
 
 def _get_numberOfSQLClips():
@@ -61,8 +61,8 @@ def _get_numberOfSQLClips():
         cur.execute("SELECT count(*) FROM clips")
         count= cur.fetchone()[0]
         
-        return f_rows
-    else
+        return count
+    else:
         return None
 
 def _get_SQLclipMaxID():
@@ -70,9 +70,9 @@ def _get_SQLclipMaxID():
 
     if (conn):
         cur= conn.cursor()
-        cur.execute("SELECT MAX(_id) FROM clips")
-        return cur.fetone()[0]
-    else
+        cur.execute("SELECT MAX(id) FROM clips")
+        return cur.fetchone()[0]
+    else:
         return None
 
 
@@ -83,6 +83,8 @@ def __get_mongo_connection_str():
         "__PASSWORD__", mongo_password
     ).replace(
         "__HOST__", mongo_host
+    ).replace(
+        "__DBNAME__", mongo_db_name
     )
 
 def _get_mongo_database():
@@ -99,7 +101,7 @@ def _insert_clips_in_mongoDB(clips):
             "type" : clip[1],
             "url" : clip[2],
             "submitter_id" : clip[3],
-            "timestamp" : datetime.datetime.strptime(clip[4],'%Y-%m-%dT%H:%M:%S.%fZ'),
+            "timestamp" : datetime.datetime.strptime(clip[4],'%Y-%m-%d %H:%M:%S'),
             "description" : clip[5],
             "thumbnail" : ""
         }
@@ -148,7 +150,8 @@ if __name__ == "__main__":
 
         n= _get_numberOfSQLClips()
         p_s= 30
-        p_n= math.ceil(p_s/n)
+        p_n= math.ceil(n/p_s)
+        print(f"=> found {n} clips => {p_n} pages of {p_s}")
 
         for _p in range(0,p_n):
             p= _p+1

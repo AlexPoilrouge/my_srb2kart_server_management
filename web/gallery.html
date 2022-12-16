@@ -14,9 +14,9 @@
     <meta property="og:type" content="website" />
     <meta property="og:url" content="http://strashbot.fr/gallery.html"/>
 
-    <link rel="stylesheet" type="text/css" href="script/gallery.css?v=00017" />
-    <script src="./script/jquery-3.6.0.min.js"></script>
-    <script type="text/javascript" src="./script/populate.js"></script>
+    <link rel="stylesheet" type="text/css" href="script/gallery.css?v=00018" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="./script/api_populate.js"></script>
     <script type="text/javascript"  src="script/gallery.js"></script>
 </head>
 
@@ -45,10 +45,21 @@
                             1
                         :   _p )
                 :   1
+
+            var c_id= parseInt(urlParams.get('clip'))
+            c_id= isNaN(c_id)?undefined:c_id
             
-            populate("./json", $("div.gallery"), function(){
-                gallery()
-            }, pageNum)
+            populate("./kart", $("div.gallery"), {pageNum, clip_id: c_id}).then(result => {
+                if(result.success){
+                    gallery()
+                }
+                else{
+                    throw `bad fetch result - ${result.success}`
+                }
+            })
+            .catch(err => {
+                console.log(`Error: ${err}`)
+            })
         })
     </script>
 </body>

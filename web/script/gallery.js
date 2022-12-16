@@ -171,7 +171,7 @@ function gallery(){
     displayer.hide()
 
     $("div.gallery a.gallery-element").each(function(index, element){
-        process_source(element)
+        // process_source(element)
 
         $(element).click(function(){
             displayer.show()
