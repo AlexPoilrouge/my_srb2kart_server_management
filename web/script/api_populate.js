@@ -112,7 +112,7 @@ function populate(api_root, $parent, infos){
                 var a=$(
                     "<a class=\"gallery-element\" id=\""+element._id+"\" src=\""+element.url+"\" src-type=\""+element.type+"\">"+
                         "<div>"+
-                            ((Boolean(element.thumbnail))? ("<img src="+element.thumbnail+" />") : "")+
+                            ((Boolean(element.thumbnail))? ("<img class=\"clip_thumbnail\" src="+element.thumbnail+" />") : "")+
                             "<img class=\"placeholder\" src=\"\./img/gallery/"+((element.type==='gif')?'gif':'vid')+"-icon.png\" />"+
                         "</div></a>"
                 ).appendTo($parent)

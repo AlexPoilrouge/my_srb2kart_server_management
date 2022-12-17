@@ -79,13 +79,16 @@ function update_displayer(){
         var source_type= cur_selected.attr('src-type')
         var source_id= cur_selected.attr('id')
 
+        var clip_thumb= cur_selected.children("div").children("img.clip_thumbnail").attr('src')
+
         switch (source_type){
             case "gif":
                 displayer.children("div.display-content").append("<img src=\""+source+"\" fetchpriority=\"high\"/>")
             break;
             case "video":
                 displayer.children("div.display-content").append(
-                    "<video controls preload=\"auto\" fetchpriority=\"high\" src=\""+source+"\">Your browser does not support the video tag.</video>"
+                    "<video controls preload=\"auto\" fetchpriority=\"high\" poster=\""+clip_thumb+"\" src=\""+source+"\">"+
+                    "Your browser does not support the video tag.</video>"
                 )
             break;
             case "youtube":
