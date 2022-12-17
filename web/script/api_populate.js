@@ -40,7 +40,6 @@ function __lookForClipInPage(clip_id, page, api_root){
 }
 
 async function _findPageForClipFromId(clipID, clips, api_root){
-    console.log("look!")
     var cpp= clips.perPage
     var ctp= clips.totalPages
     var acc= clips.availableClipsCount
@@ -54,7 +53,6 @@ async function _findPageForClipFromId(clipID, clips, api_root){
     do{
         console.log(`${search_dir}; ${first_dir}`)
         search_dir= await __lookForClipInPage(clipID, th_page, api_root)
-        console.log("====> got sd= "+search_dir+" from th_page= "+th_page)
         if(search_dir===0){
             return th_page
         }else{
@@ -101,7 +99,6 @@ function populate(api_root, $parent, infos){
                     return pageNum
                 })
 
-            console.log("NEW PAGE!!!! "+page)
 
             if(page!==pageNum){
                 clips_obj= await fetch( api_clips_str(api_root, page) )
@@ -111,7 +108,6 @@ function populate(api_root, $parent, infos){
         }
 
         $.each(clips_obj.clips, (id, element) => {
-            console.log(`element: ${JSON.stringify(element)}`)
             if(element && element.type && element.url){
                 var a=$(
                     "<a class=\"gallery-element\" id=\""+element._id+"\" src=\""+element.url+"\" src-type=\""+element.type+"\">"+

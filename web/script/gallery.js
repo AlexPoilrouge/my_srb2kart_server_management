@@ -81,11 +81,11 @@ function update_displayer(){
 
         switch (source_type){
             case "gif":
-                displayer.children("div.display-content").append("<img src=\""+source+"\"/>")
+                displayer.children("div.display-content").append("<img src=\""+source+"\" fetchpriority=\"high\"/>")
             break;
             case "video":
                 displayer.children("div.display-content").append(
-                    "<video controls src=\""+source+"\">Your browser does not support the video tag.</video>"
+                    "<video controls preload=\"auto\" fetchpriority=\"high\" src=\""+source+"\">Your browser does not support the video tag.</video>"
                 )
             break;
             case "youtube":
