@@ -163,6 +163,28 @@ div.display div.display-content div.content-info{
     margin-bottom: 16px;
 }
 
+a.share-link:hover{
+    cursor: pointer;
+}
+
+@keyframes copied_notif{
+    0%      {opacity: 0%;}
+    50%     {opacity: 100%;}
+    100%    {opacity: 100%;}
+}
+
+span.notif{
+    opacity: 0%;
+}
+
+span.notif.copied-text{
+    opacity: 0%;
+    color: #3a3a3a;
+    animation: copied_notif 4s;
+    animation-iteration-count: 2;
+    animation-direction: alternate;
+}
+
 div#l-arrow{
     background-color: rgba(255, 255, 255, 0.4);
     z-index: 11; /* Sit on top */

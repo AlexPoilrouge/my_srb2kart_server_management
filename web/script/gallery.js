@@ -120,6 +120,29 @@ function update_displayer(){
             contentInfo.append(ts.text()+"<br/>")
         }
 
+        if(source_id && source_id.length>0){
+            var $t;
+            ($t= $(  "<div><span class=\"notif\">Copied! </span>"
+                +"<span class=\"share-link\">Share link: <a class=\"share-link\">[ 📋 ]</a></span></br></div>"
+            )).appendTo(
+                contentInfo
+            ).click( () => {
+                navigator.clipboard.writeText(
+                    `https://strashbot.fr/gallery.html?clip=${source_id}`
+                );
+
+                $target= $t.children('span.notif:first-child')
+                $target.removeClass('copied-text')
+                $newone= $target.clone(true)
+
+                $target.replaceWith($newone)
+                $newone.addClass('copied-text')
+
+
+                return false;
+            })
+        }
+
         if (source){
             contentInfo.append("Direct link: <a href=\""+source+"\" target=\"_blank\">[ 🔗 ]</a><br/>")
         }

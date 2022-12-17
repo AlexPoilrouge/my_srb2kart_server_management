@@ -14,7 +14,7 @@
     <meta property="og:type" content="website" />
     <meta property="og:url" content="http://strashbot.fr/gallery.html"/>
 
-    <link rel="stylesheet" type="text/css" href="script/gallery.css?v=00021" />
+    <link rel="stylesheet" type="text/css" href="script/gallery.css?v=00022" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="text/javascript" src="./script/api_populate.js"></script>
     <script type="text/javascript"  src="script/gallery.js"></script>
@@ -49,7 +49,7 @@
             var c_id= parseInt(urlParams.get('clip'))
             c_id= isNaN(c_id)?undefined:c_id
             
-            populate("./kart", $("div.gallery"), {pageNum, clip_id: c_id}).then(result => {
+            populate("https://strashbot.fr/kart", $("div.gallery"), {pageNum, clip_id: c_id}).then(result => {
                 if(result.success){
                     gallery(result.target_clip)
                 }
