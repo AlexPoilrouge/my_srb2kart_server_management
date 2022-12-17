@@ -146,7 +146,7 @@ fi
 
 mkdir -p "${SRB2KART_F_DIR}"
 
-install -v ./scripts/{ls_restricted.lib.sh,addon_script.sh,zipping_addons.sh,record_lmp_read.py,log_processor.py,clip_manager.py,load_addon_manager.py} "${SRB2KART_F_DIR}" -m 700
+install -v ./scripts/{ls_restricted.lib.sh,addon_script.sh,zipping_addons.sh,record_lmp_read.py,log_processor.py,load_addon_manager.py} "${SRB2KART_F_DIR}" -m 700
 install -v ./config/serv/{my_server_config.cfg,kartserv.cfg,server_start.sh} "${SRB2KART_F_DIR}" -m 700
 
 mkdir -p "${SRB2KART_F_DIR}"/util
