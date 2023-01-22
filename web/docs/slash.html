@@ -1,0 +1,298 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Documentation Template</title>
+    <meta name="description" content="A simple HTML/CSS DocumentationTemplate">
+    <meta name="author" content="Carlos Yllobre">
+
+    <link rel="stylesheet" href="../script/slash.css?">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&family=Open+Sans:ital,wght@0,400;0,700;1,600&display=swap" rel="stylesheet">
+    
+    <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js" integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+
+    <div class="navbar clear nav-top">
+        <div class="row content">
+            <a href="#"><img class="logo" style="max-height: 110px; width: auto;" src="https://cdn.discordapp.com/avatars/544951503241216021/62482199d11da8be4d6148e409ea3a4b.webp"></a>
+            <a class="right" style="text-decoration: underline;" href="#"><i class="fas fa-book"></i>&nbsp; Documentation</a>
+            <a class="right" href="https://strashbot.fr" target="_blank"><i class="fas fa-globe"></i>&nbsp; strashbot.fr</a>
+        </div>
+    </div>
+
+    <div class="container clear">
+        <div class="row wrapper">
+
+            <div class="sidepanel">
+                <!-- Auto-fill with js, see bottom page script -->
+            </div>
+
+            <div class="right-col">
+                <h1 id="about_strashbot">About Discord Strashbot</h1>
+                
+                <p>Discord StrashBot is my personal Discord bot.<br/>
+                    Depending on which guild you meet him, its function can differ.
+                </p> 
+                <p>As of ver. <em>0.3.0</em> there are mainly 2 usage for strashBot:
+                    <ul>
+                        <li><b>Smash Tool:</b> offering few services for the Smash Strasbourg's community.</li>
+                        <li><b>SRB2Kart Server Manager:</b> tool to manage the StrashBot SRB2Kart Server.</li>
+                    </ul>
+                </p>
+            
+                <h2 id="current_version">Current version</h2>
+             
+                <p><b>Bot Version 0.3.0.</b></p>
+
+                <h2 id="about_slash_cmd">About slash commands</h2>
+                
+                <p>Since version <em>0.3.0</em> the Discord StrashBot transited from <em>custom !commands</em>
+                    to <a href="https://support.discord.com/hc/en-us/articles/1500000368501-Slash-Commands-FAQ" target="_blank">integrated <em>slash commands</em></a></p>
+
+                <h2 id="technology">Technology</h2>
+                
+                <p>Discord Strashbot is build using <a href="https://nodejs.org/" target="_blank">node.js</a> and <a href="https://discord.js.org/" target="_blank">Discord.js</a></p>
+
+                <p id="gettingstarted"><a href="https://github.com/AlexPoilrouge/strashBot2" target="_blank">Discord Strashbot's code</a> (as most of its code)
+                    is available on <a href="https://github.com/AlexPoilrouge" target="_blank">my github</a>.</p> 
+                 
+        <div class="divider" style="width:24%; margin:30px 0;"></div>
+
+                <h1 id="kart_slash_cmd">Kart Slash Commands [All Users]</h1>
+                <p>Coming soon…</p>
+                 
+        <div class="divider" style="width:24%; margin:30px 0;"></div>
+
+                <h1 id="smash_slash_cmd">Smash Slash Commands [All Users]</h1>
+
+                <h2 id="slash_player">/player</h2>
+                
+                <p>The <span class="code">/player</span> commands are used to register infos about Smash players in the Discord guild.<br/>
+                    The collected data are later on used by Tournament Organiser for organisation purposes.
+                    For instance generate Weekly or Monthy tournament results graph.
+                </p>
+
+                <h3 id="slash_player_tag">/player tag</h3>
+                <p>The <span class="code">/player tag</span> subcommand is used to register a player's tagname tourney information into the
+                    guild's DataBase.
+                </p>
+                <p><b>Options:</b><ul>
+                    <li><span class="code">name</span> <em>[Required]</em> - Register your Smash player name</li>
+                    <li><span class="code">team</span> - Register your team's name</li>
+                </ul></p>
+
+                <h3 id="slash_player_roster">/player roster</h3>
+                <p>The <span class="code">/player roster</span> subcommand is used to register a player's character roster into the
+                    guild's DataBase, up to 4 characters
+                </p>
+                <p><b>Options:</b><ul>
+                    <li><span class="code">fighter1</span> <em>[Required]</em> - The player's "main" character's name</li>
+                    <li><span class="code">fighter2</span> - The player's second character's name</li>
+                    <li><span class="code">fighter3</span> - The player's third character's name</li>
+                    <li><span class="code">fighter1</span> - The player's fourth character's name</li>
+                </ul></p>
+
+                <h3 id="slash_player_delete">/player delete</h3>
+                <p>The <span class="code">/player delete</span> subcommand is remove a player's information from the guild's
+                    DataBase. Both one's character roster and tag.
+                </p>
+
+                <h3 id="slash_player_about">/player about</h3>
+                <p>Use the <span class="code">/player about</span> subcommand to check your character and tag name
+                    as they are currently registered in the database.
+                    You can check another player's info by using the '<em>user</em>' command option.
+                </p>
+                <p><b>Options:</b><ul>
+                    <li><span class="code">user</span> - Mention to the user you wish to ckech info of.</li>
+                </ul></p>
+                
+                
+                <h1 id="smash_slash_cmd">Smash Slash Commands [Restricted access]</h1>
+                
+                <h2 id="slash_top8">/top8</h2>
+                
+                <p>The <span class="code">/top8</span> commands are used by Smash Tournament Organizer to generate automatically result graphs for
+                    weekly or monthly tournaments.<br/>
+                    The data used is pulled from the <a href="https://developer.start.gg" target="_blank">start.gg API</a> and from the guild's DataBase
+                    that the player fed using the <span class="code">/player</span> slash commands.</p>
+
+                <h3 id="slash_top8_test">/top8 test</h3>
+
+                <p>The <span class="code">/top8 test</span> subcommand is used to check data availability from both a start.gg completed tournament, and the
+                    guild's DataBase.<br/>
+                    When the data is processed, the Strashbot will provide the caller with a <em>.json</em> file representing the fetched top8 result.
+                    The caller should then use this file to pinpoint missing data.
+                    Afterwards it's up to the caller to fill in the blank of missing data with 2 methods available:
+                    <ul>
+                        <li>using the <em>inline options</em> option (inherited from old style commands)</li>
+                        <li>providing a completed <em>.json</em> file (it is advised to check the json validity with a validator such as 
+                            <em><a href="https://jsonlint.com" target="_blank">jsonlint.com</a></em> beforehand)</li>
+                    </ul>
+                </p>
+                <p><b>Options:</b><ul>
+                    <li><span class="code">startgg_url</span> <em>[Required]</em>  - the url to the completed start.gg tourney you wish to check the available data for.</li>
+                    <li><span class="code">title</span> - the title for your data set</li>
+                    <li><span class="code">config</span> - a <em>.json</em> file to provide the missing data. The json document should be construct in a the same way as the json
+                        document returned by a first call to <span class="code">/top8 test</span>. The intent here is to proceed like this:
+                        <ol>
+                            <li>run a first <span class="code">/top8 test</span></li>
+                            <li>fetch the returned json document and identify missing data</li>
+                            <li>edit this json document and fill in the missing data</li>
+                            <li>make sure your document is valid using a validator such as <a href="https://jsonlint.com" target="_blank">jsonlint.com</a></li>
+                            <li>re-run <span class="code">/top8 test</span> with your completed json file through the <span class="code">config</span> option</li>
+                            <li>if all is right, you can use the same json document you just provided to fill in the missing data for the
+                                <span class="code">/top8 draw</span> call.
+                            </li>
+                        </ol>
+                    </li>
+                    <li><span class="code">inline_options</span> - old style inline options to provide missing data (e.g: <span class="code">?top5a-char1="Mario 3"</span>);
+                        check available list below. 
+                </ul></p>
+
+                <h4>inline_options list:</h4>
+                <ul>
+                    <li><span class="code">top1-name</span></li>
+                    <li><span class="code">top1-team</span></li>
+                    <li><span class="code">top1-twitter</span></li>
+                    <li><span class="code">top1-char1</span></li>
+                    <li><span class="code">top1-char2</span></li>
+                    <li><span class="code">top1-char3</span></li>
+                    <li><span class="code">top1-char4</span></li>
+                    <li><span class="code">top2-name</span></li>
+                    <li><span class="code">top2-team</span></li>
+                    <li><span class="code">top2-twitter</span></li>
+                    <li><span class="code">top2-char1</span></li>
+                    <li><span class="code">top2-char2</span></li>
+                    <li><span class="code">top2-char3</span></li>
+                    <li><span class="code">top2-char4</span></li>
+                    <li><span class="code">top3-name</span></li>
+                    <li><span class="code">top3-team</span></li>
+                    <li><span class="code">top3-twitter</span></li>
+                    <li><span class="code">top3-char1</span></li>
+                    <li><span class="code">top3-char2</span></li>
+                    <li><span class="code">top3-char3</span></li>
+                    <li><span class="code">top3-char4</span></li>
+                    <li><span class="code">top4-name</span></li>
+                    <li><span class="code">top4-team</span></li>
+                    <li><span class="code">top4-twitter</span></li>
+                    <li><span class="code">top4-char1</span></li>
+                    <li><span class="code">top4-char2</span></li>
+                    <li><span class="code">top4-char3</span></li>
+                    <li><span class="code">top4-char4</span></li>
+                    <li><span class="code">top5a-name</span></li>
+                    <li><span class="code">top5a-team</span></li>
+                    <li><span class="code">top5a-twitter</span></li>
+                    <li><span class="code">top5a-char1</span></li>
+                    <li><span class="code">top5a-char2</span></li>
+                    <li><span class="code">top5a-char3</span></li>
+                    <li><span class="code">top5a-char4</span></li>
+                    <li><span class="code">top5b-name</span></li>
+                    <li><span class="code">top5b-team</span></li>
+                    <li><span class="code">top5b-twitter</span></li>
+                    <li><span class="code">top5b-char1</span></li>
+                    <li><span class="code">top5b-char2</span></li>
+                    <li><span class="code">top5b-char3</span></li>
+                    <li><span class="code">top5b-char4</span></li>
+                    <li><span class="code">top7a-name</span></li>
+                    <li><span class="code">top7a-team</span></li>
+                    <li><span class="code">top7a-twitter</span></li>
+                    <li><span class="code">top7a-char1</span></li>
+                    <li><span class="code">top7a-char2</span></li>
+                    <li><span class="code">top7a-char3</span></li>
+                    <li><span class="code">top7a-char4</span></li>
+                    <li><span class="code">top7b-name</span></li>
+                    <li><span class="code">top7b-team</span></li>
+                    <li><span class="code">top7b-twitter</span></li>
+                    <li><span class="code">top7b-char1</span></li>
+                    <li><span class="code">top7b-char2</span></li>
+                    <li><span class="code">top7b-char3</span></li>
+                    <li><span class="code">top7b-char4</span></li>
+                </ul>
+
+                <p>Call back the <span class="code">/top8 test</span> subcommand until all the data is compelete.
+                    Then, use the same options you used to complete the data with the <span class="code">/top8 draw</span> subcommand
+                    to generate the final top8 result graph.</p>
+
+                <h3 id="slash_top8_templates">/top8 templates</h3>
+
+                <p>List the available templates for graph generation (using <span class="code">/top8 draw</span>).</p>
+
+                <h3 id="slash_top8_draw">/top8 draw</h3>
+
+                <p>The <span class="code">/top8 draw</span> subcommand, provided with a template and start.gg data, uses the guild's DataBase of
+                    players character roster and tagnames (see <span class="code">/player</span>) to generate a top8 result graph for a given
+                    start.gg tourney.</p>
+                <p>You probably shouldn't use this command right away as a data might be missing from the guild's DataBase.
+                    First run a few rounds of <span class="code">/top8 test</span> to identify missing data and determine how to fill
+                    in the blanks.
+                </p>
+                <p><b>Options:</b><ul>
+                    <li><span class="code">startgg_url</span> <em>[Required]</em>  - the url to the completed start.gg tourney you wish to check the
+                        available data for.</li>
+                    <li><span class="code">title</span> <em>[Required]</em>  - the title for your graph</li>
+                    <li><span class="code">template</span> <em>[Required]</em>  - the graph's template (list available through
+                        <span class="code">/top8 templates</span>)</li>
+                    <li><span class="code">config</span> - a <em>.json</em> file to provide the missing data. The json document should be construct in a the same way as the json
+                    document returned by a first call to <span class="code">/top8 test</span>.</li>
+                    <li><span class="code">inline_options</span> - old style inline options to provide missing data (e.g: <span class="code">?top5a-char1="Mario 3"</span>);
+                        check available list above.</li>
+                    <li><span class="code">post_channel</span> - a mention to the guild's channel where you want the generated graph to be posted</li>
+                </ul></p>
+                    
+            <div class="divider" style="width:24%; margin:30px 0;"></div>
+
+                <h1 id="credits">Credits</h1>
+
+                <p>Using a slightly edited <a href="https://github.com/charlyllo/doctemplate" target="_blank">Charlyllo's Doctemplate</a> for quick format. Cheers to him for the handy sharing under MIT license. 😎</p>
+
+                <div class="doublespace"></div>
+                <div class="divider" style="width:24%; margin:30px 0;"></div>
+                
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+    <script>
+        let side_panel= document.querySelector('div.sidepanel')
+        let right_col= document.querySelector('div.right-col')
+        console.log(right_col)
+
+        for(let child of right_col.querySelectorAll('h1, h2, h3, div.divider')){
+            console.log(`${child.tagName}`)
+
+            let eName= child.tagName
+
+            if(eName==='DIV'){
+                side_panel.innerHTML+=
+                    `<div class="divider left" />`
+            }
+            else{
+                let sideLinkClass=
+                    (eName==='H3') ?
+                                'sub-section'
+                            :   (eName==='H2') ?
+                                    'section'
+                                :   'title'
+
+                side_panel.innerHTML+=
+                        `<a class="${sideLinkClass}" href="#${child.id}">` +
+                        `${child.textContent}</a>`
+            }
+        }
+
+    </script>
+
+</body>
+
+</html>
