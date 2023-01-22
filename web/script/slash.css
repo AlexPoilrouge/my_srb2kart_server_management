@@ -43,6 +43,13 @@ a:hover {
     text-decoration: underline;
 }
 
+footer {
+    padding:40px;
+    background-color:#ffffff;
+    color:#4b4c4d;
+    text-align: right;
+}
+
 .navbar {
     overflow: hidden;
     background-color: #0098f1;
