@@ -210,6 +210,7 @@ if "${WEB_INSTALL}"; then
     install -v web/*.html "${SRB2KART_F_DIR}/web" -m 644
     install -v web/script/*.js "${SRB2KART_F_DIR}/web/script"  -m 644
     install -v web/script/*.css "${SRB2KART_F_DIR}/web/script"  -m 644
+    install -v web/docs/*.html "${SRB2KART_F_DIR}/web" -m 644
 
     wget -P "${SRB2KART_F_DIR}/web/script" --backups=1 "https://code.jquery.com/jquery-3.6.0.min.js"
     
