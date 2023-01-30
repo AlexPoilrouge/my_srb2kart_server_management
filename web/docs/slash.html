@@ -27,7 +27,7 @@
 
     <div class="navbar clear nav-top">
         <div class="row content">
-            <a href="#"><img class="logo" style="max-height: 110px; width: auto;" src="https://cdn.discordapp.com/avatars/544951503241216021/62482199d11da8be4d6148e409ea3a4b.webp"></a>
+            <a href="#"><img class="logo no-cache-1hr" style="max-height: 110px; width: auto;" src="https://strashbot.fr/bot/avatar.png"></a>
             <a class="right" style="text-decoration: underline;" href="#"><i class="fas fa-book"></i>&nbsp; Documentation</a>
             <a class="right" href="https://strashbot.fr" target="_blank"><i class="fas fa-globe"></i>&nbsp; strashbot.fr</a>
         </div>
@@ -73,7 +73,238 @@
 
                 <h1 id="kart_slash_cmd">Kart Slash Commands [All Users]</h1>
                 <p>Coming soon…</p>
+                <h2 id="slash_kart_info">/kart_info</h2>
+
+                <p>The <span class="code">/kart_info</span> command allows to check the current state of the
+                    <em>StrashBot Karting</em> SRB2Kart server. This give the user info about the number of player
+                    currently on the server, the map they're racing on, and other various info such as kartspeed,
+                    current gamemode, etc.
+                </p><p>
+                    This command is basically a call to the
+                    <a href="https://strashbot.fr/kart/service" target="_blank"><span class="code">/service</span></a> and
+                    <a href="https://strashbot.fr/kart/info" target="_blank"><span class="code">/info</span></a> entrypoints
+                    of the strashbot.fr <span class="code">/kart</span> API.
+                </p>
+
+                <h2 id="slash_kart_addons">/kart_addons</h2>
+
+                <p>The <span class="code">/kart_addons</span> commands are for info about the addons currently installed on the
+                    <em>StrashBot Karting</em> SRB2Kart server.</p>
+                
+                <h3 id="slash_kart_addons_list">/kart_addons list</h3>
+                    <p>Use the <span class="code">/kart_addons list</span> subcommand to list the addons currently installed and running
+                        on the SRB2Kart Server.</p>
+                        
+                    <p><b>Options:</b><ul>
+                        <li><span class="code">pattern</span> - give a pattern to seach for among installed addon.
+                            For example, <span class="code">/kart_addons list pattern:strash</span> lists all the available
+                            addons containing the string "strash" in their name.</li>
+                    </ul></p>
+                    <p>3 categories are displayed:<ul>
+                        <li><em>[Pending]</em> - for addons that are going to be installed on the server's next restart.</li>
+                        <li><em>[Downloaded]</em> - for addons that are currently installed on the server.</li>
+                        <li><em>[Base]</em> - addons that are un-removable.</li>
+                    </ul></p>
+
+                <h3 id="slash_kart_addons_zip">/kart_addons zip</h3>
+                    <p>Gives a link to a dowloadable <em>.zip</em> archive containing all the addons.</p>
                  
+                <h2 id="slash_kart_ingames">/kart_ingames</h2>
+                <p><span class="code">/kart_ingames</span> is a group of commands used to check the assets available on the server.
+                    It differs for <span class="code">/kart_addons</span> since it allows to check items in term of ingame objects,
+                    in this case racers and maps, instead of purely addon files.
+                </p>
+
+                <h3 id="slash_kart_ingames_maps">/kart_ingames maps</h3>
+                <p>Use the <span class="code">/kart_ingames maps</span> subcommand to list the maps available on the server.</p>
+                <p><b>Options:</b><ul>
+                    <li><span class="code">pattern</span> - a string that is a part of the name of the map to look for. Example:
+                        <span class="code">/kart_ingames maps pattern:beach</span>
+                    </li>
+                    <li><span class="code">type</span> - specify if you want to list non-standard map. Possible choices: <ul>
+                        <li><span class="code">Battle maps</span> - to list battle maps</li>
+                        <li><span class="code">Hell maps</span> - to list hell maps</li>
+                        <li><span class="code">Banned maps</span> - to list maps that are installed but banned</li>
+                    </ul></li>
+                    <li><span class="code">sections</span> - specify if you want to list section maps or not. Possible choices: <ul>
+                        <li><span class="code">Show all maps (default)</span> - list both lap maps and section maps</li>
+                        <li><span class="code">Only show section maps</span> - list only section maps</li>
+                        <li><span class="code">Don't show section maps</span> - list only lap maps</li>
+                    </ul></li>
+                </ul></p>
+
+                <h3 id="slash_kart_ingames_map_count">/kart_ingames map_count</h3>
+                <p><span class="code">/kart_ingames map_count</span> is basically the same command as
+                    <span class="code">/kart_ingames maps</span>, but it just counts the number of maps.<br/>
+                    Options are identical.
+                </p>
+                <p><b>Options:</b><ul>
+                    <li><span class="code">pattern</span> - a string that is a part of the name of the map to look for. Example:
+                        <span class="code">/kart_ingames map_count pattern:beach</span>
+                    </li>
+                    <li><span class="code">type</span> - specify if you want to count non-standard map. Possible choices: <ul>
+                        <li><span class="code">Battle maps</span> - to count battle maps</li>
+                        <li><span class="code">Hell maps</span> - to count hell maps</li>
+                        <li><span class="code">Banned maps</span> - to count maps that are installed but banned</li>
+                    </ul></li>
+                    <li><span class="code">sections</span> - specify if you want to count section maps or not. Possible choices: <ul>
+                        <li><span class="code">Show all maps (default)</span> - counts both lap maps and section maps</li>
+                        <li><span class="code">Only show section maps</span> - counts only section maps</li>
+                        <li><span class="code">Don't show section maps</span> - counts only lap maps</li>
+                    </ul></li>
+                </ul></p>
+
+                <h3 id="slash_kart_ingames_racers">/kart_ingames racers</h3>
+                <p>Use the <span class="code">/kart_ingames racers</span> subcommand to list the racers/characters/skins available
+                    on the server.</p>
+                <p><b>Options:</b><ul>
+                    <li><span class="code">pattern</span> - a string that is a part of the name of the racers name to look for. Example:
+                        <span class="code">/kart_ingames racer_count pattern:sonic</span></li>
+                    <li><span class="code">speed</span> - a int to list every racer that has their speed stat set to this amount</li>
+                    <li><span class="code">weight</span> - a int to list every racer that has their weight stat set to this amount</li>
+                </ul>
+                </p>
+
+                <h3 id="slash_kart_ingames_racer_count">/kart_ingames racer_count</h3>
+                <p><span class="code">/kart_ingames racers</span> is basically the same command as
+                    <span class="code">/kart_ingames maps</span>, but it just counts the number of racers/characters/skins available.<br/>
+                    Options are identical.</p>
+                <p><b>Options:</b><ul>
+                    <li><span class="code">pattern</span> - a string that is a part of the name of the racers name to look for. Example:
+                        <span class="code">/kart_ingames racers pattern:sonic</span></li>
+                    <li><span class="code">speed</span> - a int to count the number of racer that has their speed stat
+                        set to this amount</li>
+                    <li><span class="code">weight</span> - a int to count the number of racer that has their weight stat
+                        set to this amount</li>
+                </ul>
+                </p>
+
+                <h2 id="slash_kart_clips">/kart_clips</h2>
+                <p>The <span class="code">/kart_clips</span> helps to manage some of the player cool clips by referencing them in the 
+                    <a href="https://strashbot.fr/gallery.html" target="_blank">strashbot.fr's <em>strashtheque</em></a>.<br/>
+                    Clips must be either <span class="code">.mp4/.ogg/.webm/.gif</span> video uploaded via Discord, or
+                    youtube video links.
+                </p>
+
+                <h3 id="slash_kart_clips_here">/kart_clips here</h3>
+                <p>Use the <span class="code">/kart_clips here</span> subcommand to register a clip url to the database.
+                    You can either pass the clip as a youtube url, or a video (or .gif) file through Discord (see available options).
+                </p>
+                <p><b>Options:</b><ul>
+                    <li><span class="code">clip_file</span> - use this option to upload a clip file through Discord
+                        (must be <span class="code">.mp4/.ogg/.webm/.gif</span>).
+                        (This option is prioritized over <span class="code">clip_url</span>.)</li>
+                    <li><span class="code">clip_url</span> - use this option to register a new youtube video link as a clip.
+                        (The <span class="code">clip_file</span> option is prioritized over this one.)</li>
+                    <li><span class="code">description</span> - a short description of your clip.</li>
+                </ul></p>
+
+                <h3 id="slash_kart_clips_info">/kart_clips info</h3>
+                <p>The <span class="code">/kart_clips info</span> subcommand fetches infos about the <em>strashtheque</em> clips,
+                    or a clip in particular given its strashtheque ID.</p>
+                <p><b>Options:</b><ul>
+                    <li><span class="code">clip_id</span> - give info about a clip bearing the given ID
+                        (a number available on each clip of the strashtheque)</li>
+                </ul></p>
+
+                <h3 id="slash_kart_clips_remove">/kart_clips remove</h3>
+                <p>The <span class="code">/kart_clips remove</span> subcommand allows a user to remove a clip from the strashtheque.<br/>
+                    <b>Note: </b> only a user that uploaded/registered a clip can remove it.
+                </p>
+                <p><b>Options:</b><ul>
+                    <li><span class="code">clip_id</span> <em>[Required]</em>- the clip to remove's strashtheque ID.</li>
+                </ul></p>
+
+                <h3 id="slash_kart_clips_description">/kart_clips description</h3>
+                <p>The <span class="code">/kart_clips description</span> subcommand allows a user to edit
+                    a clip from the strashtheque's description.<br/>
+                    <b>Note: </b> only a user that uploaded/registered a clip can edit its description.</p>
+                <p><b>Options:</b><ul>
+                    <li><span class="code">clip_id</span> <em>[Required]</em>- the clip's strashtheque ID.</li>
+                    <li><span class="code">description</span> - the description string of the clip
+                        (if none is passed, the clip's description will be deleted)</li>
+                </ul></p>
+
+                <h1 id="kart_slash_cmd_restricted">Kart Slash Commands [Restricted access]</h1>
+                
+                <h2 id="slash_kart_password">/kart_password</h2>
+                
+                <p>The kart <span class="code">/kart_password</span> command allows for an authorized user to
+                    fetch the StrasBot SRB2Kart Server's admin password.<br/>
+                    <b>Note:</b> the password is only worth for the current session.
+                    Each time the server restarts, the password changes.
+                    </p>
+
+
+                <h2 id="slash_kart_server">/kart_server</h2>
+                
+                <p>The <span class="code">/kart_server</span> commands are for managing directly the Strashbot SRB2Kart Server.
+                    Used to start, stop or restart the server.</p>
+
+                <h3 id="slash_kart_server_start">/kart_server start</h3>
+                <p>Call the <span class="code">/kart_server start</span> subcommand to start the SRB2Kart.
+                    Only works if the server isn't already running.</p>
+
+                <h3 id="slash_kart_server_stop">/kart_server stop</h3>
+                <p>Call the <span class="code">/kart_server stop</span> subcommand to stop the SRB2Kart.
+                    Only works if the server is running.</p>
+                <p><b>Options:</b><ul>
+                    <li><span class="code">force</span> - pass this option to True, to force the server's halt.
+                        If not, the command will fail if there are players currently on the SRB2Kart server.</li>
+                </ul></p>
+
+                <h3 id="slash_kart_server_restart">/kart_server restart</h3>
+                <p>Call the <span class="code">/kart_server stop</span> subcommand to stop the SRB2Kart.</p>
+                <p><b>Options:</b><ul>
+                    <li><span class="code">force</span> - pass this option to True, to force the server's restart.
+                        If not, the command will fail if there are players currently on the SRB2Kart server.</li>
+                </ul></p>
+
+
+                <h2 id="slash_kart_addons_manage">/kart_addons_manage</h2>
+                <p>The <span class="code">/kart_server</span> commands are for managing the addons that are installed on
+                    the StrashBot Karting SRB2Kart Server.<br/>
+                    Note that adding or removing addons from the server only take effects after the next server
+                    restart (see the <span class="code">/kart_server</span> commands)</p>
+
+                <h3 id="slash_kart_addons_manage_get_order">/kart_addons_manage get_order</h3>
+                <p>Call the <span class="code">/kart_addons_manage get_order</span> subcommand to fetch a copy of the file that controls
+                    the order in which the addons are loaded on the Strashbot Karting SRB2Kart server.</p>
+
+                <h3 id="slash_kart_addons_manage_set_order">/kart_addons_manage set_order</h3>
+                <p>Use the <span class="code">/kart_addons_manage get_order</span> subcommand to change the config file that controls
+                    the order in which the addons are loaded on the Strashbot Karting SRB2Kart server.</p>
+                <p><b>Options:</b><ul>
+                    <li><span class="code">order_config_file</span> <em>[Required]</em>- the order config file to upload.</li>
+                </ul></p>
+
+                <h3 id="slash_kart_addons_manage_upload_new">/kart_addons_manage upload_new</h3>
+                <p>Call the <span class="code">/kart_addons_manage upload_new</span> subcommand to upload and install a new addon on the
+                    StrashBot Karting SRB2Kart server.<br/>
+                    Note: only <span class="code">*.pk3</span> and <span class="code">*.wad</span> files are accepted.</p>
+                <p><b>Options:</b><ul>
+                    <li><span class="code">kart_addon_file</span> <em>[Required]</em>- the addon file to upload and install.</li>
+                </ul></p>
+
+                <h3 id="slash_kart_addons_manage_link_new">/kart_addons_manage link_new</h3>
+                <p>Call the <span class="code">/kart_addons_manage link_new</span> subcommand to upload and install a new addon on the
+                    StrashBot Karting SRB2Kart server through a direct url.<br/>
+                    Note: only <em>direct url</em> to a file of type <span class="code">*.pk3</span> or <span class="code">*.wad</span>
+                    are accepted.</p>
+                <p><b>Options:</b><ul>
+                    <li><span class="code">addon_url</span> <em>[Required]</em>- the direct url to the addon file.</li>
+                </ul></p>
+
+                <h3 id="slash_kart_addons_manage_remove">/kart_addons_manage remove</h3>
+                <p>Call the <span class="code">/kart_addons_manage link_new</span> subcommand to uninstall and remove an addon from
+                    the StrashBot Karting SRB2Kart server.</p>
+                <p><b>Options:</b><ul>
+                    <li><span class="code">addon_name</span> <em>[Required]</em>- the complete addons filename (extension included)
+                        to remove.</li>
+                </ul></p>
+                
+
+
         <div class="divider" style="width:24%; margin:30px 0;"></div>
 
                 <h1 id="smash_slash_cmd">Smash Slash Commands [All Users]</h1>
@@ -123,7 +354,7 @@
                 </ul></p>
                 
                 
-                <h1 id="smash_slash_cmd">Smash Slash Commands [Restricted access]</h1>
+                <h1 id="smash_slash_cmd_restricted">Smash Slash Commands [Restricted access]</h1>
                 
                 <h2 id="slash_top8">/top8</h2>
                 
@@ -275,13 +506,11 @@
     <footer>By Dr_Nope</footer>
 
     <script>
+        // scripting to fill the side_panel
         let side_panel= document.querySelector('div.sidepanel')
         let right_col= document.querySelector('div.right-col')
-        console.log(right_col)
 
         for(let child of right_col.querySelectorAll('h1, h2, h3, div.divider')){
-            console.log(`${child.tagName}`)
-
             let eName= child.tagName
 
             if(eName==='DIV'){
@@ -300,6 +529,10 @@
                         `<a class="${sideLinkClass}" href="#${child.id}">` +
                         `${child.textContent}</a>`
             }
+        }
+
+        for(let img of document.querySelectorAll('img.no-cache-1hr')){
+            img.attributes['src'].value+= `?h=${Math.floor(Date.now()/3600000)}`
         }
 
     </script>
