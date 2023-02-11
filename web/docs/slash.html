@@ -318,7 +318,23 @@
                     <li><span class="code">addon_name</span> <em>[Required]</em>- the complete addons filename (extension included)
                         to remove.</li>
                 </ul></p>
+
+
+                <h2 id="slash_kart_discord">/kart_discord</h2>
+                <p>The <span class="code">/kart_discord</span> commands are for managing some behavior related to discord linked to kart for
+                    the current bot.</p>
                 
+                <h3 id="slash_kart_discord_post_status_channel">/kart_discord post_status_channel</h3>
+                <p>The <span class="code">/kart_discord post_status_channel</span> subcommand is for managing the channel (if any) that's recieve
+                    notification post for players joining the SRB2Kart's server.<br/>
+                    Called with no arguments, it informs which channel is currently designated as said notification channel.</p>
+                <p><b>Options:</b><ul>
+                    <li><span class="code">set</span> - set the text channel to recieved the player number notificiations.</li>
+                    <li><span class="code">do</span> - additionnal command to specify among which:<ul>
+                        <li><span class="code">get</span> <em>[Default]</em>- informs which channel is currently designated as said notification channel.</li>
+                        <li><span class="code">clear</span> - disable the currently designated notification channel for receiving said notifications.</li></ul>
+                    </li>
+                </ul></p>
 
 
         <div class="divider" style="width:24%; margin:30px 0;"></div>
