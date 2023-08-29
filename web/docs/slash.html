@@ -96,8 +96,8 @@
                         on the SRB2Kart Server.</p>
                         
                     <p><b>Options:</b><ul>
-                        <li><span class="code">pattern</span> - give a pattern to seach for among installed addon.
-                            For example, <span class="code">/kart_addons list pattern:strash</span> lists all the available
+                        <li><span class="code">search</span> - give a pattern to search for among installed addon.
+                            For example, <span class="code">/kart_addons list search:strash</span> lists all the available
                             addons containing the string "strash" in their name.</li>
                     </ul></p>
                     <p>3 categories are displayed:<ul>
@@ -118,8 +118,8 @@
                 <h3 id="slash_kart_ingames_maps">/kart_ingames maps</h3>
                 <p>Use the <span class="code">/kart_ingames maps</span> subcommand to list the maps available on the server.</p>
                 <p><b>Options:</b><ul>
-                    <li><span class="code">pattern</span> - a string that is a part of the name of the map to look for. Example:
-                        <span class="code">/kart_ingames maps pattern:beach</span>
+                    <li><span class="code">search</span> - a string that is a part of the name of the map to look for. Example:
+                        <span class="code">/kart_ingames maps search:beach</span>
                     </li>
                     <li><span class="code">type</span> - specify if you want to list non-standard map. Possible choices: <ul>
                         <li><span class="code">Battle maps</span> - to list battle maps</li>
@@ -139,8 +139,8 @@
                     Options are identical.
                 </p>
                 <p><b>Options:</b><ul>
-                    <li><span class="code">pattern</span> - a string that is a part of the name of the map to look for. Example:
-                        <span class="code">/kart_ingames map_count pattern:beach</span>
+                    <li><span class="code">search</span> - a string that is a part of the name of the map to look for. Example:
+                        <span class="code">/kart_ingames map_count search:beach</span>
                     </li>
                     <li><span class="code">type</span> - specify if you want to count non-standard map. Possible choices: <ul>
                         <li><span class="code">Battle maps</span> - to count battle maps</li>
@@ -158,8 +158,8 @@
                 <p>Use the <span class="code">/kart_ingames racers</span> subcommand to list the racers/characters/skins available
                     on the server.</p>
                 <p><b>Options:</b><ul>
-                    <li><span class="code">pattern</span> - a string that is a part of the name of the racers name to look for. Example:
-                        <span class="code">/kart_ingames racer_count pattern:sonic</span></li>
+                    <li><span class="code">search</span> - a string that is a part of the name of the racers name to look for. Example:
+                        <span class="code">/kart_ingames racer_count search:sonic</span></li>
                     <li><span class="code">speed</span> - a int to list every racer that has their speed stat set to this amount</li>
                     <li><span class="code">weight</span> - a int to list every racer that has their weight stat set to this amount</li>
                 </ul>
@@ -170,8 +170,8 @@
                     <span class="code">/kart_ingames maps</span>, but it just counts the number of racers/characters/skins available.<br/>
                     Options are identical.</p>
                 <p><b>Options:</b><ul>
-                    <li><span class="code">pattern</span> - a string that is a part of the name of the racers name to look for. Example:
-                        <span class="code">/kart_ingames racers pattern:sonic</span></li>
+                    <li><span class="code">search</span> - a string that is a part of the name of the racers name to look for. Example:
+                        <span class="code">/kart_ingames racers search:sonic</span></li>
                     <li><span class="code">speed</span> - a int to count the number of racer that has their speed stat
                         set to this amount</li>
                     <li><span class="code">weight</span> - a int to count the number of racer that has their weight stat
@@ -186,12 +186,12 @@
                     youtube video links.
                 </p>
 
-                <h3 id="slash_kart_clips_here">/kart_clips here</h3>
-                <p>Use the <span class="code">/kart_clips here</span> subcommand to register a clip url to the database.
+                <h3 id="slash_kart_clips_new">/kart_clips new</h3>
+                <p>Use the <span class="code">/kart_clips new</span> subcommand to register a new clip url to the database.
                     You can either pass the clip as a youtube url, or a video (or .gif) file through Discord (see available options).
                 </p>
                 <p><b>Options:</b><ul>
-                    <li><span class="code">clip_file</span> - use this option to upload a clip file through Discord
+                    <li><span class="code">clip_file</span> - use this option to upload a new clip file through Discord
                         (must be <span class="code">.mp4/.ogg/.webm/.gif</span>).
                         (This option is prioritized over <span class="code">clip_url</span>.)</li>
                     <li><span class="code">clip_url</span> - use this option to register a new youtube video link as a clip.

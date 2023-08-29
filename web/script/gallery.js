@@ -4,7 +4,7 @@ var cur_selected= null
 function _extractVideoId(src_type, url){
     switch (src_type){
         case "youtube":
-            return url.match(/((youtube\.com.*(\?v=|\/embed\/))|(youtu\.be\/))(.{11})/).pop()
+            return url.match(/((youtube\.com.*(\?v=|\/embed\/|shorts\/))|(youtu\.be\/))(.{11})/).pop()
         case "streamable.com":
             return url.match(/streamable\.com\/(.*)/).pop()
         default:
