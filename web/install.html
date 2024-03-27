@@ -14,7 +14,7 @@
     <meta property="og:type" content="website" />
     <meta property="og:url" content="http://strashbot.fr/install.html"/>
 
-    <link rel="stylesheet" type="text/css" href="script/install.css?v=0006" />
+    <link rel="stylesheet" type="text/css" href="script/install.css?v=0007" />
     <link rel="stylesheet" type="text/css" href="script/key.css" />
     <script src="./script/jquery-3.6.0.min.js"></script>
     <script src="./script/various.js"></script>
@@ -67,6 +67,26 @@
                         <span>Une esthétique aujourd'hui bien singulière</span>
                     </div>
                 </div>
+
+                <div id="tldr">
+                    <h3><b>TL;DR 😏</b></h3>
+                    <h4><b>C'est où que j'installe sur Windows?</b></h4>
+                        <p><a href="https://github.com/STJr/Kart-Public/releases/download/v1.6/srb2kart-v16-Installer.exe">Ici</a>.</p>
+                    <h4><b>… sur Linux?</b></h4>
+                        <p><a href="https://pkgs.org/download/srb2kart">RPM</a>;
+                        <a href="https://aur.archlinux.org/packages/srb2kart/">AUR</a>;
+                        <a href="https://flathub.org/apps/org.srb2.SRB2Kart">flatpak</a>.
+                        (sinon <a href="https://github.com/STJr/Kart-Public">démerde-toi</a>)</p>
+                    <h4><b>En azerty avec les trucs cools sur Windows plz?</b></h4>
+                        <p>Tu fais l'install normale puis tu remplace le srb2kart.exe par
+                            <a href="https://github.com/AlexPoilrouge/Kart-Public_azerty/releases/download/v1.6-galaxy-1.3-azerty/srb2kart.exe">celui-là</a>.</p>
+                    <h4><b>Azerty Galactico Linux?</b></h4>
+                        <p>J'ai un <a href="https://aur.archlinux.org/packages/srb2kart-galaxy-azerty-git">AUR</a>
+                            ou un <a href="https://flathub.org/apps/org.srb2.SRB2Kart-galaxy_azerty">flatpak</a>…
+                            (sinon <a href="https://github.com/AlexPoilrouge/Kart-Public_azerty/tree/v1.6-galaxy-1.3-azerty">yolo</a>)</p>
+                </div>
+                    
+
                 <h2 id="systems">Sur quel système?</h2>
                 <p>Son moteur étant ancestral et sous licence libre, <em>SRB2Kart</em> a pu être compilé et rendu disponible sur
                     Windows, MacOS, & Linux.
@@ -90,7 +110,12 @@
                     <input id="foldible" class="folding-toggle" type="checkbox">
                     <label for="foldible" class="folding-title">Linux</label>
                     <div class="folding-content">
-                        <p>Il faudra <a href="http://wiki.srb2.org/wiki/Source_code_compiling">compiler</a> vous-même le code depuis
+                        <p>Certains paquets d'installation sont cependant disponibles pour certaines distributions, comme par exemple
+                            <a href="https://pkgs.org/download/srb2kart">un package rpm</a> pour Ubuntu, Debian & friends, ou
+                            <a href="https://aur.archlinux.org/packages/srb2kart/">un package AUR</a> pour Arch et affiliés, ou
+                            <a href="https://flathub.org/apps/org.srb2.SRB2Kart">un flatpak</a> pour avoir la vie facile.
+                        </p>
+                        <p>Sinon, il faudra <a href="http://wiki.srb2.org/wiki/Source_code_compiling">compiler</a> vous-même le code depuis
                             <a href="https://github.com/STJr/Kart-Public">les sources</a> !
                         </p>
                         <p>Attention toutefois, car la compilation du code source, ne fournit pas certaines données nécessaire au lancement
@@ -108,10 +133,6 @@
                                 <code>/usr/share/games/SRB2Kart</code>
                              </li>
                         </ol>
-                        <p>Certains paquets d'installation sont cependant disponibles pour certaines distributions, comme par exemple
-                            <a href="https://launchpad.net/~kartkrew/+archive/ubuntu/srb2kart">Ubuntu</a> ou
-                            <a href="https://aur.archlinux.org/packages/srb2kart/">Archlinux</a>.
-                        </p>
                         <p>
                             Pour un guide (anglais) plus détaillé, vous pouvez consulter
                             <a href="https://kart.moe/building-srb2-kart-for-linux/">celui-ci</a>.
@@ -188,7 +209,7 @@
                     <input id="foldible2" class="folding-toggle" type="checkbox">
                     <label for="foldible2" class="folding-title">Linux</label>
                     <div class="folding-content">
-                        <p>Pour Linux, c'est un peu plus délicat. Cette fois, vous n'y couperez pas, il faudra compiler
+                        <p>Pas de paquets pour ce mod, déso. Cette fois, vous n'y couperez pas, il faudra compiler
                             <a href="https://github.com/AlexPoilrouge/Kart-Public_azerty/">les sources modifiées</a>!
                             Essentiellement, l'étape de compilation est strictement la même que pour l'installation de base, mais
                             avec ces nouvelles sources.
@@ -265,7 +286,11 @@
                         <input id="foldible3" class="folding-toggle" type="checkbox">
                         <label for="foldible3" class="folding-title">Linux</label>
                         <div class="folding-content">
-                            <p>Pour Linux, il vous faut également compiler <em>l'exe mod</em> 
+                            <p>Pour cette version, c'est un peu plus délicat, il y'aura moins de paquets disponibles. Mais on a quand même:
+                                <a href="https://aur.archlinux.org/packages/srb2kart-galaxy-azerty-git">un paquet AUR</a> pour les Arch-eux, ou
+                                <a href="https://flathub.org/apps/org.srb2.SRB2Kart-galaxy">le flatpak</a> pour les chill dudes.
+                            </p>
+                            <p>Ou bien, une fois encore, compilez <em>l'exe mod</em> 
                                 <a href="https://git.do.srb2.org/Galactice/Kart-Public/">depuis les sources</a>.
                             </p>
                             <ol>
@@ -308,7 +333,11 @@
                         <input id="foldible4" class="folding-toggle" type="checkbox">
                         <label for="foldible4" class="folding-title">Linux</label>
                         <div class="folding-content">
-                            <p>Pour Linux, il vous faut toujours compiler <em>l'exe mod</em> 
+                            <p>Ici aussi on trouve:
+                                <a href="https://aur.archlinux.org/packages/srb2kart-galaxy-azerty-git">un paquet AUR</a> pour les archistocrates, ou
+                                <a href="https://flathub.org/apps/org.srb2.SRB2Kart-galaxy_azerty">le flatpak</a> pour les gens normaux.
+                            </p>
+                            <p>Bah sinon, il vous faut toujours compiler <em>l'exe mod</em> 
                                 <a href="https://github.com/AlexPoilrouge/Kart-Public_azerty/tree/v1.6-galaxy-1.3-azerty">depuis les sources</a>.
                             </p>
                             <ol>

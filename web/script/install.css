@@ -94,6 +94,15 @@ h1 { color: #ffffff; font-family: 'Lato', sans-serif; font-size: 54px; font-weig
 h2 { color: #ffffff; font-family: 'Lato', sans-serif; font-size: 36px; font-weight: 300; line-height: 32px; margin: 64px 0 32px 16px; }
 label, h3 { color: #ffffff; font-family: 'Lato', sans-serif; font-size: 24px; font-weight: 300; line-height: 32px; margin: 0 0 32px 16px; }
 label h3 {margin: 0;}
+h4 {color: #ffffff; font-family: 'Lato', sans-serif; font-size: 18px; font-weight: 300; line-height: 16px; margin: 0 0 16px 16px;}
+
+div#tldr {
+    background-color: gray;
+    border: 4px dotted #ffffff;
+}
+div#tldr p {
+    background-color: rgb(103, 92, 92);
+}
 
 
 

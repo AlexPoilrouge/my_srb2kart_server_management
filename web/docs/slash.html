@@ -50,12 +50,13 @@
                     <ul>
                         <li><b>Smash Tool:</b> offering few services for the Smash Strasbourg's community.</li>
                         <li><b>SRB2Kart Server Manager:</b> tool to manage the StrashBot SRB2Kart Server.</li>
+                        <li><b>Minecraft Bedrock server manager:</b> don't bother with that, plz.</li>
                     </ul>
                 </p>
             
                 <h2 id="current_version">Current version</h2>
              
-                <p><b>Bot Version 0.3.1.</b></p>
+                <p><b>Bot Version 0.3.3.</b></p>
 
                 <h2 id="about_slash_cmd">About slash commands</h2>
                 
@@ -270,7 +271,7 @@
                 <p><b>Options:</b><ul>
                     <li><span class="code">set</span> - this option allows you to upload a new configuration file.</li>
                 </ul></p>
-                <p style="margin-left: 32px;"><b>Note: </b>the following kart commands are blacklister from the config file:<br/>
+                <p style="margin-left: 32px;"><b>Note: </b>the following kart commands are blacklisted from the config file:<br/>
                 <span class="code">"addfile" "alias" "bind" "toggle" "changeconfig" "exec" "loadconfig" "runsoc" "saveconfig"
                     "exitgame" "quit" "demote" "password" "promote" "connect" "cheats" "runscripts" "addons_folder"
                     "addons_option" "addons_search_case" "addons_search_type" "maxsend"</span>
@@ -518,7 +519,140 @@
                     <li><span class="code">post_channel</span> - a mention to the guild's channel where you want the generated graph to be posted</li>
                 </ul></p>
                     
-            <div class="divider" style="width:24%; margin:30px 0;"></div>
+        <div class="divider" style="width:24%; margin:30px 0;"></div>
+
+                <h1 id="craft_slash_cmd">Craft Slash Commands [All Users]</h1>
+
+                <p>The <span class="code">/craft</span> commands are used as a quick tool interface to basically interact with the StashBot's <em>Minecraft Bedrock</em>
+                    server (MC BR).
+
+                <h2 id="slash_craft">/craft</h2>
+
+                <p>Basic interactions with the <em>Minecraft Bedrock</em> server.</p>
+
+                <h3 id="slash_craft_start">/craft start</h3>
+
+                <p>Starts the MC BR server. Does nothing if it was already running.</p>
+
+                <h3 id="slash_craft_stop">/craft stop</h3>
+
+                <p><b>Note:</b> Starting the MC BR is refused to members of the "<em>Blocked</em>" attribute giving role.</p>
+
+                <p>Stops the MC BR server. No effect if it wasn't previously running.</p>
+
+                <p><b>Options:</b><ul>
+                    <li><span class="code">force</span> - A boolean whether or note to force the server to stop, i.e. even if players are currently playing on it.
+                        Forcing a server to reboot is only accessible to members of the guild belonging to the "<em>Operator</em>" privilege granting role.
+                    </li>
+                </ul></p>
+
+                <p><b>Note:</b> Stoping the MC BR is refused to members of the "<em>Blocked</em>" attribute giving role.</p>
+
+                <h3 id="slash_craft_restart">/craft restart</h3>
+
+                <p>Restarts the MC BR server. Should start it if it wasn't previously running.</p>
+
+                <p><b>Options:</b><ul>
+                    <li><span class="code">force</span> - A boolean whether or note to force the server to restart, i.e. even if players are currently playing on it.
+                        Forcing a server to restart is only accessible to members of the guild belonging to an "<em>Operator</em>" privilege granting role.
+                    </li>
+                </ul></p>
+
+                <p><b>Note:</b> Restarting the MC BR is refused to members of the "<em>Blocked</em>" attribute giving role.</p>
+
+                <h3 id="slash_craft_join">/craft join</h3>
+
+                <p>Subscribe the caller to the <em>allowed players</em> list of the MCBR. Players absent from this list wouldn't be able to join the running MCBR.</p>
+
+                <p><b>Options:</b><ul>
+                    <li><span class="code">username</span> <em>[Required]</em> - The mojang's Minecraft username, or UUID (uses 
+                        <code>https://api.mojang.com/users/profiles/minecraft/&lt;username&gt;</code> entry point for the first one,
+                        and <code>https://sessionserver.mojang.com/session/minecraft/profile/&lt;uuid&gt;</code> for the latter).
+                    </li>
+                </ul></p>
+
+                <p><b>Note:</b> This "joining" action has no effect for members of the "<em>Blocked</em>" attribute giving role.</p>
+
+                <h3 id="slash_craft_info">/craft info</h3>
+
+                <p>Get informations about the current state of the StrashBot's MCRB server.</p>
+
+                <h3 id="slash_craft_about">/craft about</h3>
+
+                <p>Fetch information about players regarding there Minecraft account.
+                    To check a user, you can provide a discord id, a mojang's Minecraft username, or a UUID.
+                    Although, the discord id will only be able to pair with a result, if the user has previously
+                    joined the mincraft server (see <span class="code">/craft join</span>).
+                </p>
+
+                <p><b>Options:</b><ul>
+                    <li><span class="code">mention</span> - the player's discord mention. This parameter is prioritized over <em>minecraft_id</em>.</li>
+                    <li><span class="code">mincraft_id</span> - the player's mojang's Minecraft username, or UUID.</li>
+                </ul></p>
+
+
+                <h1 id="craft_slash_cmd_restricted">Craft Slash Commands [Restricted access]</h1>
+
+                <p>The <span class="code">/craft_admin</span> commands are used for restricted management such as removing a player from the <em>allowed players list</em>,
+                    setting necessary privileges/restriction to some roles, or updating the MCBR server.</p>
+
+                <h2 id="slash_craft_admin">/craft_admin</h2>
+
+                <p>Admin only operations</p>
+
+                <h3 id="slash_craft_admin_disallow">/craft_admin disallow</h3>
+
+                <p>Removes a player from the StrasBot's MCRB server's <em>allowed players list</em>.</p>
+
+                <p><b>Options:</b><ul>
+                    <li><span class="code">user</span> - the player's mojang's Minecraft username, or UUID.</li>
+                    <li><span class="code">mention</span> - the player's discord mention. This parameter is prioritized over <em>minecraft_id</em>.</li>
+                </ul></p>
+
+                <p><b>Note:</b> this options only removes the players from the list. If you want to prevent a player from joinin again, said user
+                    will have to be assigned to the '<em>Blocked</em>' restriction via the associated role (see <span class="code">/craft_admin roles</span>).</p>
+
+                <h3 id="slash_craft_admin_roles">/craft_admin roles</h3>
+
+                <p>Associates given roles to privileges or restrictions.</p>
+
+                <p><b>Options:</b><ul>
+                    <li><span class="code">status</span> <em>[Required]</em> - values among:
+                        <ul>
+                            <li><span class="code">Operator</span> - privilege needed to force restart or stop the MCBR server.</li>
+                            <li><span class="code">Blocked</span> - restriction to keep users from joining, restart or stoping the MCBR server.</li>
+                            <li><span class="code">status</span> - use this value to check on the role given by the second option <span class="code">role</span>,
+                                gives general roles info if <span class="code">role</span> is kept empty along this value.</li>
+                        </ul>
+                    </li>
+                    <li><span class="code">role</span> - role mention of the role to handle according to the first option <span class="code">status</span>'s value</li>
+                </ul></p>
+
+                <p><b>Examples:</b><ul>
+                    <li><span class="code">/craft_admin roles status:Operator role:@builder</span> - gives the '<em>Operator</em>' privilege to members of the discord role
+                        <em>builder</em>.</li>
+                    <li><span class="code">/craft_admin roles status:Blocked role:@dumbass</span> - afflict the '<em>Blocked</em>' restirctions to members of the discord
+                        role <em>dumbass</em>.</li>
+                    <li><span class="code">/craft_admin roles status:status</span> - gives info about which roles carries with privilege/restriction.</li>
+                    <li><span class="code">/craft_admin roles status:Blocked</span> - removes the '<em>Blocked</em>' restriction from the previous discord role carrying it.</li>
+                </ul></p>
+
+                <h3 id="slash_craft_admin_update_server">/craft_admin update_server</h3>
+
+                <p>Update the StrasBot's MCBR server. <em>Don't bother.</em></p>
+
+                <p><b>Options:</b><ul>
+                    <li><span class="code">version_number</span> <em>[Required]</em> - the version to upgrade the StrashBot's MCBR server to. (e.g. "<em>1.20.72.01</em>")
+                        (check the <a href="https://www.minecraft.net/en-us/download/server/bedrock" target="_blank">official download site</a>)
+                    </li>
+                    <li><span class="code">key_pass</span> <em>[Required]</em> - the super secret passphrase necessary to use this command.
+                        This value has to be computed using dynamic parameters. No really, don't bother…
+                    </li>
+                </p>
+
+
+                    
+        <div class="divider" style="width:24%; margin:30px 0;"></div>
 
                 <h1 id="credits">Credits</h1>
 
