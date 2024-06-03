@@ -1,0 +1,88 @@
+- name: kart_server_install
+  vars_files:
+    - ./variables.yaml
+  become: true
+  hosts: "{{ host_var | default('hosts') }}"
+  
+  tasks:
+    - include_tasks: ./tasks/source_fetch.yaml
+
+    - name: creating strashbot user
+      ansible.builtin.user:
+        name: "{{ strashbot.username }}"
+        home: "{{ strashbot.home }}"
+
+    - name: preparing strashbot user limit security config
+      ansible.builtin.file:
+        path: "{{ root_dir }}/etc/security/limits.d"
+        state: directory
+        mode: 0755
+        owner: root
+        group: root
+    - name: writing strashbot user limit security config
+      ansible.builtin.template:
+        src: ./templates/10-strashbot-user-nice-limite.conf.j2
+        dest: "{{ root_dir }}/etc/security/limits.d/10-strashbot-user-nice-limite.conf"
+        mode: 0644
+        owner: root
+        group: root
+
+    - include_tasks: ./tasks/nginx_web_generic.yaml
+      when: web.install and nginx.install
+
+    - include_tasks: ./tasks/install_files.yaml
+      when: web.install
+      loop:
+        - { name: "html", path: "{{ server_source_dir }}/web/", dest: "{{ root_dir }}{{ strashbot.home }}/web/", recurse: "no", pattern: "*.html", mode: 0644, owner: "{{ strashbot.username }}", group: "{{ strashbot.username }}"}
+        - { name: "script_css", path: "{{ server_source_dir }}/web/script/", dest: "{{ root_dir }}{{ strashbot.home }}/web/script", recurse: "no", pattern: "*.css", mode: 0644, owner: "{{ strashbot.username }}", group: "{{ strashbot.username }}"}
+        - { name: "script_js", path: "{{ server_source_dir }}/web/script/", dest: "{{ root_dir }}{{ strashbot.home }}/web/script", recurse: "no", pattern: "*.js", mode: 0644, owner: "{{ strashbot.username }}", group: "{{ strashbot.username }}"}
+        - { name: "docs_html", path: "{{ server_source_dir }}/web/docs/", dest: "{{ root_dir }}{{ strashbot.home }}/web/docs", recurse: "no", pattern: "*.html", mode: 0644, owner: "{{ strashbot.username }}", group: "{{ strashbot.username }}"}
+        - { name: "img_files", path: "{{ server_source_dir }}/web/img", dest: "{{ root_dir }}{{ strashbot.home }}/web/img", recurse: "no", pattern: "*", mode: 0644, owner: "{{ strashbot.username }}", group: "{{ strashbot.username }}"}
+      loop_control:
+        loop_var: fileinfo
+    - name: "web images install"
+      when: web.install
+      ansible.builtin.copy:
+        src: ../../web/img/
+        dest: "{{ root_dir }}{{ strashbot.home }}/web/img/"
+        mode: 0644
+        owner: "{{ strashbot.username }}"
+        group: "{{ strashbot.username }}"
+    - name: "download jquery ver {{ web.jquery_ver }} for web install"
+      when: web.install
+      ansible.builtin.get_url:
+        url: "https://code.jquery.com/jquery-{{ web.jquery_ver }}.min.js"
+        dest: "{{ root_dir }}{{ strashbot.home }}/web/script/jquery-{{ web.jquery_ver }}.min.js"
+        mode: 0644
+        owner: "{{ strashbot.username }}"
+        group: "{{ strashbot.username }}"
+
+
+    - include_tasks: ./tasks/racer_install.yaml
+      loop: "{{ racers }}"
+      loop_control:
+        loop_var: racer
+
+    - name: Systemd reload
+      when: systemd.install and not docker_test
+      ansible.builtin.systemd_service:
+        daemon_reload: true
+    - name: nginx restart
+      when: systemd.install and nginx.install and not docker_test
+      ansible.builtin.systemd_service:
+        name: nginx
+        state: restarted
+    - name: "{{ racer.name }} service restart"
+      when: systemd.install and not docker_test
+      ansible.builtin.systemd_service:
+        name: "{{ racer.name }}_serv"
+        state: restarted
+      loop: "{{ racers }}"
+      loop_control:
+        loop_var: racer
+
+    - name: "remove source repo"
+      when: git.remove_on_finish 
+      ansible.builtin.file:
+        path: /etc/foo
+        state: absent

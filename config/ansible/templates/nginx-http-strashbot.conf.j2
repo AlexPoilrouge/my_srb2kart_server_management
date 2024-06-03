@@ -1,10 +1,9 @@
-
 server{
-    server_name ${STRASHBOT_WEB_DOMAIN};
+    server_name {{ web.domain }};
     index index.html;
 
     location / {
-        root ${STRASHBOT_USER_HOME}/${SRB2KART_DIR}/web;
+        root {{ root_dir }}{{ strashbot.home }}/web;
     }
 
     include strashbot_web_http_server/*.conf;

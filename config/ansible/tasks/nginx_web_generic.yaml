@@ -1,0 +1,32 @@
+- name: nginx strashbot install prep
+  ansible.builtin.file:
+    path: "{{ root_dir }}/etc/nginx/{{ item }}/"
+    state: directory
+    mode: 0755
+    owner: "{{ strashbot.username }}"
+    group: "{{ strashbot.username }}"
+  loop:
+    - sites-available
+    - sites-enabled
+- name: nginx webinstall conf 1
+  ansible.builtin.template:
+    src: ../templates/nginx-http-strashbot.conf.j2
+    dest: "{{ root_dir }}/etc/nginx/sites-available/nginx-http-strashbot.conf"
+    mode: 0644
+    owner: root
+    group: root
+- name: nginx webinstall conf 2
+  ansible.builtin.file:
+    state: link
+    src: "{{ root_dir }}/etc/nginx/sites-available/nginx-http-strashbot.conf"
+    dest: "{{ root_dir }}/etc/nginx/sites-enabled/nginx-http-strashbot.conf"
+    mode: 0644
+    owner: root
+    group: root
+- name: nginx webinstall conf 3
+  ansible.builtin.file:
+    path: "{{ root_dir }}/etc/nginx/strashbot_web_http_server"
+    state: directory
+    mode: 0755
+    owner: root
+    group: root

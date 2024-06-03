@@ -1,0 +1,32 @@
+root_dir: /
+
+docker_test: true
+
+git:
+  url: https://github.com/AlexPoilrouge/my_srb2kart_server_management.git
+  branch: "{{ git_branch_var | default('master') }}"
+  cloned_repo_dir: /var/sources/my_kart_server_management
+  remove_on_finish: true
+
+strashbot:
+  username: strashbot
+  home: "/home/strashbot"
+
+
+systemd:
+  install: true
+nginx:
+  install: true
+web:
+  install: true
+  domain: strashbot.fr
+  jquery_ver: 3.6.0
+
+racers:
+  - name: SRB2Kart
+    dirname: .srb2kart 
+    aur_pkg: srb2kart
+    exe: /usr/bin/srb2kart
+    lua_files_directory: /usr/share/games/SRB2Kart/luafiles
+    launch_args: -bandwidth 2000000 -port 5028 -room 33
+    addr: 127.0.0.1

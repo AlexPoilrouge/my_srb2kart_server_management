@@ -1,0 +1,16 @@
+[Install]
+WantedBy=multi-user.target
+
+[Unit]
+Description={{ racer.name}} Server
+After=local-fs.target network.target
+
+[Service]
+Type=simple
+User={{ strashbot.username }}
+LimitNICE=-20
+WorkingDirectory={{ root_dir }}{{ strashbot.home }}
+ExecStart=sh {{ racer.dirname }}/server_start.sh
+
+Restart=on-failure
+RestartSec=10s

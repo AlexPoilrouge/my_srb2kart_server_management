@@ -1,0 +1,5 @@
+{{ strashbot.username }} ALL=(ALL) NOPASSWD: /bin/systemctl start {{ racer.name }}_serv.service
+{{ strashbot.username }}  ALL=(ALL) NOPASSWD: /bin/systemctl stop {{ racer.name }}_serv.service
+{{ strashbot.username }}  ALL=(ALL) NOPASSWD: /bin/systemctl restart {{ racer.name }}_serv.service
+
+{{ strashbot.username }}  ALL=(ALL) NOPASSWD: {{ racer.exe }} -dedicated *

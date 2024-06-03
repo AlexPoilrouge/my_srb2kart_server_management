@@ -1,0 +1,34 @@
+
+server{
+    server_name {{ racer.addr }};
+
+    location ~* ^\/{{ racer.dirname }}\/(.+\.zip)$ {
+        root {{ root_dir }}{{ strashbot.home }}/{{ racer.dirname }};
+
+        try_files /$1 /addons/$1 =404;
+    }
+
+    location ~* ^\/{{ racer.dirname }}\/(.+\..+)$ {
+        root {{ root_dir }}{{ strashbot.home }};
+
+        try_files $uri /dl/$1;
+    }
+
+    location ~* ^\/dl\/(.+\..+)$ {
+        root {{ root_dir }}{{ strashbot.home }}/{{ racer.dirname }}/addons;
+
+        try_files $uri /tmp/$1;
+    }
+
+    location ~* ^\/tmp\/(.+\..+)$ {
+        root {{ root_dir }}{{ strashbot.home }}/{{ racer.dirname }}/addons;
+
+        try_files $uri /Packs/$1;
+    }
+
+    location ~* ^\/Packs\/(.+\..+)$ {
+        root {{ root_dir }}{{ strashbot.home }}/{{ racer.dirname }}/addons;
+
+        try_files $uri =404;
+    }
+}

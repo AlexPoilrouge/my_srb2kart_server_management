@@ -1,0 +1,103 @@
+- name: racer directory creation
+  ansible.builtin.file:
+    path: "{{ root_dir }}{{ strashbot.home }}/{{ racer.dirname }}"
+    state: directory
+    mode: 0755
+    owner: "{{ strashbot.username }}"
+    group: "{{ strashbot.username }}"
+
+- name: install systemd kart service file
+  when: systemd.install
+  ansible.builtin.template:
+    src: ../templates/racer_serv.service.j2
+    dest: "{{ root_dir }}/etc/systemd/system/{{ racer.name }}_serv.service"
+    mode: 0644
+    owner: root
+    group: root
+- name: install sudoers file
+  ansible.builtin.template:
+    src: ../templates/10-racer-serv-systemd.j2
+    dest: "{{ root_dir }}/etc/sudoers.d/10-{{ racer.name }}-serv-systemd"
+    mode: 0644
+    owner: root
+    group: root
+- name: install nginx conf
+  when: nginx.install
+  ansible.builtin.template:
+    src: ../templates/nginx-http-racer.conf.j2
+    dest: "{{ root_dir }}/etc/nginx/sites-available/nginx-http-{{ racer.name }}.conf"
+    mode: 0644
+    owner: root
+    group: root
+- name: nginx conf activation
+  when: nginx.install
+  ansible.builtin.file:
+    state: link
+    src: "{{ root_dir }}/etc/nginx/sites-available/nginx-http-{{ racer.name }}.conf"
+    dest: "{{ root_dir }}/etc/nginx/sites-enabled/nginx-http-{{ racer.name }}.conf"
+    owner: root
+    group: root
+
+- name: luafiles folder creation
+  ansible.builtin.file:
+    path: "{{ root_dir }}/usr/share/games/{{ racer.name }}/luafiles"
+    state: directory
+    mode: 0755
+    owner: "{{ strashbot.username }}"
+    group: "{{ strashbot.username }}"
+- name: luafile folder set
+  ansible.builtin.file:
+    state: link
+    src: "{{ root_dir }}/usr/share/games/{{ racer.name }}/luafiles"
+    dest: "{{ root_dir }}{{ strashbot.home }}/{{ racer.dirname }}/luafiles"
+    owner: "{{ strashbot.username }}"
+    group: "{{ strashbot.username }}"
+
+- name: install racer scripts
+  ansible.builtin.copy:
+    remote_src: true
+    src: "{{ server_source_dir }}/scripts/{{ item.script }}"
+    dest: "{{ root_dir }}{{ strashbot.home }}/{{ racer.dirname }}/{{ item.script }}"
+    mode: 0700
+    owner: "{{ strashbot.username }}"
+    group: "{{ strashbot.username }}"
+  loop:
+    - { script: "ls_restricted.lib.sh" }
+    - { script: "racer_operator.sh" }
+    - { script: "zipping_addons.sh" }
+    - { script: "record_lmp_read.py" }
+    - { script: "log_processor.py"}
+    - { script: "load_addon_manager.py" }
+- name: racer serv config copy
+  ansible.builtin.copy:
+    remote_src: true
+    src: "{{ server_source_dir }}/config/serv/{{ item.name }}"
+    dest: "{{ root_dir }}{{ strashbot.home }}/{{ racer.dirname }}/{{ item.name }}"
+    mode: 0700
+    owner: "{{ strashbot.username }}"
+    group: "{{ strashbot.username }}"
+    force: false
+  loop:
+    - { name: "kartserv.cfg" }
+    - { name: "startup.cfg" }
+- name: racer serv config prepare
+  ansible.builtin.template:
+    src: "../templates/{{ item.basename }}.{{racer.name}}.j2"
+    dest: "{{ root_dir }}{{ strashbot.home }}/{{ racer.dirname }}/{{ item.basename }}"
+    mode: 0700
+    owner: "{{ strashbot.username }}"
+    group: "{{ strashbot.username }}"
+    force: false
+  loop:
+    - { basename: "my_server_config.cfg" }
+- name: racer server start script prepare
+  ansible.builtin.template:
+    src: "../templates/{{ item.basename }}.j2"
+    dest: "{{ root_dir }}{{ strashbot.home }}/{{ racer.dirname }}/{{ item.basename }}"
+    mode: 0700
+    owner: "{{ strashbot.username }}"
+    group: "{{ strashbot.username }}"
+    force: false
+  loop:
+    - { basename: "server_start.sh" }
+    - { basename: "operator_values.env" }

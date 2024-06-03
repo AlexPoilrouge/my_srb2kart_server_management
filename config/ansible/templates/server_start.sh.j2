@@ -6,8 +6,13 @@ FILE="$( pwd )/.TMP_PASS"
 
 echo "${PASS}" > "$FILE"
 
-LOG_FILE="${STRASHBOT_USER_HOME}/${SRB2KART_DIR}/log.txt"
-LOGS_DIR="${STRASHBOT_USER_HOME}/${SRB2KART_DIR}/logs"
+STRASHBOT_USER_HOME="{{ root_dir }}{{ strashbot.home }}"
+RACER_DIR="{{ racer.dirname }}"
+RACER_EXE="{{ racer.exe }}"
+RACER_LAUNCH_ARGS="{{ racer.launch_args }}"
+
+LOG_FILE="${STRASHBOT_USER_HOME}/${RACER_DIR}/log.txt"
+LOGS_DIR="${STRASHBOT_USER_HOME}/${RACER_DIR}/logs"
 mkdir -p "${LOGS_DIR}"
 if [ -f "${LOG_FILE}" ]; then
     cp -vf "${LOG_FILE}" "${LOGS_DIR}/log$( date +'%Y%m%d%H%M%S' ).txt"
@@ -18,12 +23,12 @@ fi
 touch "${LOG_FILE}"
 chmod 704 "${LOG_FILE}"
 
-STATE_FILE="${STRASHBOT_USER_HOME}/${SRB2KART_DIR}/state.txt"
-MAPS_FILE="${STRASHBOT_USER_HOME}/${SRB2KART_DIR}/maps.txt"
-SKINS_FILE="${STRASHBOT_USER_HOME}/${SRB2KART_DIR}/skins.txt"
+STATE_FILE="${STRASHBOT_USER_HOME}/${RACER_DIR}/state.txt"
+MAPS_FILE="${STRASHBOT_USER_HOME}/${RACER_DIR}/maps.txt"
+SKINS_FILE="${STRASHBOT_USER_HOME}/${RACER_DIR}/skins.txt"
 touch "${STATE_FILE}" "${MAPS_FILE}" "${SKINS_FILE}" 
 chmod 704 "${STATE_FILE}" "${MAPS_FILE}" "${SKINS_FILE}"
 
 trap 'kill $(jobs -p)' EXIT
-( tail -f "${LOG_FILE}" | "${STRASHBOT_USER_HOME}/${SRB2KART_DIR}/log_processor.py" "${STATE_FILE}" "${MAPS_FILE}" "${SKINS_FILE}") &
-nice -n -20 ${SRB2KART_EXE} -dedicated -password ${PASS} ${SRB2KART_LAUNCH_ARGS}
+( tail -f "${LOG_FILE}" | "${STRASHBOT_USER_HOME}/${RACER_DIR}/log_processor.py" "${STATE_FILE}" "${MAPS_FILE}" "${SKINS_FILE}") &
+nice -n -20 ${RACER_EXE} -dedicated -password ${PASS} ${RACER_LAUNCH_ARGS}

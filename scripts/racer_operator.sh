@@ -11,11 +11,26 @@ source "${VALUES_FILES}"
 
 RACER_MODE_INFO_FILE="${SCRIPT_DIR}/state.txt"
 RACER_PASSWORD_FILE="${SCRIPT_DIR}/.TMP_PASS"
+RACER_LOGFILE="${SCRIPT_DIR}/log.txt"
+
+ADDONS_DIR="${SCRIPT_DIR}/addons"
 
 
 CMD="$1"
 
 case "${CMD}" in
+"INIT")
+    mkdir "${ADDONS_DIR}"
+
+    if [ -f "${RACER_LOGFILE}" ]; then
+        chmod 704 "${RACER_LOGFILE}"
+    fi
+
+    touch "${RACER_MODE_INFO_FILE}"
+    chmod 704 "${RACER_MODE_INFO_FILE}"
+
+    exit 0
+;;
 "" | "IS_SERVICE_ACTIVE")
     if systemctl is-active "${RACER_SERVER_SERVICE}" >/dev/null 2>&1; then
         echo "active"
