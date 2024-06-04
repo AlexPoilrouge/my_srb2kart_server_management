@@ -32,7 +32,8 @@ depend_check "make"
 depend_check "ansible-playbook"
 depend_check "yq"
 
-ANSIBLE_DIR="${SCRIPT_DIR}/config/ansbile"
+ANSIBLE_DIR="${SCRIPT_DIR}/config/ansible"
+VARIABLES_YAML="${ANSIBLE_DIR}/variables.yaml"
 
 RACER_MANAGER_SCRIPT_BASENAME="racer_operator.sh"
 RACER_MANAGER_SCRIPT_INIT_ARGS="INIT"
@@ -41,6 +42,13 @@ RACER_MANAGER_SCRIPT_INIT_ARGS="INIT"
 make -C "${ANSIBLE_DIR}" local_install LOCAL_SOURCE_DIR="${SCRIPT_DIR}"
 
 
-su ${STRASHBOT_USER} -c "cd ${SRB2KART_F_DIR}; ./${RACER_MANAGER_SCRIPT_BASENAME} ${RACER_MANAGER_SCRIPT_INIT_ARGS}"
+STRASHBOT_USER="$( yq '.strashbot.username' "${VARIABLES_YAML}" | tr -d '"' )"
+STRASHBOT_HOMEDIR="$( yq '.strashbot.home' "${VARIABLES_YAML}" | tr -d '"' )"
+
+yq '.racers.[].dirname' "${VARIABLES_YAML}" | tr -d '"'  | while read RACER_DIRNAME; do
+  RACER_DIR="${STRASHBOT_HOMEDIR}/${RACER_DIRNAME}"
+  echo ">>> Init '${RACER_DIR}'"
+  su ${STRASHBOT_USER} -c "cd ${RACER_DIR}; ./${RACER_MANAGER_SCRIPT_BASENAME} ${RACER_MANAGER_SCRIPT_INIT_ARGS}"
+done
 
 echo "End."
