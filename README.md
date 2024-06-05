@@ -37,6 +37,31 @@ the `install.sh` script should do the trick:
 ./install.sh
 ```
 
+### SRB2Kart + RingRacers
+
+You can install both, or only one of them, depending on the values in `config/ansible/variables.yaml`.
+
+For instance, this example only installs *Sonic Robo Blast 2 Kart*, but you can also install
+*Dr. Robotnik's Ring Racers* by just adding the following yaml item to the `.racers` list:
+```yaml
+  - name: RingRacers
+    dirname: .ringracers
+    aur_pkg: ringracers
+    exe: /usr/bin/ringracers
+    launch_args: -bandwidth 2000000 -room 33
+    addr: 127.0.0.1
+```
+
+#### Important notes:
+
+Make sure the config don't overlap, and the servers don't run on same port (tweak
+the `.racers.[].launch_args` value).
+
+Also, both of the server must have a ***server config*** template.
+For SRB2Kart and RingRacers, respectively:
+- `config/ansible/templates/my_server_config.cfg.SRB2Kart.j2`
+- `config/ansible/templates/my_server_config.cfg.RingRacers.j2`
+
 
 ## Tests
 
