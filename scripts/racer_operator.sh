@@ -20,7 +20,7 @@ CMD="$1"
 
 case "${CMD}" in
 "INIT")
-    mkdir "${ADDONS_DIR}"
+    mkdir -p "${ADDONS_DIR}"
 
     if [ -f "${RACER_LOGFILE}" ]; then
         chmod 704 "${RACER_LOGFILE}"
