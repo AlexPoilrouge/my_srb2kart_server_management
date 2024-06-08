@@ -26,7 +26,9 @@ case "${CMD}" in
         chmod 704 "${RACER_LOGFILE}"
     fi
 
-    touch "${RACER_MODE_INFO_FILE}"
+    if [ ! -f "${RACER_MODE_INFO_FILE}" ]; then
+        echo "{"modes": []}" > "${RACER_MODE_INFO_FILE}"
+    fi
     chmod 704 "${RACER_MODE_INFO_FILE}"
 
     exit 0
