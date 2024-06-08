@@ -1,8 +1,13 @@
 #!/bin/bash
 
+
+SCRIPT_DIR="$( dirname "$( realpath "$0" )" )"
+
+
+
 PASS="$( </dev/urandom tr -dc '0123456789azertyuiopqsdfghjklmwxcvbnAZERTYUIOPQSDFGHJKLMWXCVBN' | head -c6 )"
 
-FILE="$( pwd )/.TMP_PASS"
+FILE="${SCRIPT_DIR}/.TMP_PASS"
 
 echo "${PASS}" > "$FILE"
 
