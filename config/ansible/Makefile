@@ -8,6 +8,9 @@ ANSIBLE_DOCKER_TEST_INVENTORY:= ./docker_test/inventory.yaml
 ANSIBLE_INVENTORY?=./inventory.yaml
 ANSIBLE_SSH_TEST_HOSTNAME?= ssh_test
 ANSIBLE_PLAYBOOK?= ./playbook.yaml
+ANSIBLE_VARIABLES?= ./variables.yaml
+
+ANSIBLE_DOCKER_TEST_FLAG?= false
 
 SSH_ARG_PORT:= $(shell yq '.my_hosts.hosts.ssh_test.ansible_port' $(ANSIBLE_DOCKER_TEST_INVENTORY) | tr -d '"')
 SSH_ARG_ANSIBLE_USER:= $(shell yq '.my_hosts.hosts.ssh_test.ansible_user' $(ANSIBLE_DOCKER_TEST_INVENTORY) | tr -d '"')
@@ -27,17 +30,24 @@ install:
 	echo "Use \`make server_install\` or \`local_install\` => check 'README.md'"
 
 remote_install:
-	ansible-playbook -i "$(ANSIBLE_INVENTORY)" "$(ANSIBLE_PLAYBOOK)" -e "host_var=" -e "git_branch_var=$(SOURCE_GIT_BRANCH)"
+	ansible-playbook -i "$(ANSIBLE_INVENTORY)" "$(ANSIBLE_PLAYBOOK)" \
+				-e "variables_file_var=$(ANSIBLE_VARIABLES)"
+				-e "host_var=" -e "git_branch_var=$(SOURCE_GIT_BRANCH)" \
+				-e "docker_test_flag=$(ANSIBLE_DOCKER_TEST_FLAG)"
 
 ansible_test: run_docker
 	sleep 3
 	ansible-playbook -vvv -i "$(ANSIBLE_DOCKER_TEST_INVENTORY)" "$(ANSIBLE_PLAYBOOK)" \
-				-e "host_var=$(ANSIBLE_SSH_TEST_HOSTNAME)" -e "git_branch_var=$(SOURCE_GIT_BRANCH)"
+				-e "host_var=$(ANSIBLE_SSH_TEST_HOSTNAME)" \
+				-e "git_branch_var=$(SOURCE_GIT_BRANCH)" \
+				-e "docker_test_flag=true"
 
 local_install:
 	ansible-playbook "$(ANSIBLE_PLAYBOOK)" \
+				-e "variables_file_var=$(ANSIBLE_VARIABLES)"
 				-e "host_var=127.0.0.1" -e "git_branch_var=$(SOURCE_GIT_BRANCH)" \
 				-e "source_fetch=${LOCAL_SOURCE_DIR}" \
+				-e "docker_test_flag=$(ANSIBLE_DOCKER_TEST_FLAG)" \
 				--connection=local
 
 start_docker_service:

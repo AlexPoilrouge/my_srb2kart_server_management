@@ -1,6 +1,6 @@
 - name: kart_server_install
   vars_files:
-    - ./variables.yaml
+    - "{{ variables_file_var | default('./variables.yaml') }}"
   become: true
   hosts: "{{ host_var | default('hosts') }}"
   
@@ -72,11 +72,13 @@
       ansible.builtin.systemd_service:
         name: nginx
         state: restarted
+        enabled: true
     - name: "{{ racer.name }} service restart"
       when: systemd.install and not docker_test
       ansible.builtin.systemd_service:
         name: "{{ racer.name }}_serv"
-        state: restarted
+        state: "{{ (racer.systemd_service.state | default('stopped', true)) | default('stopped') }}"
+        enabled: "{{ (racer.systemd_service.enabled | default(false, true)) | default(false) }}"
       loop: "{{ racers }}"
       loop_control:
         loop_var: racer

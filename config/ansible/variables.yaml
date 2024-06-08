@@ -1,6 +1,6 @@
 root_dir: /
 
-docker_test: true
+docker_test: "{{ docker_test_flag | default(false) }}"
 
 git:
   url: https://github.com/AlexPoilrouge/my_srb2kart_server_management.git
@@ -30,3 +30,6 @@ racers:
     lua_files_directory: /usr/share/games/SRB2Kart/luafiles
     launch_args: -bandwidth 2000000 -port 5028 -room 33
     addr: 127.0.0.1
+    systemd_service:
+      state: stopped
+      enabled: false
