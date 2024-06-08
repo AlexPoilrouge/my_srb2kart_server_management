@@ -32,7 +32,7 @@ install:
 remote_install:
 	ansible-playbook -i "$(ANSIBLE_INVENTORY)" "$(ANSIBLE_PLAYBOOK)" \
 				-e "variables_file_var=$(ANSIBLE_VARIABLES)" \
-				-e "host_var=" -e "git_branch_var=$(SOURCE_GIT_BRANCH)" \
+				-e "git_branch_var=$(SOURCE_GIT_BRANCH)" \
 				-e "docker_test_flag=$(ANSIBLE_DOCKER_TEST_FLAG)"
 
 ansible_test: run_docker

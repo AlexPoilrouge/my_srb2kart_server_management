@@ -2,7 +2,7 @@
   vars_files:
     - "{{ variables_file_var | default('./variables.yaml') }}"
   become: true
-  hosts: "{{ host_var | default('hosts') }}"
+  hosts: "{{ host_var | default('all') }}"
   
   tasks:
     - include_tasks: ./tasks/source_fetch.yaml
@@ -64,17 +64,17 @@
         loop_var: racer
 
     - name: Systemd reload
-      when: systemd.install and not docker_test
+      when: systemd is defined and systemd.install is defined and systemd.install and ( ( docker_test is undefined ) or ( not docker_test ) )
       ansible.builtin.systemd_service:
         daemon_reload: true
     - name: nginx restart
-      when: systemd.install and nginx.install and not docker_test
+      when: systemd is defined and systemd.install is defined and systemd.install and ( ( docker_test is undefined ) or ( not docker_test ) )
       ansible.builtin.systemd_service:
         name: nginx
         state: restarted
         enabled: true
     - name: "{{ racer.name }} service restart"
-      when: systemd.install and not docker_test
+      when: systemd is defined and systemd.install is defined and systemd.install and ( ( docker_test is undefined ) or ( not docker_test ) )
       ansible.builtin.systemd_service:
         name: "{{ racer.name }}_serv"
         state: "{{ (racer.systemd_service.state | default('stopped', true)) | default('stopped') }}"
@@ -84,7 +84,7 @@
         loop_var: racer
 
     - name: "remove source repo"
-      when: git.remove_on_finish 
+      when: git is defined and git.remove_on_finish is defined and git.remove_on_finish 
       ansible.builtin.file:
         path: /etc/foo
         state: absent

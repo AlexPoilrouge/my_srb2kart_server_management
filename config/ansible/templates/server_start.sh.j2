@@ -23,6 +23,8 @@ fi
 touch "${LOG_FILE}"
 chmod 704 "${LOG_FILE}"
 
+rm -f "${STRASHBOT_USER_HOME}/${RACER_DIR}/ringdata.dat"
+
 STATE_FILE="${STRASHBOT_USER_HOME}/${RACER_DIR}/state.txt"
 MAPS_FILE="${STRASHBOT_USER_HOME}/${RACER_DIR}/maps.txt"
 SKINS_FILE="${STRASHBOT_USER_HOME}/${RACER_DIR}/skins.txt"
