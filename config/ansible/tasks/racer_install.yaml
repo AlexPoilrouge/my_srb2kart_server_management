@@ -76,7 +76,6 @@
     mode: 0700
     owner: "{{ strashbot.username }}"
     group: "{{ strashbot.username }}"
-    force: false
   loop:
     - { name: "kartserv.cfg" }
     - { name: "startup.cfg" }
@@ -87,7 +86,6 @@
     mode: 0700
     owner: "{{ strashbot.username }}"
     group: "{{ strashbot.username }}"
-    force: false
   loop:
     - { basename: "my_server_config.cfg" }
 - name: racer server start script prepare
@@ -97,7 +95,6 @@
     mode: 0700
     owner: "{{ strashbot.username }}"
     group: "{{ strashbot.username }}"
-    force: false
   loop:
     - { basename: "server_start.sh" }
     - { basename: "operator_values.env" }
