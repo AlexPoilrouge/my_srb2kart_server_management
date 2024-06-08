@@ -30,6 +30,6 @@ VOLUME /kart_addons
 
 RUN mkdir -p /kart_home/.srb2kart && ln -s /kart_addons /kart_home/.srb2kart/kart_addons
 
-RUN sh install.sh
+RUN sh install.sh -d
 
 CMD [ "sh", " /scripts/launch_kart.sh" ]

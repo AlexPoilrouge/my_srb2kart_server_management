@@ -27,11 +27,11 @@ about:
 	sed -n $(shell grep -n "^### remote install" "${README_FILE}"  | cut -d: -f1),$(shell expr $(shell grep -n "^## Tests" "${README_FILE}"  | cut -d: -f1) - 1)p "${README_FILE}"		
 
 install:
-	echo "Use \`make server_install\` or \`local_install\` => check 'README.md'"
+	echo "Use \`make remote_install\` or \`local_install\` => check 'README.md'"
 
 remote_install:
 	ansible-playbook -i "$(ANSIBLE_INVENTORY)" "$(ANSIBLE_PLAYBOOK)" \
-				-e "variables_file_var=$(ANSIBLE_VARIABLES)"
+				-e "variables_file_var=$(ANSIBLE_VARIABLES)" \
 				-e "host_var=" -e "git_branch_var=$(SOURCE_GIT_BRANCH)" \
 				-e "docker_test_flag=$(ANSIBLE_DOCKER_TEST_FLAG)"
 
@@ -44,7 +44,7 @@ ansible_test: run_docker
 
 local_install:
 	ansible-playbook "$(ANSIBLE_PLAYBOOK)" \
-				-e "variables_file_var=$(ANSIBLE_VARIABLES)"
+				-e "variables_file_var=$(ANSIBLE_VARIABLES)" \
 				-e "host_var=127.0.0.1" -e "git_branch_var=$(SOURCE_GIT_BRANCH)" \
 				-e "source_fetch=${LOCAL_SOURCE_DIR}" \
 				-e "docker_test_flag=$(ANSIBLE_DOCKER_TEST_FLAG)" \
