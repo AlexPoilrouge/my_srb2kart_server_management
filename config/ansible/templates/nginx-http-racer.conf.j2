@@ -11,22 +11,10 @@ server{
     location ~* ^\/{{ racer.dirname }}\/(.+\..+)$ {
         root {{ root_dir }}{{ strashbot.home }};
 
-        try_files $uri /dl/$1;
+        try_files $uri /installed/$1;
     }
 
-    location ~* ^\/dl\/(.+\..+)$ {
-        root {{ root_dir }}{{ strashbot.home }}/{{ racer.dirname }}/addons;
-
-        try_files $uri /tmp/$1;
-    }
-
-    location ~* ^\/tmp\/(.+\..+)$ {
-        root {{ root_dir }}{{ strashbot.home }}/{{ racer.dirname }}/addons;
-
-        try_files $uri /Packs/$1;
-    }
-
-    location ~* ^\/Packs\/(.+\..+)$ {
+    location ~* ^\/installed\/(.+\..+)$ {
         root {{ root_dir }}{{ strashbot.home }}/{{ racer.dirname }}/addons;
 
         try_files $uri =404;
