@@ -19,11 +19,6 @@ ADDONS_ENABLED_SUBDIR="${ADDONS_DIR}/enabled"
 ADDONS_PENDING_OPS_JSON_FILE="${ADDONS_DIR}/pending_op.json"
 
 
-pendingOps_process(){
-
-}
-
-
 CMD="$1"
 shift
 
