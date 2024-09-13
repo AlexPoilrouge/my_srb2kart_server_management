@@ -1,0 +1,14 @@
+server{
+    server_name {{ web.domain }};
+    index index.html;
+
+    location / {
+        root {{ root_dir }}{{ strashbot.home }}/web;
+    }
+
+    include strashbot_web_http_server/*.conf;
+
+    include certbot/in-serverblock-certbot-config.conf;
+}
+
+include certbot/own-serverblock-strashbotfr-https-redirect.conf;

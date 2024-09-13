@@ -2,6 +2,16 @@
 
 echoerr() { echo "$@" 1>&2; }
 
+usage() {
+    echo "Usage: $0 [option]"
+    echo ""
+    echo "Options:"
+    echo -e "\t-d, --docker_testing \t tells that the install is targeting a docker contained environnement"
+    echo -e "\t-v, --variables_file \t specifies the variables YAML file for install"
+    echo -e "\t-h, --help \t\t shows this help"
+    exit 0
+}
+
 depend_check() {
     for arg; do
 		hash "$arg" 2>/dev/null || { echoerr "Error: Could not find \"$arg\" application."; exit 2; }
@@ -12,223 +22,54 @@ SCRIPT_DIR="$( realpath "$( dirname "$0" )" )"
 
 cd "$SCRIPT_DIR"
 
-ROOT_DIR="/"
-if [ "$#" -gt 0 ] && [ -d "$1" ]; then
-    ROOT_DIR="$1"
-fi
-
-echo "Root dir is set to ${ROOT_DIR}"
-
-
-
 if ! [ "$( id -u )" = 0 ]; then
    echo "$0 must be run with root privileges…"
    exit 1
 fi
 
 depend_check "sudo"
-depend_check "find"
-depend_check "useradd"
-depend_check "envsubst"
-depend_check "wget"
-depend_check "srb2kart"
+depend_check "git"
+depend_check "make"
+depend_check "ansible-playbook"
+depend_check "yq"
+
+ANSIBLE_DIR="${SCRIPT_DIR}/config/ansible"
+VARIABLES_YAML="${ANSIBLE_DIR}/variables.yaml"
+MAKE_OPT=""
+
+OPTIONS=$(getopt -o dhv: --long docker_testing,help,variables_file: -- "$@")
+
+eval set -- "${OPTIONS}"
+# Process the options
+while true; do
+    case "$1" in
+        -d | --docker_testing ) MAKE_OPT="${MAKE_OPT} ANSIBLE_DOCKER_TEST_FLAG=true"; shift ;;
+        -v | --variables_file )
+              VARIABLES_YAML="$2"
+              MAKE_OPT="${MAKE_OPT} ANSIBLE_VARIABLES=$2"
+              shift 2
+              ;;
+        -h | --help ) usage; shift;;
+        -- ) shift; break ;;
+        * ) break ;;
+    esac
+done
 
 
+RACER_MANAGER_SCRIPT_BASENAME="racer_operator.sh"
+RACER_MANAGER_SCRIPT_INIT_ARGS="INIT"
 
 
-##### Obtaining variable values #####
-
-VALUES_FILE="values.txt"
+eval make -C "${ANSIBLE_DIR}" local_install LOCAL_SOURCE_DIR="${SCRIPT_DIR}" "${MAKE_OPT}"
 
 
-check_val(){
-    if [ "${1+x}" = "" ]; then
-        echoerr "Variable $1 not set…"
-        false
-    else
-        true
-    fi
-}
+STRASHBOT_USER="$( yq '.strashbot.username' "${VARIABLES_YAML}" | tr -d '"' )"
+STRASHBOT_HOMEDIR="$( yq '.strashbot.home' "${VARIABLES_YAML}" | tr -d '"' )"
 
-
-VAR_SUBST=""
-while read -r VAR_LINE; do
-    if [[ "${VAR_LINE}" =~ ^[0-9a-zA-Z_]+\:.*$ ]]; then
-        VAR="$( echo "${VAR_LINE}" | cut -d: -f1 )"
-        VAL="$( echo "${VAR_LINE}" | cut -d: -f2- )"
-
-        export VAR_SUBST="${VAR_SUBST} \\\$${VAR}"
-    	
-        if eval [ -x '${'"${VAR}"'+x}' ]; then
-            echoerr "export \"${VAR}\"=\"${VAL}\""
-            eval "export \"${VAR}\"=\"${VAL}\""
-        else
-            echoerr "[WARNING] Variable '${VAR}' was already set; ignoring value in '${VALUES_FILE}'"
-            eval export "${VAR}"
-    	fi
-	if eval "[ \"\${${VAR}}\" = \"\" ]"; then
-		echoerr "[WARNING] Variable '${VAR}' remains empty..."
-	fi
-    else
-    	echoerr "[CRITICAL WARNING] In '${VALUES_FILE}', line '${VAR_LINE}' is invalid."
-    fi
-done < "${VALUES_FILE}"
-
-if check_val "${NGINX_INSTALL}" && "${NGINX_INSTALL}"; then
-    depend_check "nginx"
-fi
-
-
-##### Install 1 #####
-
-if ! check_val "${STRASHBOT_USER}" || ! check_val "${SRB2KART_DIR}"; then
-    echoerr "STRASHBOT_USER & SRB2KART_DIR need to be set…"
-    exit 5
-fi
-
-if [ "$(grep -c "^${STRASHBOT_USER}:" /etc/passwd)" -eq 0 ]; then
-    useradd -m "${STRASHBOT_USER}"
-fi
-
-export VAR_SUBST="${VAR_SUBST} \\\$STRASHBOT_USER_HOME"
-if eval [ -x ${STRASHBOT_USER_HOME+x} ]; then
-	export STRASHBOT_USER_HOME="$( realpath "$( eval echo ~"${STRASHBOT_USER}" )" )"
-	echoerr "export \"STRASHBOT_USER_HOME\"=\"${STRASHBOT_USER_HOME}\""
-else
-	echoerr "[WARNING] Variable 'STRASHBOT_USER_HOME' was already set; ignoring value in '${STRASHBOT_USER_HOME}'"
-	eval export "${STRASHBOT_USER_HOME}"
-fi
-if [ "${STRASHBOT_USER_HOME}" = "" ]; then
-	echoerr "[WARNING] Variable '${STRASHBOT_USER_HOME}' remains empty..."
-fi
-SRB2KART_F_DIR="${STRASHBOT_USER_HOME}/${SRB2KART_DIR}"
-
-
-
-##### Obtaining and formating files #####
-
-check_template(){
-    if ! [ -f "${1}.template" ]; then
-        echoerr "Missing template file for $1 ( ${1}.template )"
-        exit 4
-    fi
-}
-
-
-convert_template(){
-    echo -n "-- formatting '$1'"
-    TEMPLATE_FILE="$1"
-    if [[ "${TEMPLATE_FILE}" =~ .*\.template$ ]]; then
-        TARGET_FILE="${TEMPLATE_FILE%.*}"
-        check_template "${TARGET_FILE}"
-        (eval "envsubst \"${VAR_SUBST}\"" ) < "${TEMPLATE_FILE}" > "${TARGET_FILE}"
-        echo " -> ${TARGET_FILE}"
-    else
-        echo " -> ! ERROR !"
-    fi
-}
-export -f check_template
-export -f convert_template
-
-find . -regex '.*\.template$' -exec bash -c 'convert_template {}' \;
-
-
-
-
-##### Install 2 #####
-
-if "${SYSTEMD_INSTALL}" && ( ! check_val "${SERVICE_INSTALL_PATH}" || ! check_val "${SUDOERS_DIR}" ); then
-    depend_check "systemctl"
-    
-    echoerr "Need SERVICE_INSTALL_PATH & SUDOERS_DIR for systemd install";
-    exit 6
-fi
-
-mkdir -p "${SRB2KART_F_DIR}"
-
-install -v ./scripts/{ls_restricted.lib.sh,addon_script.sh,zipping_addons.sh,record_lmp_read.py,log_processor.py,clip_manager.py,load_addon_manager.py} "${SRB2KART_F_DIR}" -m 700
-install -v ./config/serv/{my_server_config.cfg,kartserv.cfg,server_start.sh} "${SRB2KART_F_DIR}" -m 700
-
-mkdir -p "${ROOT_DIR}/etc/security/limits.d"
-install -v ./config/10-strashbot-user-nice-limite.conf "${ROOT_DIR}/etc/security/limits.d" -m 644
-
-if check_val "${SRB2KART_LUAFILES_FOLDER}"; then
-    mkdir -p "${ROOT_DIR}/${SRB2KART_LUAFILES_FOLDER}"
-    chown "${STRASHBOT_USER}:${STRASHBOT_USER}" "${ROOT_DIR}/${SRB2KART_LUAFILES_FOLDER}"
-    ln -sf "${SRB2KART_LUAFILES_FOLDER}" "${STRASHBOT_USER_HOME}/.srb2kart/luafiles"
-fi
-
-#preventing override
-if ! [ -f "${SRB2KART_F_DIR}/startup.cfg" ]; then
-    install -v ./config/serv/startup.cfg "${SRB2KART_F_DIR}" -m 704
-else
-    chmod 704 "${SRB2KART_F_DIR}/startup.cfg"
-fi
-chown "${STRASHBOT_USER}:${STRASHBOT_USER}" -R "${SRB2KART_F_DIR}"
-
-if "${SYSTEMD_INSTALL}"; then
-    echo "Systemd install…"
-    mkdir -p "${ROOT_DIR}/${SERVICE_INSTALL_PATH}"
-    install -v config/{srb2kart_serv.service,strashbot_zip_addons.service} "${ROOT_DIR}/${SERVICE_INSTALL_PATH}" -m 644
-    
-    echo "[systemd] daemon reload…"
-    systemctl daemon-reload
-
-    mkdir -p "${ROOT_DIR}/${SUDOERS_DIR}"
-    install -v config/10-strashbot-kartserv-systemd "${ROOT_DIR}/${SUDOERS_DIR}" -m 644
-fi
-
-if "${NGINX_INSTALL}"; then
-    echo "Nginx install… ${NGINX_DIR}"
-
-    chmod 701 "${STRASHBOT_USER_HOME}"
-
-    mkdir -p "${ROOT_DIR}/${NGINX_DIR}/sites-available"
-    mkdir -p "${ROOT_DIR}/${NGINX_DIR}/sites-enabled"
-
-    install -v config/nginx-http-srb2kart.conf "${ROOT_DIR}/${NGINX_DIR}/sites-available" -m 644
-
-    ln -sf "${ROOT_DIR}/${NGINX_DIR}/sites-available/nginx-http-srb2kart.conf" "${ROOT_DIR}/${NGINX_DIR}/sites-enabled/nginx-http-srb2kart.conf"
-
-    echo -e "[IMPORTANT] Make sure the line \n\tinclude sites-enabled/*;\n is added to '${ROOT_DIR}/${NGINX_DIR}/nginx.conf''s 'http' block!"
-    
-    if "${SYSTEMD_INSTALL}" && ! "${WEB_INSTALL}" && ( systemctl is-active nginx.service >/dev/null 2>&1 ); then
-        echo "[systemd] restarting nginx…"
-        systemctl restart nginx.service
-    fi
-fi
-
-if "${WEB_INSTALL}"; then
-    mkdir -p "${SRB2KART_F_DIR}/web/"{script,json}
-
-    rm -f "${SRB2KART_F_DIR}/web/script"/*
-
-    install -v web/{gallery.html,index.html,install.html} "${SRB2KART_F_DIR}/web" -m 644
-    install -v web/script/{gallery.css,strashbot.css,install.css,key.css,gallery.js,populate.js,various.js} "${SRB2KART_F_DIR}/web/script"  -m 644
-
-    wget -P "${SRB2KART_F_DIR}/web/script" --backups=1 "https://code.jquery.com/jquery-3.6.0.min.js"
-    
-    chown "${STRASHBOT_USER}:${STRASHBOT_USER}" -R "${SRB2KART_F_DIR}"
-
-    echo -e "\e[1m\e[33m[IMPORTANT]\e[0m: images resources ('${SRB2KART_F_DIR}/web/img') aren't installed by this process. You must fetch the resources manually…"
-
-    if ! "${NGINX_INSTALL}"; then
-        echo -e "\e[1m\e[33m[WARNING]\e[0m: 'web_install' can't be complete without 'nginx_install'"
-    else
-        install -v config/nginx-http-strashbot.conf "${ROOT_DIR}/${NGINX_DIR}/sites-available" -m 644
-        ln -sf "${ROOT_DIR}/${NGINX_DIR}/sites-available/nginx-http-strashbot.conf" "${ROOT_DIR}/${NGINX_DIR}/sites-enabled/nginx-http-strashbot.conf"
-
-        echo -e "\e[1m\e[33m[IMPORTANT]\e[0m Make sure the line \n\tinclude sites-enabled/*;\n is added to '${ROOT_DIR}/${NGINX_DIR}/nginx.conf''s 'http' block!"
-    
-        if "${SYSTEMD_INSTALL}" && ( systemctl is-active nginx.service >/dev/null 2>&1 ); then
-            echo "[systemd] restarting nginx…"
-            systemctl restart nginx.service
-        fi
-
-        mkdir -p "${ROOT_DIR}/${NGINX_DIR}/strashbot_web_http_server"
-    fi
-fi
-
-su ${STRASHBOT_USER} -c "cd ${SRB2KART_F_DIR}; ./addon_script.sh INIT"
+yq '.racers.[].dirname' "${VARIABLES_YAML}" | tr -d '"' | while read RACER_DIRNAME; do
+  RACER_DIR="${STRASHBOT_HOMEDIR}/${RACER_DIRNAME}"
+  echo ">>> Init '${RACER_DIR}'"
+  su ${STRASHBOT_USER} -c "cd ${RACER_DIR}; ./${RACER_MANAGER_SCRIPT_BASENAME} ${RACER_MANAGER_SCRIPT_INIT_ARGS}"
+done
 
 echo "End."

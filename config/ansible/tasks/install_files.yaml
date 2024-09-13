@@ -1,0 +1,15 @@
+- name: "find {{ fileinfo.name }} files"
+  ansible.builtin.find:
+    paths: "{{ fileinfo.path }}"
+    recurse: "{{ fileinfo.recurse }}"
+    patterns: "{{ fileinfo.pattern }}"
+  register: "found_files"
+- name: "install {{ fileinfo.name }} files"
+  ansible.builtin.copy:
+    remote_src: true
+    src: "{{ item.path }}"
+    dest: "{{ fileinfo.dest }}/"
+    mode: 0644
+    owner: "{{ fileinfo.owner }}"
+    group: "{{ fileinfo.group }}"
+  with_items: "{{ found_files.files }}"

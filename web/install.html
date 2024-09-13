@@ -14,7 +14,7 @@
     <meta property="og:type" content="website" />
     <meta property="og:url" content="http://strashbot.fr/install.html"/>
 
-    <link rel="stylesheet" type="text/css" href="script/install.css?v=0005" />
+    <link rel="stylesheet" type="text/css" href="script/install.css?v=0007" />
     <link rel="stylesheet" type="text/css" href="script/key.css" />
     <script src="./script/jquery-3.6.0.min.js"></script>
     <script src="./script/various.js"></script>
@@ -67,6 +67,26 @@
                         <span>Une esthétique aujourd'hui bien singulière</span>
                     </div>
                 </div>
+
+                <div id="tldr">
+                    <h3><b>TL;DR 😏</b></h3>
+                    <h4><b>C'est où que j'installe sur Windows?</b></h4>
+                        <p><a href="https://github.com/STJr/Kart-Public/releases/download/v1.6/srb2kart-v16-Installer.exe">Ici</a>.</p>
+                    <h4><b>… sur Linux?</b></h4>
+                        <p><a href="https://pkgs.org/download/srb2kart">RPM</a>;
+                        <a href="https://aur.archlinux.org/packages/srb2kart/">AUR</a>;
+                        <a href="https://flathub.org/apps/org.srb2.SRB2Kart">flatpak</a>.
+                        (sinon <a href="https://github.com/STJr/Kart-Public">démerde-toi</a>)</p>
+                    <h4><b>En azerty avec les trucs cools sur Windows plz?</b></h4>
+                        <p>Tu fais l'install normale puis tu remplace le srb2kart.exe par
+                            <a href="https://github.com/AlexPoilrouge/Kart-Public_azerty/releases/download/v1.6-galaxy-1.3-azerty/srb2kart.exe">celui-là</a>.</p>
+                    <h4><b>Azerty Galactico Linux?</b></h4>
+                        <p>J'ai un <a href="https://aur.archlinux.org/packages/srb2kart-galaxy-azerty-git">AUR</a>
+                            ou un <a href="https://flathub.org/apps/org.srb2.SRB2Kart-galaxy_azerty">flatpak</a>…
+                            (sinon <a href="https://github.com/AlexPoilrouge/Kart-Public_azerty/tree/v1.6-galaxy-1.3-azerty">yolo</a>)</p>
+                </div>
+                    
+
                 <h2 id="systems">Sur quel système?</h2>
                 <p>Son moteur étant ancestral et sous licence libre, <em>SRB2Kart</em> a pu être compilé et rendu disponible sur
                     Windows, MacOS, & Linux.
@@ -80,7 +100,7 @@
                 <p>L'installation de <em>SRB2Kart</em> sous Windows est classique et relativement simple :</p>
                     <ol>
                         <li>Créez un dossier dans vos fichiers personnels qui sera destiné à contenir votre installation</li>
-                        <li>Téléchargez <a href="https://github.com/STJr/Kart-Public/releases/download/v1.3/srb2kart-v13-Installer.exe">l'installateur</a>
+                        <li>Téléchargez <a href="https://github.com/STJr/Kart-Public/releases/download/v1.6/srb2kart-v16-Installer.exe">l'installateur</a>
                             depuis le <a href="https://github.com/STJr/Kart-Public">github de KartKrew</a> ou le
                             <a href="https://mb.srb2.org/threads/srb2kart.25868/">SRB2 Message Board</a> et placez le dans ce nouveau dossier</li>
                         <li>Exécutez l'installateur et suivez les instructions</li>
@@ -90,7 +110,12 @@
                     <input id="foldible" class="folding-toggle" type="checkbox">
                     <label for="foldible" class="folding-title">Linux</label>
                     <div class="folding-content">
-                        <p>Il faudra <a href="http://wiki.srb2.org/wiki/Source_code_compiling">compiler</a> vous-même le code depuis
+                        <p>Certains paquets d'installation sont cependant disponibles pour certaines distributions, comme par exemple
+                            <a href="https://pkgs.org/download/srb2kart">un package rpm</a> pour Ubuntu, Debian & friends, ou
+                            <a href="https://aur.archlinux.org/packages/srb2kart/">un package AUR</a> pour Arch et affiliés, ou
+                            <a href="https://flathub.org/apps/org.srb2.SRB2Kart">un flatpak</a> pour avoir la vie facile.
+                        </p>
+                        <p>Sinon, il faudra <a href="http://wiki.srb2.org/wiki/Source_code_compiling">compiler</a> vous-même le code depuis
                             <a href="https://github.com/STJr/Kart-Public">les sources</a> !
                         </p>
                         <p>Attention toutefois, car la compilation du code source, ne fournit pas certaines données nécessaire au lancement
@@ -99,7 +124,7 @@
                         </p>
                         <ol>
                             <li>Télécharger
-                                <a href="https://github.com/STJr/Kart-Public/releases/download/v1.3/srb2kart-v13-Installer.exe">l'installateur Windows.</a>
+                                <a href="https://github.com/STJr/Kart-Public/releases/download/v1.6/srb2kart-v16-Installer.exe">l'installateur Windows.</a>
                             </li>
                             <li>Extraire/désarchiver son contenu.</li>
                             <li>Installer/copier tous les fichiers <code>*.kart</code>, les fichiers
@@ -108,10 +133,6 @@
                                 <code>/usr/share/games/SRB2Kart</code>
                              </li>
                         </ol>
-                        <p>Certains paquets d'installation sont cependant disponibles pour certaines distributions, comme par exemple
-                            <a href="https://launchpad.net/~kartkrew/+archive/ubuntu/srb2kart">Ubuntu</a> ou
-                            <a href="https://aur.archlinux.org/packages/srb2kart/">Archlinux</a>.
-                        </p>
                         <p>
                             Pour un guide (anglais) plus détaillé, vous pouvez consulter
                             <a href="https://kart.moe/building-srb2-kart-for-linux/">celui-ci</a>.
@@ -156,7 +177,7 @@
                     De fait, il n'est pas possible de modifier dynamiquement, via un addon ou autre, ce mapping.
                     Or, évidemment, ce mapping des touches est calqué sur le modèle QWERTY.
                     Par conséquent, jouer à <em>SRB2Kart</em>, c'est subir le mapping QWERTY, même lorsque votre clavier est AZERTY.
-                    Cela peut vite devenir frustrant, notamment vis-à-vis du chat textuel lors de partie en ligne, le principal endroit où l'entré
+                    Cela peut vite devenir frustrant, notamment vis-à-vis du chat textuel lors de partie en ligne, le principal endroit où l'entrée
                     textuelle est utilisée dans le jeu.
                 </p>
                 <p>Heureusement, des joueurs de <em>StrashBot Karting</em> (comme celui qui écrit ces lignes) ont été frustrés avant vous, et ont décidé de 
@@ -180,7 +201,7 @@
                 <ol>
                     <li>Si ce n'est pas déjà fait, effectuez une <a href="#base-install">installation de base</a> de <em>SRB2Kart</em>.</li>
                     <li>Dans le dossier d'installation du jeu, remplacez simplement l'exécutable <code>srb2kart.exe</code> par
-                        <a href="https://github.com/AlexPoilrouge/Kart-Public_azerty/releases/download/1.3-azerty/srb2kart.exe">la version modifiée</a>.
+                        <a href="https://github.com/AlexPoilrouge/Kart-Public_azerty/releases/download/1.6-azerty/srb2kart.exe">la version modifiée</a>.
                     </li>
                 </ol>
                 <p>Et voilà !</p>
@@ -188,7 +209,7 @@
                     <input id="foldible2" class="folding-toggle" type="checkbox">
                     <label for="foldible2" class="folding-title">Linux</label>
                     <div class="folding-content">
-                        <p>Pour Linux, c'est un peu plus délicat. Cette fois, vous n'y couperez pas, il faudra compiler
+                        <p>Pas de paquets pour ce mod, déso. Cette fois, vous n'y couperez pas, il faudra compiler
                             <a href="https://github.com/AlexPoilrouge/Kart-Public_azerty/">les sources modifiées</a>!
                             Essentiellement, l'étape de compilation est strictement la même que pour l'installation de base, mais
                             avec ces nouvelles sources.
@@ -207,24 +228,27 @@
                     </div>
                 </div>
 
-                <h2 id="moe-mansion">Débloquer les FPS avec Moe's Mansion</h2>
-                    <p><em>Moe's Mansion</em> est sans doute <em>l'exe mod</em> le plus populaire, et à raison ! Il offre beaucoup de nouvelles
+                <h2 id="moe-mansion">Galaxy</h2>
+                    <p class="warning"> ⚠ <u>Important:</u> La dernière release officelle (non modifiée), la <a href="https://github.com/STJr/Kart-Public/releases/tag/v1.6">v1.6</a>, a intégré l'interpollation de FPS.
+                        L'<em>exe mod Moe's Mansion</em> ou <em>Galaxy</em> n'est donc plus nécessaire pour bénéficier de l'unlock de FPS!
+                    </p>
+                    <p class="warning"> <u><b>Note:</b></u> Depuis la dernière release officelle, la <a href="https://github.com/STJr/Kart-Public/releases/tag/v1.6">v1.6</a>, Moe's Mansion n'est plus considéré « à jour »,
+                        A l'heure ou ce guide est mis à jour, c'est la release <em>Galaxy</em> de Galactice qui a pris sa place.
+                    </p>
+                    <p><em>Galaxy</em> est  l'hértier de <em>Moe's Mansion</em>, sans doute <em>l'exe mod</em> le plus populaire, et à raison ! Il offre beaucoup de nouvelles
                     fonctionnalités intéressantes, dont notamment :</p>
                     <ul>
-                        <li>Interpolation de frames : lors des courses, l'état du jeu est évalué en 35 tics par seconde. Les frames affichés suivent
-                            donc ce rythme et limite le jeu à 35 fps. L'interpolation de frame offerte par <em>Moe's Mansion</em> permet
-                            s'affranchir de cette limite, bien au-delà des 35 frames par seconde.
-                        </li>
                         <li>Camera tilting : avec cette fonctionnalité, lors des courses, la caméra pivote en fonction du relief sur lequel se déplace
                             votre personnage. ⚠ <u>Attention :</u> si vous êtes sujet au “motion sickeness” pensez à la désactiver dans les options du
                             jeu :
                             <code>options</code> → <code>bird</code> → <code>screen tilting</code> → <code>camera tilting</code>
                         </li>
                         <li>Écran de sélection des personnages retravaillé, pratique pour les serveurs avec beaucoup de personnages.</li>
+                        <li>Commande console pour marquer l'enregisrement de replay directement pendant les course</li>
                     </ul>
                     <p>Cet <em>exe mod</em> offre bien d'autres modifications. Consultez
-                        <a href="https://mb.srb2.org/addons/srb2kart-1-3-moe-mansion.42/">le post du message board</a>
-                        associé ou <a href="https://gitlab.com/himie/kart-public/-/tree/moe-mansion">le repo du projet</a>.
+                        <a href="https://mb.srb2.org/addons/srb2kart-galaxy.4500/">le post du message board</a>
+                        associé ou <a href="https://git.do.srb2.org/Galactice/Kart-Public/-/tree/Galaxy-Redux">le repo du projet</a>.
                     </p>
 
                     <div class="figure-container">
@@ -235,7 +259,7 @@
                                     <img class="target-img" src="img/install/kart0044.png"/>
                                 </div>
                             </label>
-                            <span>L'écran de sélection “<em>grid</em>” de <em>Moe's Mansion</em></span>
+                            <span>L'écran de sélection “<em>grid</em>” de <em>Galaxy</em></span>
                         </div>
                         <div class="figure">
                             <input id="img5" class="img-toggle" type="checkbox">
@@ -250,23 +274,27 @@
 
                     <h3 id="moe-mansion-install">Installation</h3>
                     <p>L'installation est la même que pour <em>l'exe mod</em> AZERTY, ou tout autre <em>exe mod</em> en général :
-                        remplacez simplement l'exécutable <code>srb2kart.exe</code> par celui de <em>Moe's Mansion</em> dans votre installation :
+                        remplacez simplement l'exécutable <code>srb2kart.exe</code> par celui de <em>Galaxy</em> (disponible <a href="https://mb.srb2.org/addons/srb2kart-galaxy.4500/">ici</a>) dans votre installation :
                     </p>
                     <ol>
                         <li>Si ce n'est pas déjà fait, effectuez une <a href="#base-install">installation de base</a> de <em>SRB2Kart</em>.</li>
                         <li>Dans le dossier d'installation du jeu, remplacez simplement l'exécutable <code>srb2kart.exe</code> par
-                            <a href="https://kart.moe/moe-mansion/">la version modifiée</a>.
+                            la version modifiée</a>.
                         </li>
                     </ol>
                     <div class="folding-note">
                         <input id="foldible3" class="folding-toggle" type="checkbox">
                         <label for="foldible3" class="folding-title">Linux</label>
                         <div class="folding-content">
-                            <p>Pour Linux, il vous faut également compiler <em>l'exe mod</em> 
-                                <a href="https://gitlab.com/himie/kart-public.git">depuis les sources</a>.
+                            <p>Pour cette version, c'est un peu plus délicat, il y'aura moins de paquets disponibles. Mais on a quand même:
+                                <a href="https://aur.archlinux.org/packages/srb2kart-galaxy-azerty-git">un paquet AUR</a> pour les Arch-eux, ou
+                                <a href="https://flathub.org/apps/org.srb2.SRB2Kart-galaxy">le flatpak</a> pour les chill dudes.
+                            </p>
+                            <p>Ou bien, une fois encore, compilez <em>l'exe mod</em> 
+                                <a href="https://git.do.srb2.org/Galactice/Kart-Public/">depuis les sources</a>.
                             </p>
                             <ol>
-                                <li>Clonez le répo : <code>git clone https://gitlab.com/himie/kart-public.git</code></li>
+                                <li>Clonez le répo : <code>git clone https://git.do.srb2.org/Galactice/Kart-Public.git</code></li>
                                 <li>Entrez dans le nouveau dossier cloné : <code>cd kart-public</code></li>
                                 <li>Compilez : <code>make -C src/ LINUX64=1 clean && make -C src/ LINUX64=1</code></li>
                                 <li>Si tout se déroule bien, le nouvel exécutable aura été généré à l'emplacement
@@ -279,7 +307,7 @@
                         </div>
                     </div>
 
-                <h2 id="azerty-moe-mansion">Moe's Mansion en AZERTY</h2>
+                <h2 id="azerty-moe-mansion">Galaxy en AZERTY</h2>
                     <p>Comme évoqué précédemment, les <em>exe mods</em> sont des exécutables du jeu modifiés.
                         Il n'est donc pas possible d'utiliser deux <em>exe mods</em> en même temps.
                         Jusqu'ici, nous avons présenté deux <em>exe mods</em> : AZERTY mod et <em>Moe's Mansion</em>.
@@ -287,16 +315,16 @@
                         Fort heureusement, jusqu'ici, les modifications effectuées sur le code source par ces deux <em>exe mods</em> ne sont pas
                         conflictuelles !
                         Par conséquent, il fut, jusqu'à présent, relativement facile de combiner ces deux mods en un nouveau troisième <em>exe mod</em>:
-                        <em>Moe's Mansion (AZERTY)</em>. À vous les 100 fps ET le layout AZERTY!
+                        <em>Galaxy (AZERTY)</em>. À vous Galaxy ET le layout AZERTY!
                     </p>
                     <h3 id="azerty-moe-mansion-install">Installation</h3>
                     <p>L'installation est la même que pour les deux autres <em>exe mods</em>:
-                        remplacez simplement l'exécutable <code>srb2kart.exe</code> par celui de <em>Moe's Mansion (AZERTY)</em> dans votre installation:
+                        remplacez simplement l'exécutable <code>srb2kart.exe</code> par celui de <em>Galaxy (AZERTY)</em> dans votre installation:
                     </p>
                     <ol>
                         <li>Si ce n'est pas déjà fait, effectuez une <a href="#base-install">installation de base</a> de <em>SRB2Kart</em>.</li>
                         <li>Dans le dossier d'installation du jeu, remplacez simplement l'exécutable <code>srb2kart.exe</code> par
-                            <a href="https://github.com/AlexPoilrouge/Kart-Public_azerty/releases/download/v1.3-moe-mansion-azerty/srb2kart.exe">
+                            <a href="https://github.com/AlexPoilrouge/Kart-Public_azerty/releases/download/v1.6-galaxy-1.3-azerty/srb2kart.exe">
                                 la version modifiée
                             </a>.
                         </li>
@@ -305,15 +333,19 @@
                         <input id="foldible4" class="folding-toggle" type="checkbox">
                         <label for="foldible4" class="folding-title">Linux</label>
                         <div class="folding-content">
-                            <p>Pour Linux, il vous faut toujours compiler <em>l'exe mod</em> 
-                                <a href="https://github.com/AlexPoilrouge/Kart-Public_azerty/tree/moe-mansion">depuis les sources</a>.
+                            <p>Ici aussi on trouve:
+                                <a href="https://aur.archlinux.org/packages/srb2kart-galaxy-azerty-git">un paquet AUR</a> pour les archistocrates, ou
+                                <a href="https://flathub.org/apps/org.srb2.SRB2Kart-galaxy_azerty">le flatpak</a> pour les gens normaux.
+                            </p>
+                            <p>Bah sinon, il vous faut toujours compiler <em>l'exe mod</em> 
+                                <a href="https://github.com/AlexPoilrouge/Kart-Public_azerty/tree/v1.6-galaxy-1.3-azerty">depuis les sources</a>.
                             </p>
                             <ol>
                                 <li>Clonez le répo :
-                                    <code>git clone https://github.com/AlexPoilrouge/Kart-Public_azerty/tree/moe-mansion</code>
+                                    <code>git clone https://github.com/AlexPoilrouge/Kart-Public_azerty.git</code>
                                 </li>
                                 <li>Entrez dans le nouveau dossier cloné : <code>cd Kart-Public_azerty</code></li>
-                                <li>Basculez sur la branche <em>moe-mansion</em> : <code>git checkout moe-mansion</code></li>
+                                <li>Basculez sur la branche <em>Galaxy-Redux_azerty</em> : <code>git checkout Galaxy-Redux_azerty</code></li>
                                 <li>Compilez : <code>make -C src/ LINUX64=1 clean && make -C src/ LINUX64=1</code></li>
                                 <li>Si tout se déroule bien, le nouvel exécutable aura été généré à l'emplacement
                                     <code>kart-public/bin/Linux64/Release/lsdl2srb2kart</code>

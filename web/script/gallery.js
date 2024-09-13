@@ -4,7 +4,7 @@ var cur_selected= null
 function _extractVideoId(src_type, url){
     switch (src_type){
         case "youtube":
-            return url.match(/((youtube\.com.*(\?v=|\/embed\/))|(youtu\.be\/))(.{11})/).pop()
+            return url.match(/((youtube\.com.*(\?v=|\/embed\/|shorts\/))|(youtu\.be\/))(.{11})/).pop()
         case "streamable.com":
             return url.match(/streamable\.com\/(.*)/).pop()
         default:
@@ -79,13 +79,16 @@ function update_displayer(){
         var source_type= cur_selected.attr('src-type')
         var source_id= cur_selected.attr('id')
 
+        var clip_thumb= cur_selected.children("div").children("img.clip_thumbnail").attr('src')
+
         switch (source_type){
             case "gif":
-                displayer.children("div.display-content").append("<img src=\""+source+"\"/>")
+                displayer.children("div.display-content").append("<img src=\""+source+"\" fetchpriority=\"high\"/>")
             break;
             case "video":
                 displayer.children("div.display-content").append(
-                    "<video controls src=\""+source+"\">Your browser does not support the video tag.</video>"
+                    "<video controls preload=\"auto\" fetchpriority=\"high\" poster=\""+clip_thumb+"\" src=\""+source+"\">"+
+                    "Your browser does not support the video tag.</video>"
                 )
             break;
             case "youtube":
@@ -118,6 +121,29 @@ function update_displayer(){
         var ts= cur_selected.children("time.gallery-element-timestamp")
         if (ts && ts.text()){
             contentInfo.append(ts.text()+"<br/>")
+        }
+
+        if(source_id && source_id.length>0){
+            var $t;
+            ($t= $(  "<div><span class=\"notif\">Copied! </span>"
+                +"<span class=\"share-link\">Share link: <a class=\"share-link\">[ 📋 ]</a></span></br></div>"
+            )).appendTo(
+                contentInfo
+            ).click( () => {
+                navigator.clipboard.writeText(
+                    `https://strashbot.fr/gallery.html?clip=${source_id}`
+                );
+
+                $target= $t.children('span.notif:first-child')
+                $target.removeClass('copied-text')
+                $newone= $target.clone(true)
+
+                $target.replaceWith($newone)
+                $newone.addClass('copied-text')
+
+
+                return false;
+            })
         }
 
         if (source){
@@ -164,22 +190,31 @@ function displayer_close(){
     clear_displayer()
 }
 
-function gallery(){
+function gallery(clip_id){
 
     displayer= $("div.display")
 
     displayer.hide()
 
     $("div.gallery a.gallery-element").each(function(index, element){
-        process_source(element)
+        // process_source(element)
 
-        $(element).click(function(){
+        let _show_clip= (elmt) => {
             displayer.show()
 
-            cur_selected= $(this)
+            cur_selected= $(elmt)
 
             update_displayer()
+        }
+
+        $(element).click(function(){
+            _show_clip(this)
         })
+            
+
+        if($(element).attr('id')===`${clip_id}`){
+            _show_clip(element)
+        }
     })
     displayer.click(function(){
         if (displayer.is(":visible")){

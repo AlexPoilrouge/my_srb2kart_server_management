@@ -1,0 +1,708 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>StrashBot's Discord documentation</title>
+    <meta name="description" content="Strashbot Discord Bot Documentation">
+    <meta name="author" content="Dr_Nope">
+
+    <meta property="og:site_name" content="Strashbot's help"/>
+    <meta property="og:title" content="strashbot.fr/docs - documentation"/>
+    <meta property="og:description" content="Strashbot Discord Bot Documentation about slash commands and whatnots."/>
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://strashbot.fr/docs/slash.html"/>
+
+    <link rel="stylesheet" href="../script/slash.css?">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&family=Open+Sans:ital,wght@0,400;0,700;1,600&display=swap" rel="stylesheet">
+    
+    <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js" integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+
+    <div class="navbar clear nav-top">
+        <div class="row content">
+            <a href="#"><img class="logo no-cache-1hr" style="max-height: 110px; width: auto;" src="https://strashbot.fr/bot/avatar.png"></a>
+            <a class="right" style="text-decoration: underline;" href="#"><i class="fas fa-book"></i>&nbsp; Documentation</a>
+            <a class="right" href="https://strashbot.fr" target="_blank"><i class="fas fa-globe"></i>&nbsp; strashbot.fr</a>
+        </div>
+    </div>
+
+    <div class="container clear">
+        <div class="row wrapper">
+
+            <div class="sidepanel">
+                <!-- Auto-fill with js, see bottom page script -->
+            </div>
+
+            <div class="right-col">
+                <h1 id="about_strashbot">About Discord Strashbot</h1>
+                
+                <p>Discord StrashBot is my personal Discord bot.<br/>
+                    Depending on which guild you meet him, its function can differ.
+                </p> 
+                <p>As of ver. <em>0.3.0</em> there are mainly 2 usage for strashBot:
+                    <ul>
+                        <li><b>Smash Tool:</b> offering few services for the Smash Strasbourg's community.</li>
+                        <li><b>SRB2Kart Server Manager:</b> tool to manage the StrashBot SRB2Kart Server.</li>
+                        <li><b>Minecraft Bedrock server manager:</b> don't bother with that, plz.</li>
+                    </ul>
+                </p>
+            
+                <h2 id="current_version">Current version</h2>
+             
+                <p><b>Bot Version 0.3.3.</b></p>
+
+                <h2 id="about_slash_cmd">About slash commands</h2>
+                
+                <p>Since version <em>0.3.0</em> the Discord StrashBot transited from <em>custom !commands</em>
+                    to <a href="https://support.discord.com/hc/en-us/articles/1500000368501-Slash-Commands-FAQ" target="_blank">integrated <em>slash commands</em></a></p>
+
+                <h2 id="technology">Technology</h2>
+                
+                <p>Discord Strashbot is build using <a href="https://nodejs.org/" target="_blank">node.js</a> and <a href="https://discord.js.org/" target="_blank">Discord.js</a></p>
+
+                <p id="gettingstarted"><a href="https://github.com/AlexPoilrouge/strashBot2" target="_blank">Discord Strashbot's code</a> (as most of its code)
+                    is available on <a href="https://github.com/AlexPoilrouge" target="_blank">my github</a>.</p> 
+                 
+        <div class="divider" style="width:24%; margin:30px 0;"></div>
+
+                <h1 id="kart_slash_cmd">Kart Slash Commands [All Users]</h1>
+                <p>Coming soon…</p>
+                <h2 id="slash_kart_info">/kart_info</h2>
+
+                <p>The <span class="code">/kart_info</span> command allows to check the current state of the
+                    <em>StrashBot Karting</em> SRB2Kart server. This give the user info about the number of player
+                    currently on the server, the map they're racing on, and other various info such as kartspeed,
+                    current gamemode, etc.
+                </p><p>
+                    This command is basically a call to the
+                    <a href="https://strashbot.fr/kart/service" target="_blank"><span class="code">/service</span></a> and
+                    <a href="https://strashbot.fr/kart/info" target="_blank"><span class="code">/info</span></a> entrypoints
+                    of the strashbot.fr <span class="code">/kart</span> API.
+                </p>
+
+                <h2 id="slash_kart_addons">/kart_addons</h2>
+
+                <p>The <span class="code">/kart_addons</span> commands are for info about the addons currently installed on the
+                    <em>StrashBot Karting</em> SRB2Kart server.</p>
+                
+                <h3 id="slash_kart_addons_list">/kart_addons list</h3>
+                    <p>Use the <span class="code">/kart_addons list</span> subcommand to list the addons currently installed and running
+                        on the SRB2Kart Server.</p>
+                        
+                    <p><b>Options:</b><ul>
+                        <li><span class="code">search</span> - give a pattern to search for among installed addon.
+                            For example, <span class="code">/kart_addons list search:strash</span> lists all the available
+                            addons containing the string "strash" in their name.</li>
+                    </ul></p>
+                    <p>3 categories are displayed:<ul>
+                        <li><em>[Pending]</em> - for addons that are going to be installed on the server's next restart.</li>
+                        <li><em>[Downloaded]</em> - for addons that are currently installed on the server.</li>
+                        <li><em>[Base]</em> - addons that are un-removable.</li>
+                    </ul></p>
+
+                <h3 id="slash_kart_addons_zip">/kart_addons zip</h3>
+                    <p>Gives a link to a dowloadable <em>.zip</em> archive containing all the addons.</p>
+                 
+                <h2 id="slash_kart_ingames">/kart_ingames</h2>
+                <p><span class="code">/kart_ingames</span> is a group of commands used to check the assets available on the server.
+                    It differs for <span class="code">/kart_addons</span> since it allows to check items in term of ingame objects,
+                    in this case racers and maps, instead of purely addon files.
+                </p>
+
+                <h3 id="slash_kart_ingames_maps">/kart_ingames maps</h3>
+                <p>Use the <span class="code">/kart_ingames maps</span> subcommand to list the maps available on the server.</p>
+                <p><b>Options:</b><ul>
+                    <li><span class="code">search</span> - a string that is a part of the name of the map to look for. Example:
+                        <span class="code">/kart_ingames maps search:beach</span>
+                    </li>
+                    <li><span class="code">type</span> - specify if you want to list non-standard map. Possible choices: <ul>
+                        <li><span class="code">Battle maps</span> - to list battle maps</li>
+                        <li><span class="code">Hell maps</span> - to list hell maps</li>
+                        <li><span class="code">Banned maps</span> - to list maps that are installed but banned</li>
+                    </ul></li>
+                    <li><span class="code">sections</span> - specify if you want to list section maps or not. Possible choices: <ul>
+                        <li><span class="code">Show all maps (default)</span> - list both lap maps and section maps</li>
+                        <li><span class="code">Only show section maps</span> - list only section maps</li>
+                        <li><span class="code">Don't show section maps</span> - list only lap maps</li>
+                    </ul></li>
+                </ul></p>
+
+                <h3 id="slash_kart_ingames_map_count">/kart_ingames map_count</h3>
+                <p><span class="code">/kart_ingames map_count</span> is basically the same command as
+                    <span class="code">/kart_ingames maps</span>, but it just counts the number of maps.<br/>
+                    Options are identical.
+                </p>
+                <p><b>Options:</b><ul>
+                    <li><span class="code">search</span> - a string that is a part of the name of the map to look for. Example:
+                        <span class="code">/kart_ingames map_count search:beach</span>
+                    </li>
+                    <li><span class="code">type</span> - specify if you want to count non-standard map. Possible choices: <ul>
+                        <li><span class="code">Battle maps</span> - to count battle maps</li>
+                        <li><span class="code">Hell maps</span> - to count hell maps</li>
+                        <li><span class="code">Banned maps</span> - to count maps that are installed but banned</li>
+                    </ul></li>
+                    <li><span class="code">sections</span> - specify if you want to count section maps or not. Possible choices: <ul>
+                        <li><span class="code">Show all maps (default)</span> - counts both lap maps and section maps</li>
+                        <li><span class="code">Only show section maps</span> - counts only section maps</li>
+                        <li><span class="code">Don't show section maps</span> - counts only lap maps</li>
+                    </ul></li>
+                </ul></p>
+
+                <h3 id="slash_kart_ingames_racers">/kart_ingames racers</h3>
+                <p>Use the <span class="code">/kart_ingames racers</span> subcommand to list the racers/characters/skins available
+                    on the server.</p>
+                <p><b>Options:</b><ul>
+                    <li><span class="code">search</span> - a string that is a part of the name of the racers name to look for. Example:
+                        <span class="code">/kart_ingames racer_count search:sonic</span></li>
+                    <li><span class="code">speed</span> - a int to list every racer that has their speed stat set to this amount</li>
+                    <li><span class="code">weight</span> - a int to list every racer that has their weight stat set to this amount</li>
+                </ul>
+                </p>
+
+                <h3 id="slash_kart_ingames_racer_count">/kart_ingames racer_count</h3>
+                <p><span class="code">/kart_ingames racers</span> is basically the same command as
+                    <span class="code">/kart_ingames maps</span>, but it just counts the number of racers/characters/skins available.<br/>
+                    Options are identical.</p>
+                <p><b>Options:</b><ul>
+                    <li><span class="code">search</span> - a string that is a part of the name of the racers name to look for. Example:
+                        <span class="code">/kart_ingames racers search:sonic</span></li>
+                    <li><span class="code">speed</span> - a int to count the number of racer that has their speed stat
+                        set to this amount</li>
+                    <li><span class="code">weight</span> - a int to count the number of racer that has their weight stat
+                        set to this amount</li>
+                </ul>
+                </p>
+
+                <h2 id="slash_kart_clips">/kart_clips</h2>
+                <p>The <span class="code">/kart_clips</span> helps to manage some of the player cool clips by referencing them in the 
+                    <a href="https://strashbot.fr/gallery.html" target="_blank">strashbot.fr's <em>strashtheque</em></a>.<br/>
+                    Clips must be either <span class="code">.mp4/.ogg/.webm/.gif</span> video uploaded via Discord, or
+                    youtube video links.
+                </p>
+
+                <h3 id="slash_kart_clips_new">/kart_clips new</h3>
+                <p>Use the <span class="code">/kart_clips new</span> subcommand to register a new clip url to the database.
+                    You can either pass the clip as a youtube url, or a video (or .gif) file through Discord (see available options).
+                </p>
+                <p><b>Options:</b><ul>
+                    <li><span class="code">clip_file</span> - use this option to upload a new clip file through Discord
+                        (must be <span class="code">.mp4/.ogg/.webm/.gif</span>).
+                        (This option is prioritized over <span class="code">clip_url</span>.)</li>
+                    <li><span class="code">clip_url</span> - use this option to register a new youtube video link as a clip.
+                        (The <span class="code">clip_file</span> option is prioritized over this one.)</li>
+                    <li><span class="code">description</span> - a short description of your clip.</li>
+                </ul></p>
+
+                <h3 id="slash_kart_clips_info">/kart_clips info</h3>
+                <p>The <span class="code">/kart_clips info</span> subcommand fetches infos about the <em>strashtheque</em> clips,
+                    or a clip in particular given its strashtheque ID.</p>
+                <p><b>Options:</b><ul>
+                    <li><span class="code">clip_id</span> - give info about a clip bearing the given ID
+                        (a number available on each clip of the strashtheque)</li>
+                </ul></p>
+
+                <h3 id="slash_kart_clips_remove">/kart_clips remove</h3>
+                <p>The <span class="code">/kart_clips remove</span> subcommand allows a user to remove a clip from the strashtheque.<br/>
+                    <b>Note: </b> only a user that uploaded/registered a clip can remove it.
+                </p>
+                <p><b>Options:</b><ul>
+                    <li><span class="code">clip_id</span> <em>[Required]</em>- the clip to remove's strashtheque ID.</li>
+                </ul></p>
+
+                <h3 id="slash_kart_clips_description">/kart_clips description</h3>
+                <p>The <span class="code">/kart_clips description</span> subcommand allows a user to edit
+                    a clip from the strashtheque's description.<br/>
+                    <b>Note: </b> only a user that uploaded/registered a clip can edit its description.</p>
+                <p><b>Options:</b><ul>
+                    <li><span class="code">clip_id</span> <em>[Required]</em>- the clip's strashtheque ID.</li>
+                    <li><span class="code">description</span> - the description string of the clip
+                        (if none is passed, the clip's description will be deleted)</li>
+                </ul></p>
+
+                <h1 id="kart_slash_cmd_restricted">Kart Slash Commands [Restricted access]</h1>
+                
+                <h2 id="slash_kart_password">/kart_password</h2>
+                
+                <p>The kart <span class="code">/kart_password</span> command allows for an authorized user to
+                    fetch the StrasBot SRB2Kart Server's admin password.<br/>
+                    <b>Note:</b> the password is only worth for the current session.
+                    Each time the server restarts, the password changes.
+                    </p>
+
+
+                <h2 id="slash_kart_server">/kart_server</h2>
+                
+                <p>The <span class="code">/kart_server</span> commands are for managing directly the Strashbot SRB2Kart Server.
+                    Used to start, stop or restart the server.</p>
+
+                <h3 id="slash_kart_server_start">/kart_server start</h3>
+                <p>Call the <span class="code">/kart_server start</span> subcommand to start the SRB2Kart.
+                    Only works if the server isn't already running.</p>
+
+                <h3 id="slash_kart_server_stop">/kart_server stop</h3>
+                <p>Call the <span class="code">/kart_server stop</span> subcommand to stop the SRB2Kart.
+                    Only works if the server is running.</p>
+                <p><b>Options:</b><ul>
+                    <li><span class="code">force</span> - pass this option to True, to force the server's halt.
+                        If not, the command will fail if there are players currently on the SRB2Kart server.</li>
+                </ul></p>
+
+                <h3 id="slash_kart_server_restart">/kart_server restart</h3>
+                <p>Call the <span class="code">/kart_server stop</span> subcommand to stop the SRB2Kart.</p>
+                <p><b>Options:</b><ul>
+                    <li><span class="code">force</span> - pass this option to True, to force the server's restart.
+                        If not, the command will fail if there are players currently on the SRB2Kart server.</li>
+                </ul></p>
+
+                <h3 id="slash_kart_server_logs">/kart_server logs</h3>
+                <p>Call the <span class="code">/kart_server logs</span> subcommand to get a reminder of the
+                    server's log url, lol.</p>
+
+                <h3 id="slash_kart_server_logs">/kart_server config</h3>
+                <p>The <span class="code">/kart_server config</span> subcommands is for checking and changing
+                    the addon configuration layer of the <em>StrashBort Karting</em> SRB2Kart server.</p>
+                <p><b>Options:</b><ul>
+                    <li><span class="code">set</span> - this option allows you to upload a new configuration file.</li>
+                </ul></p>
+                <p style="margin-left: 32px;"><b>Note: </b>the following kart commands are blacklisted from the config file:<br/>
+                <span class="code">"addfile" "alias" "bind" "toggle" "changeconfig" "exec" "loadconfig" "runsoc" "saveconfig"
+                    "exitgame" "quit" "demote" "password" "promote" "connect" "cheats" "runscripts" "addons_folder"
+                    "addons_option" "addons_search_case" "addons_search_type" "maxsend"</span>
+                </p>
+
+
+                <h2 id="slash_kart_addons_manage">/kart_addons_manage</h2>
+                <p>The <span class="code">/kart_server</span> commands are for managing the addons that are installed on
+                    the StrashBot Karting SRB2Kart Server.<br/>
+                    Note that adding or removing addons from the server only take effects after the next server
+                    restart (see the <span class="code">/kart_server</span> commands)</p>
+
+                <h3 id="slash_kart_addons_manage_get_order">/kart_addons_manage get_order</h3>
+                <p>Call the <span class="code">/kart_addons_manage get_order</span> subcommand to fetch a copy of the file that controls
+                    the order in which the addons are loaded on the Strashbot Karting SRB2Kart server.</p>
+
+                <h3 id="slash_kart_addons_manage_set_order">/kart_addons_manage set_order</h3>
+                <p>Use the <span class="code">/kart_addons_manage get_order</span> subcommand to change the config file that controls
+                    the order in which the addons are loaded on the Strashbot Karting SRB2Kart server.</p>
+                <p><b>Options:</b><ul>
+                    <li><span class="code">order_config_file</span> <em>[Required]</em>- the order config file to upload.</li>
+                </ul></p>
+
+                <h3 id="slash_kart_addons_manage_upload_new">/kart_addons_manage upload_new</h3>
+                <p>Call the <span class="code">/kart_addons_manage upload_new</span> subcommand to upload and install a new addon on the
+                    StrashBot Karting SRB2Kart server.<br/>
+                    Note: only <span class="code">*.pk3</span> and <span class="code">*.wad</span> files are accepted.</p>
+                <p><b>Options:</b><ul>
+                    <li><span class="code">kart_addon_file</span> <em>[Required]</em>- the addon file to upload and install.</li>
+                </ul></p>
+
+                <h3 id="slash_kart_addons_manage_link_new">/kart_addons_manage link_new</h3>
+                <p>Call the <span class="code">/kart_addons_manage link_new</span> subcommand to upload and install a new addon on the
+                    StrashBot Karting SRB2Kart server through a direct url.<br/>
+                    Note: only <em>direct url</em> to a file of type <span class="code">*.pk3</span> or <span class="code">*.wad</span>
+                    are accepted.</p>
+                <p><b>Options:</b><ul>
+                    <li><span class="code">addon_url</span> <em>[Required]</em>- the direct url to the addon file.</li>
+                </ul></p>
+
+                <h3 id="slash_kart_addons_manage_remove">/kart_addons_manage remove</h3>
+                <p>Call the <span class="code">/kart_addons_manage link_new</span> subcommand to uninstall and remove an addon from
+                    the StrashBot Karting SRB2Kart server.</p>
+                <p><b>Options:</b><ul>
+                    <li><span class="code">addon_name</span> <em>[Required]</em>- the complete addons filename (extension included)
+                        to remove.</li>
+                </ul></p>
+
+
+                <h2 id="slash_kart_discord">/kart_discord</h2>
+                <p>The <span class="code">/kart_discord</span> commands are for managing some behavior related to discord linked to kart for
+                    the current bot.</p>
+                
+                <h3 id="slash_kart_discord_post_status_channel">/kart_discord post_status_channel</h3>
+                <p>The <span class="code">/kart_discord post_status_channel</span> subcommand is for managing the channel (if any) that's recieve
+                    notification post for players joining the SRB2Kart's server.<br/>
+                    Called with no arguments, it informs which channel is currently designated as said notification channel.</p>
+                <p><b>Options:</b><ul>
+                    <li><span class="code">set</span> - set the text channel to recieved the player number notificiations.</li>
+                    <li><span class="code">do</span> - additionnal command to specify among which:<ul>
+                        <li><span class="code">get</span> <em>[Default]</em>- informs which channel is currently designated as said notification channel.</li>
+                        <li><span class="code">clear</span> - disable the currently designated notification channel for receiving said notifications.</li></ul>
+                    </li>
+                </ul></p>
+
+
+        <div class="divider" style="width:24%; margin:30px 0;"></div>
+
+                <h1 id="smash_slash_cmd">Smash Slash Commands [All Users]</h1>
+
+                <h2 id="slash_player">/player</h2>
+                
+                <p>The <span class="code">/player</span> commands are used to register infos about Smash players in the Discord guild.<br/>
+                    The collected data are later on used by Tournament Organiser for organisation purposes.
+                    For instance generate Weekly or Monthy tournament results graph.
+                </p>
+
+                <h3 id="slash_player_tag">/player tag</h3>
+                <p>The <span class="code">/player tag</span> subcommand is used to register a player's tagname tourney information into the
+                    guild's DataBase.
+                </p>
+                <p><b>Options:</b><ul>
+                    <li><span class="code">name</span> <em>[Required]</em> - Register your Smash player name</li>
+                    <li><span class="code">team</span> - Register your team's name</li>
+                </ul></p>
+
+                <h3 id="slash_player_roster">/player roster</h3>
+                <p>The <span class="code">/player roster</span> subcommand is used to register a player's character roster into the
+                    guild's DataBase, up to 4 characters
+                </p>
+                <p><b>Options:</b><ul>
+                    <li><span class="code">fighter1</span> <em>[Required]</em> - The player's "main" character's name</li>
+                    <li><span class="code">fighter2</span> - The player's second character's name</li>
+                    <li><span class="code">fighter3</span> - The player's third character's name</li>
+                    <li><span class="code">fighter4</span> - The player's fourth character's name</li>
+                </ul>
+                The file used to reference all the Smash Bros. figthers can be found
+                <a href="https://github.com/AlexPoilrouge/strashBot2/blob/master/js/modules/player/fighters.json" target="_blank">
+                    here</a>.</p>
+
+                <h3 id="slash_player_delete">/player delete</h3>
+                <p>The <span class="code">/player delete</span> subcommand is remove a player's information from the guild's
+                    DataBase. Both one's character roster and tag.
+                </p>
+
+                <h3 id="slash_player_about">/player about</h3>
+                <p>Use the <span class="code">/player about</span> subcommand to check your character and tag name
+                    as they are currently registered in the database.
+                    You can check another player's info by using the '<em>user</em>' command option.
+                </p>
+                <p><b>Options:</b><ul>
+                    <li><span class="code">user</span> - Mention to the user you wish to ckech info of.</li>
+                </ul></p>
+                
+                
+                <h1 id="smash_slash_cmd_restricted">Smash Slash Commands [Restricted access]</h1>
+                
+                <h2 id="slash_top8">/top8</h2>
+                
+                <p>The <span class="code">/top8</span> commands are used by Smash Tournament Organizer to generate automatically result graphs for
+                    weekly or monthly tournaments.<br/>
+                    The data used is pulled from the <a href="https://developer.start.gg" target="_blank">start.gg API</a> and from the guild's DataBase
+                    that the player fed using the <span class="code">/player</span> slash commands.</p>
+
+                <h3 id="slash_top8_test">/top8 test</h3>
+
+                <p>The <span class="code">/top8 test</span> subcommand is used to check data availability from both a start.gg completed tournament, and the
+                    guild's DataBase.<br/>
+                    When the data is processed, the Strashbot will provide the caller with a <em>.json</em> file representing the fetched top8 result.
+                    The caller should then use this file to pinpoint missing data.
+                    Afterwards it's up to the caller to fill in the blank of missing data with 2 methods available:
+                    <ul>
+                        <li>using the <em>inline options</em> option (inherited from old style commands)</li>
+                        <li>providing a completed <em>.json</em> file (it is advised to check the json validity with a validator such as 
+                            <em><a href="https://jsonlint.com" target="_blank">jsonlint.com</a></em> beforehand)</li>
+                    </ul>
+                </p>
+                <p><b>Options:</b><ul>
+                    <li><span class="code">startgg_url</span> <em>[Required]</em>  - the url to the completed start.gg tourney you wish to check the available data for.</li>
+                    <li><span class="code">title</span> - the title for your data set</li>
+                    <li><span class="code">config</span> - a <em>.json</em> file to provide the missing data. The json document should be construct in a the same way as the json
+                        document returned by a first call to <span class="code">/top8 test</span>. The intent here is to proceed like this:
+                        <ol>
+                            <li>run a first <span class="code">/top8 test</span></li>
+                            <li>fetch the returned json document and identify missing data</li>
+                            <li>edit this json document and fill in the missing data</li>
+                            <li>make sure your document is valid using a validator such as <a href="https://jsonlint.com" target="_blank">jsonlint.com</a></li>
+                            <li>re-run <span class="code">/top8 test</span> with your completed json file through the <span class="code">config</span> option</li>
+                            <li>if all is right, you can use the same json document you just provided to fill in the missing data for the
+                                <span class="code">/top8 draw</span> call.
+                            </li>
+                        </ol>
+                    </li>
+                    <li><span class="code">inline_options</span> - old style inline options to provide missing data (e.g: <span class="code">?top5a-char1="Mario 3"</span>);
+                        check available list below. 
+                </ul></p>
+
+                <h4>inline_options list:</h4>
+                <ul>
+                    <li><span class="code">top1-name</span></li>
+                    <li><span class="code">top1-team</span></li>
+                    <li><span class="code">top1-twitter</span></li>
+                    <li><span class="code">top1-char1</span></li>
+                    <li><span class="code">top1-char2</span></li>
+                    <li><span class="code">top1-char3</span></li>
+                    <li><span class="code">top1-char4</span></li>
+                    <li><span class="code">top2-name</span></li>
+                    <li><span class="code">top2-team</span></li>
+                    <li><span class="code">top2-twitter</span></li>
+                    <li><span class="code">top2-char1</span></li>
+                    <li><span class="code">top2-char2</span></li>
+                    <li><span class="code">top2-char3</span></li>
+                    <li><span class="code">top2-char4</span></li>
+                    <li><span class="code">top3-name</span></li>
+                    <li><span class="code">top3-team</span></li>
+                    <li><span class="code">top3-twitter</span></li>
+                    <li><span class="code">top3-char1</span></li>
+                    <li><span class="code">top3-char2</span></li>
+                    <li><span class="code">top3-char3</span></li>
+                    <li><span class="code">top3-char4</span></li>
+                    <li><span class="code">top4-name</span></li>
+                    <li><span class="code">top4-team</span></li>
+                    <li><span class="code">top4-twitter</span></li>
+                    <li><span class="code">top4-char1</span></li>
+                    <li><span class="code">top4-char2</span></li>
+                    <li><span class="code">top4-char3</span></li>
+                    <li><span class="code">top4-char4</span></li>
+                    <li><span class="code">top5a-name</span></li>
+                    <li><span class="code">top5a-team</span></li>
+                    <li><span class="code">top5a-twitter</span></li>
+                    <li><span class="code">top5a-char1</span></li>
+                    <li><span class="code">top5a-char2</span></li>
+                    <li><span class="code">top5a-char3</span></li>
+                    <li><span class="code">top5a-char4</span></li>
+                    <li><span class="code">top5b-name</span></li>
+                    <li><span class="code">top5b-team</span></li>
+                    <li><span class="code">top5b-twitter</span></li>
+                    <li><span class="code">top5b-char1</span></li>
+                    <li><span class="code">top5b-char2</span></li>
+                    <li><span class="code">top5b-char3</span></li>
+                    <li><span class="code">top5b-char4</span></li>
+                    <li><span class="code">top7a-name</span></li>
+                    <li><span class="code">top7a-team</span></li>
+                    <li><span class="code">top7a-twitter</span></li>
+                    <li><span class="code">top7a-char1</span></li>
+                    <li><span class="code">top7a-char2</span></li>
+                    <li><span class="code">top7a-char3</span></li>
+                    <li><span class="code">top7a-char4</span></li>
+                    <li><span class="code">top7b-name</span></li>
+                    <li><span class="code">top7b-team</span></li>
+                    <li><span class="code">top7b-twitter</span></li>
+                    <li><span class="code">top7b-char1</span></li>
+                    <li><span class="code">top7b-char2</span></li>
+                    <li><span class="code">top7b-char3</span></li>
+                    <li><span class="code">top7b-char4</span></li>
+                </ul>
+
+                <p>Call back the <span class="code">/top8 test</span> subcommand until all the data is compelete.
+                    Then, use the same options you used to complete the data with the <span class="code">/top8 draw</span> subcommand
+                    to generate the final top8 result graph.</p>
+
+                <h3 id="slash_top8_templates">/top8 templates</h3>
+
+                <p>List the available templates for graph generation (using <span class="code">/top8 draw</span>).</p>
+
+                <h3 id="slash_top8_draw">/top8 draw</h3>
+
+                <p>The <span class="code">/top8 draw</span> subcommand, provided with a template and start.gg data, uses the guild's DataBase of
+                    players character roster and tagnames (see <span class="code">/player</span>) to generate a top8 result graph for a given
+                    start.gg tourney.</p>
+                <p>You probably shouldn't use this command right away as a data might be missing from the guild's DataBase.
+                    First run a few rounds of <span class="code">/top8 test</span> to identify missing data and determine how to fill
+                    in the blanks.
+                </p>
+                <p><b>Options:</b><ul>
+                    <li><span class="code">startgg_url</span> <em>[Required]</em>  - the url to the completed start.gg tourney you wish to check the
+                        available data for.</li>
+                    <li><span class="code">title</span> <em>[Required]</em>  - the title for your graph</li>
+                    <li><span class="code">template</span> <em>[Required]</em>  - the graph's template (list available through
+                        <span class="code">/top8 templates</span>)</li>
+                    <li><span class="code">config</span> - a <em>.json</em> file to provide the missing data. The json document should be construct in a the same way as the json
+                    document returned by a first call to <span class="code">/top8 test</span>.</li>
+                    <li><span class="code">inline_options</span> - old style inline options to provide missing data (e.g: <span class="code">?top5a-char1="Mario 3"</span>);
+                        check available list above.</li>
+                    <li><span class="code">post_channel</span> - a mention to the guild's channel where you want the generated graph to be posted</li>
+                </ul></p>
+                    
+        <div class="divider" style="width:24%; margin:30px 0;"></div>
+
+                <h1 id="craft_slash_cmd">Craft Slash Commands [All Users]</h1>
+
+                <p>The <span class="code">/craft</span> commands are used as a quick tool interface to basically interact with the StashBot's <em>Minecraft Bedrock</em>
+                    server (MC BR).
+
+                <h2 id="slash_craft">/craft</h2>
+
+                <p>Basic interactions with the <em>Minecraft Bedrock</em> server.</p>
+
+                <h3 id="slash_craft_start">/craft start</h3>
+
+                <p>Starts the MC BR server. Does nothing if it was already running.</p>
+
+                <h3 id="slash_craft_stop">/craft stop</h3>
+
+                <p><b>Note:</b> Starting the MC BR is refused to members of the "<em>Blocked</em>" attribute giving role.</p>
+
+                <p>Stops the MC BR server. No effect if it wasn't previously running.</p>
+
+                <p><b>Options:</b><ul>
+                    <li><span class="code">force</span> - A boolean whether or note to force the server to stop, i.e. even if players are currently playing on it.
+                        Forcing a server to reboot is only accessible to members of the guild belonging to the "<em>Operator</em>" privilege granting role.
+                    </li>
+                </ul></p>
+
+                <p><b>Note:</b> Stoping the MC BR is refused to members of the "<em>Blocked</em>" attribute giving role.</p>
+
+                <h3 id="slash_craft_restart">/craft restart</h3>
+
+                <p>Restarts the MC BR server. Should start it if it wasn't previously running.</p>
+
+                <p><b>Options:</b><ul>
+                    <li><span class="code">force</span> - A boolean whether or note to force the server to restart, i.e. even if players are currently playing on it.
+                        Forcing a server to restart is only accessible to members of the guild belonging to an "<em>Operator</em>" privilege granting role.
+                    </li>
+                </ul></p>
+
+                <p><b>Note:</b> Restarting the MC BR is refused to members of the "<em>Blocked</em>" attribute giving role.</p>
+
+                <h3 id="slash_craft_join">/craft join</h3>
+
+                <p>Subscribe the caller to the <em>allowed players</em> list of the MCBR. Players absent from this list wouldn't be able to join the running MCBR.</p>
+
+                <p><b>Options:</b><ul>
+                    <li><span class="code">username</span> <em>[Required]</em> - The mojang's Minecraft username, or UUID (uses 
+                        <code>https://api.mojang.com/users/profiles/minecraft/&lt;username&gt;</code> entry point for the first one,
+                        and <code>https://sessionserver.mojang.com/session/minecraft/profile/&lt;uuid&gt;</code> for the latter).
+                    </li>
+                </ul></p>
+
+                <p><b>Note:</b> This "joining" action has no effect for members of the "<em>Blocked</em>" attribute giving role.</p>
+
+                <h3 id="slash_craft_info">/craft info</h3>
+
+                <p>Get informations about the current state of the StrashBot's MCRB server.</p>
+
+                <h3 id="slash_craft_about">/craft about</h3>
+
+                <p>Fetch information about players regarding there Minecraft account.
+                    To check a user, you can provide a discord id, a mojang's Minecraft username, or a UUID.
+                    Although, the discord id will only be able to pair with a result, if the user has previously
+                    joined the mincraft server (see <span class="code">/craft join</span>).
+                </p>
+
+                <p><b>Options:</b><ul>
+                    <li><span class="code">mention</span> - the player's discord mention. This parameter is prioritized over <em>minecraft_id</em>.</li>
+                    <li><span class="code">mincraft_id</span> - the player's mojang's Minecraft username, or UUID.</li>
+                </ul></p>
+
+
+                <h1 id="craft_slash_cmd_restricted">Craft Slash Commands [Restricted access]</h1>
+
+                <p>The <span class="code">/craft_admin</span> commands are used for restricted management such as removing a player from the <em>allowed players list</em>,
+                    setting necessary privileges/restriction to some roles, or updating the MCBR server.</p>
+
+                <h2 id="slash_craft_admin">/craft_admin</h2>
+
+                <p>Admin only operations</p>
+
+                <h3 id="slash_craft_admin_disallow">/craft_admin disallow</h3>
+
+                <p>Removes a player from the StrasBot's MCRB server's <em>allowed players list</em>.</p>
+
+                <p><b>Options:</b><ul>
+                    <li><span class="code">user</span> - the player's mojang's Minecraft username, or UUID.</li>
+                    <li><span class="code">mention</span> - the player's discord mention. This parameter is prioritized over <em>minecraft_id</em>.</li>
+                </ul></p>
+
+                <p><b>Note:</b> this options only removes the players from the list. If you want to prevent a player from joinin again, said user
+                    will have to be assigned to the '<em>Blocked</em>' restriction via the associated role (see <span class="code">/craft_admin roles</span>).</p>
+
+                <h3 id="slash_craft_admin_roles">/craft_admin roles</h3>
+
+                <p>Associates given roles to privileges or restrictions.</p>
+
+                <p><b>Options:</b><ul>
+                    <li><span class="code">status</span> <em>[Required]</em> - values among:
+                        <ul>
+                            <li><span class="code">Operator</span> - privilege needed to force restart or stop the MCBR server.</li>
+                            <li><span class="code">Blocked</span> - restriction to keep users from joining, restart or stoping the MCBR server.</li>
+                            <li><span class="code">status</span> - use this value to check on the role given by the second option <span class="code">role</span>,
+                                gives general roles info if <span class="code">role</span> is kept empty along this value.</li>
+                        </ul>
+                    </li>
+                    <li><span class="code">role</span> - role mention of the role to handle according to the first option <span class="code">status</span>'s value</li>
+                </ul></p>
+
+                <p><b>Examples:</b><ul>
+                    <li><span class="code">/craft_admin roles status:Operator role:@builder</span> - gives the '<em>Operator</em>' privilege to members of the discord role
+                        <em>builder</em>.</li>
+                    <li><span class="code">/craft_admin roles status:Blocked role:@dumbass</span> - afflict the '<em>Blocked</em>' restirctions to members of the discord
+                        role <em>dumbass</em>.</li>
+                    <li><span class="code">/craft_admin roles status:status</span> - gives info about which roles carries with privilege/restriction.</li>
+                    <li><span class="code">/craft_admin roles status:Blocked</span> - removes the '<em>Blocked</em>' restriction from the previous discord role carrying it.</li>
+                </ul></p>
+
+                <h3 id="slash_craft_admin_update_server">/craft_admin update_server</h3>
+
+                <p>Update the StrasBot's MCBR server. <em>Don't bother.</em></p>
+
+                <p><b>Options:</b><ul>
+                    <li><span class="code">version_number</span> <em>[Required]</em> - the version to upgrade the StrashBot's MCBR server to. (e.g. "<em>1.20.72.01</em>")
+                        (check the <a href="https://www.minecraft.net/en-us/download/server/bedrock" target="_blank">official download site</a>)
+                    </li>
+                    <li><span class="code">key_pass</span> <em>[Required]</em> - the super secret passphrase necessary to use this command.
+                        This value has to be computed using dynamic parameters. No really, don't bother…
+                    </li>
+                </p>
+
+
+                    
+        <div class="divider" style="width:24%; margin:30px 0;"></div>
+
+                <h1 id="credits">Credits</h1>
+
+                <p>Using a slightly edited <a href="https://github.com/charlyllo/doctemplate" target="_blank">Charlyllo's Doctemplate</a> for quick format. Cheers to him for the handy sharing under MIT license. 😎</p>
+
+                <div class="doublespace"></div>
+                <div class="divider" style="width:24%; margin:30px 0;"></div>
+                
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+    <footer>By Dr_Nope</footer>
+
+    <script>
+        // scripting to fill the side_panel
+        let side_panel= document.querySelector('div.sidepanel')
+        let right_col= document.querySelector('div.right-col')
+
+        for(let child of right_col.querySelectorAll('h1, h2, h3, div.divider')){
+            let eName= child.tagName
+
+            if(eName==='DIV'){
+                side_panel.innerHTML+=
+                    `<div class="divider left" />`
+            }
+            else{
+                let sideLinkClass=
+                    (eName==='H3') ?
+                                'sub-section'
+                            :   (eName==='H2') ?
+                                    'section'
+                                :   'title'
+
+                side_panel.innerHTML+=
+                        `<a class="${sideLinkClass}" href="#${child.id}">` +
+                        `${child.textContent}</a>`
+            }
+        }
+
+        for(let img of document.querySelectorAll('img.no-cache-1hr')){
+            img.attributes['src'].value+= `?h=${Math.floor(Date.now()/3600000)}`
+        }
+
+    </script>
+
+</body>
+
+</html>

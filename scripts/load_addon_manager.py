@@ -1,159 +1,116 @@
-#!/bin/bash/python3
+#!/bin/python3
 
 import os
-from os import path
-
-import re
-
-import pathlib
-
 import sys
+import re
+import yaml
 
+def load_yaml(yaml_path):
+    with open(yaml_path, 'r') as file:
+        return yaml.safe_load(file)
 
-IN_BETWEEN_ADDON_LOAD_WAIT_TIME=3
+def get_files(directory):
+    return sorted(os.listdir(directory))
 
-class AddonLoadManager:
-    ADDON_EXTENSION_LIST= ["pk7", "kart", "lua", "wad", "pk3"]
+def apply_position_rule(files, filename, position):
+    if filename in files:
+        files.remove(filename)
+        if position == 'first':
+            files.insert(0, filename)
+        elif position == 'last':
+            files.append(filename)
+    return files
 
-    def __init__(self, dirList='.'):
-        self.dirs= []
-        self.files= []
+def apply_order_rule(files, filename, target, order):
+    if filename in files and target in files:
+        files.remove(filename)
+        target_index = files.index(target)
+        if order == 'before':
+            files.insert(target_index, filename)
+        elif order == 'after':
+            files.insert(target_index + 1, filename)
+    return files
 
-        for dir in dirList:
-            if path.isdir(dir):
-                self.process(dir)
+def find_matching_files(files, pattern):
+    return [file for file in files if re.fullmatch(pattern, file)]
 
-    def process(self, dir):
-        count= 0
-        for file in os.listdir(dir):
-            b= False
-            for ext in AddonLoadManager.ADDON_EXTENSION_LIST:
-                if file.endswith('.'+ext):
-                    b= True
-                    break
-            
-            filepath=dir+'/'+file
-            if b and os.path.isfile(filepath):
-                count+= 1
-                self.files.append(filepath)
+def apply_rules(files, rules):
+    for rule in rules:
+        filename_rule = rule.get('filename', {})
+        rules_to_apply = rule.get('rules', [])
         
-        if count>0:
-            self.dirs.append(dir)
+        # Determine the target file(s) to apply the rules
+        if 'text' in filename_rule:
+            targets = [filename_rule['text']]
+        elif 'regex' in filename_rule:
+            targets = find_matching_files(files, filename_rule['regex'])
+        else:
+            continue
+        
+        for target in targets:
+            for rule in rules_to_apply:
+                if 'position' in rule:
+                    files = apply_position_rule(files, target, rule['position'])
+                elif 'before' in rule:
+                    before_rule = rule['before']
+                    if 'text' in before_rule:
+                        files = apply_order_rule(files, target, before_rule['text'], 'before')
+                    elif 'regex' in before_rule:
+                        before_targets = find_matching_files(files, before_rule['regex'])
+                        for before_target in before_targets:
+                            files = apply_order_rule(files, target, before_target, 'before')
+                elif 'after' in rule:
+                    after_rule = rule['after']
+                    if 'text' in after_rule:
+                        files = apply_order_rule(files, target, after_rule['text'], 'after')
+                    elif 'regex' in after_rule:
+                        after_targets = find_matching_files(files, after_rule['regex'])
+                        for after_target in after_targets:
+                            files = apply_order_rule(files, target, after_target, 'after')
+    
+    return files
 
+def main():
+    # Determine the directory where the script is located
+    script_dir = os.path.dirname(os.path.abspath(__file__))
 
-    def _check_line(self, line):
-        res= re.search(r"^\s*(r?)((\'(.*)\')|(\"(.*)\"))\s*\<\s*(r?)((\'(.*)\')|(\"(.*)\"))\s*$", line)
-        r1= res.group(4) if (res and res.group(4)) else (res.group(6) if (res and res.group(6)) else None)
-        r2= res.group(10) if (res and res.group(10)) else (res.group(12) if (res and res.group(12)) else None)
-        if (r1 and r2):
-            return ('A_BEFORE_B', r1, (res.group(1)=='r'), r2, (res.group(7)=='r'))
-
-        res= re.search(r"^\s*FIRST\s*\: (r?)[\"\'](.*)[\"\']", line)
-        if(res and res.group(2)):
-            return ('FIRST', res.group(2), (res.group(1)=='r'))
-
-        res= re.search(r"^\s*LAST\s*\: (r?)[\"\'](.*)[\"\']", line)
-        if(res and res.group(2)):
-            return ('LAST', res.group(2), (res.group(1)=='r'))
-
-        return ("UNKNOWN")
-
-    def ordering(self, orderFile="./addon_load_order.txt"):
-        if not os.path.isfile(orderFile):
-            with open(orderFile, 'a'): pass
-            return
-
-        with open(orderFile, 'r') as file:
-            for line in file:
-                t_checked_line= self._check_line(line)
-
-                if t_checked_line=="UNKNOWN":
-                    continue
-                elif t_checked_line[0]=='A_BEFORE_B':
-                    f_a= t_checked_line[1]
-                    try:
-                        regex_a= (re.compile(f_a) if t_checked_line[2] else None)
-                    except:
-                        regex_a= None
-                    f_b= t_checked_line[3]
-                    try:
-                        regex_b= (re.compile(f_b) if t_checked_line[4] else None)
-                    except:
-                        regex_b= None
-
-                    r_f_a= f_a
-                    for file in self.files:
-                        basename=  os.path.basename(file)
-                        if (regex_a and re.match(regex_a,basename)) or basename==f_a:
-                                r_f_a= file
-                                break
-
-                    r_f_b= f_b
-                    for file in self.files:
-                        basename=  os.path.basename(file)
-                        if (regex_b and re.match(regex_b,basename)) or basename==f_b:
-                                r_f_b= file
-                                break
-
-                    i_f_a= self.files.index(r_f_a) if (r_f_a in self.files) else -1
-                    i_f_b= self.files.index(r_f_b) if (r_f_b in self.files) else -1
-
-                    if (i_f_b<0) or (i_f_a<0) or (i_f_a<i_f_b):
-                        continue
-
-                    self.files.remove(r_f_a)
-                    self.files.insert(i_f_b,r_f_a)
-                elif t_checked_line[0]=='FIRST':
-                    f= t_checked_line[1]
-                    try:
-                        regex= (re.compile(f) if t_checked_line[2] else None)
-                    except:
-                        regex= None
-
-                    r_f= f
-                    for file in self.files:
-                        basename=  os.path.basename(file)
-                        if (regex and re.match(regex,basename)) or basename==f:
-                            r_f= file
-                            break
-
-                    if r_f in self.files:
-                        self.files.remove(r_f)
-                        self.files.insert(0,r_f)
-                elif t_checked_line[0]=='LAST':
-                    f= t_checked_line[1]
-                    try:
-                        regex= (re.compile(f) if t_checked_line[2] else None)
-                    except:
-                        regex= None
-
-                    r_f= f
-                    for file in self.files:
-                        basename=  os.path.basename(file)
-                        if (regex and re.match(regex,basename)) or basename==f:
-                            r_f= file
-                            break
-
-                    if r_f in self.files:
-                        self.files.remove(r_f)
-                        self.files.insert(len(self.files),r_f)
-
-
-    def generateLoadFile(self, filename="dl_load.cfg"):
-        filepath=str(pathlib.Path(__file__).parent.absolute())+'/'+filename
-
-        with open(filepath, 'w') as file:
-            for addon in self.files:
-                file.write("wait "+str(IN_BETWEEN_ADDON_LOAD_WAIT_TIME)+"\naddfile \""+str(addon)+"\"\n")
-            file.write("wait\n")
-
+    # Paths to the directory and YAML file based on the script's location
+    directory = os.path.join(script_dir, 'addons/enabled')
+    yaml_path = os.path.join(script_dir, 'addons/addons_order.yaml')
+    
+    # Ensure the directory and YAML file exist
+    if not os.path.exists(directory):
+        print(f"Error: Directory '{directory}' does not exist.", file=sys.stderr)
+        return
+    
+    # Load files from the directory
+    files = get_files(directory)    
+    if not os.path.exists(yaml_path):
+        print(f"Error: YAML file '{yaml_path}' does not exist.", file=sys.stderr)
+        for file in files:
+            print(file)
+        return
+    
+    try:
+        # Load rules from the YAML file
+        yaml_data = load_yaml(yaml_path)
+    except yaml.YAMLError as e:
+        print(f"Error: Failed to parse YAML file '{yaml_path}'.", file=sys.stderr)
+        print(f"Details: {e}", file=sys.stderr)
+        for file in files:
+            print(file)
+        return
+    
+    # Retrieve rules, defaulting to an empty list if not present
+    rules = yaml_data.get('rules', [])
+    
+    # Apply the ordering rules
+    ordered_files = apply_rules(files, rules)
+    
+    # Output the final ordered list of files
+    for file in ordered_files:
+        # print(os.path.join(directory,file))
+        print(file)
 
 if __name__ == "__main__":
-    if len(sys.argv)<2 :
-        print("Error - Need dir")
-        exit(1)
-
-    alm= AddonLoadManager(sys.argv[1:])
-    alm.ordering()
-    alm.generateLoadFile()
-
+    main()
