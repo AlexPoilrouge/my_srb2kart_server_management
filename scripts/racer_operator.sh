@@ -23,7 +23,7 @@ ADDONS_ENABLED_SUBDIR="${ADDONS_DIR}/enabled"
 ADDONS_PENDING_OPS_JSON_FILE="${ADDONS_DIR}/pending_op.json"
 
 
-SERVCMD_COOLDOWN_FILEBASE="${SCRIPT_DIR}/.cooldown"
+SERVCMD_COOLDOWN_FILE="${SCRIPT_DIR}/.service_op_cooldown"
 SERVCMD_COOLDOWN_PERIOD=180
 
 cmd_serv(){
@@ -31,12 +31,11 @@ cmd_serv(){
 
     CURRENT_TIME=$(date +%s)
     CAN_DO="true"
-    COOLDOWN_FILE="${SERVCMD_COOLDOWN_FILEBASE}_${CMD}"
     
-    if [ ! -f "$COOLDOWN_FILE" ]; then
+    if [ ! -f "$SERVCMD_COOLDOWN_FILE" ]; then
         CAN_DO="true"
     else
-        LAST_SERVCMD_TIME="$( cat "${COOLDOWN_FILE}" )"
+        LAST_SERVCMD_TIME="$( cat "${SERVCMD_COOLDOWN_FILE}" )"
         TIME_DIFF="$((CURRENT_TIME - LAST_SERVCMD_TIME))"
 
         if [ "$TIME_DIFF" -lt "$SERVCMD_COOLDOWN_PERIOD" ]; then
@@ -45,7 +44,7 @@ cmd_serv(){
     fi
 
     if "${CAN_DO}"; then
-        echo "CURRENT_TIME" > "${COOLDOWN_FILE}"
+        echo "CURRENT_TIME" > "${SERVCMD_COOLDOWN_FILE}"
 
         sudo "${CMD}"
 
