@@ -29,7 +29,7 @@ SERVCMD_COOLDOWN_PERIOD=180
 cmd_serv(){
     OP="$1"
     _CMD_VAR="RACER_SERVER_CMD_${OP}"
-    CMD="$(eval echo \${${_CMD_VAR}}})"
+    CMD="$(eval echo \${${_CMD_VAR}})"
 
     SERVCMD_COOLDOWN_FILE="${SERVCMD_COOLDOWN_FILEBASE}_${OP}"
     CURRENT_TIME=$(date +%s)
