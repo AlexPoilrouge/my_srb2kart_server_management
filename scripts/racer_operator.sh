@@ -34,7 +34,7 @@ cmd_serv(){
     COOLDOWN_FILE="${SERVCMD_COOLDOWN_FILEBASE}_${CMD}"
     
     if [ ! -f "$COOLDOWN_FILE" ]; then
-        CAN_DO="false"
+        CAN_DO="true"
     else
         LAST_SERVCMD_TIME="$( cat "${COOLDOWN_FILE}" )"
         TIME_DIFF="$((CURRENT_TIME - LAST_SERVCMD_TIME))"
