@@ -23,12 +23,15 @@ ADDONS_ENABLED_SUBDIR="${ADDONS_DIR}/enabled"
 ADDONS_PENDING_OPS_JSON_FILE="${ADDONS_DIR}/pending_op.json"
 
 
-SERVCMD_COOLDOWN_FILE="${SCRIPT_DIR}/.service_op_cooldown"
+SERVCMD_COOLDOWN_FILEBASE="${SCRIPT_DIR}/.service_op_cooldown"
 SERVCMD_COOLDOWN_PERIOD=180
 
 cmd_serv(){
-    CMD="$1"
+    OP="$1"
+    _CMD_VAR="RACER_SERVER_CMD_${OP}"
+    CMD="$(eval echo \${${_CMD_VAR}}})"
 
+    SERVCMD_COOLDOWN_FILE="${SERVCMD_COOLDOWN_FILEBASE}_${OP}"
     CURRENT_TIME=$(date +%s)
     CAN_DO="true"
     
@@ -46,7 +49,7 @@ cmd_serv(){
     if "${CAN_DO}"; then
         echo "CURRENT_TIME" > "${SERVCMD_COOLDOWN_FILE}"
 
-        sudo "${CMD}"
+        eval sudo "${CMD}"
 
         echo "{ \"state\": \"ok\" }"
         exit 0
@@ -87,13 +90,13 @@ case "${CMD}" in
     fi
 ;;
 "START")
-    cmd_serv "${RACER_SERVER_CMD_START}"
+    cmd_serv START
 ;;
 "RESTART")
-    cmd_serv "${RACER_SERVER_CMD_RESTART}"
+    cmd_serv RESTART
 ;;
 "STOP")
-    cmd_serv "${RACER_SERVER_CMD_STOP}"
+    cmd_serv STOP
 ;;
 "MODE_INFO")
     if [ -f "${RACER_MODE_INFO_FILE}" ]; then
