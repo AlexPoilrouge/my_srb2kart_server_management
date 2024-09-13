@@ -52,12 +52,10 @@ cmd_serv(){
         eval sudo "${CMD}"
 
         echo "{ \"state\": \"ok\" }"
-        exit 0
     else
         REMAINING_TIME="$(( SERVCMD_COOLDOWN_PERIOD - TIME_DIFF ))"
 
         echo "{\n    \"state\": \"cooldown\",\n    \"remaining_seconds\": ${REMAINING_TIME}\n}"
-        exit 4
     fi
 }
 
