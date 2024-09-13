@@ -47,7 +47,7 @@ cmd_serv(){
     fi
 
     if "${CAN_DO}"; then
-        echo "CURRENT_TIME" > "${SERVCMD_COOLDOWN_FILE}"
+        echo "${CURRENT_TIME}" > "${SERVCMD_COOLDOWN_FILE}"
 
         eval sudo "${CMD}"
 
@@ -55,7 +55,7 @@ cmd_serv(){
     else
         REMAINING_TIME="$(( SERVCMD_COOLDOWN_PERIOD - TIME_DIFF ))"
 
-        echo "{\n    \"state\": \"cooldown\",\n    \"remaining_seconds\": ${REMAINING_TIME}\n}"
+        echo -e "{\n    \"state\": \"cooldown\",\n    \"remaining_seconds\": ${REMAINING_TIME}\n}"
     fi
 }
 
