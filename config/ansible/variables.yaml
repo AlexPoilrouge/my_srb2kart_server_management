@@ -33,3 +33,7 @@ racers:
     systemd_service:
       state: stopped
       enabled: false
+    operator_commands:
+      start: "/bin/systemctl start SRB2Kart_serv.service"
+      restart: "/bin/systemctl restart SRB2Kart_serv.service"
+      stop: "/bin/systemctl stop SRB2Kart_serv.service"

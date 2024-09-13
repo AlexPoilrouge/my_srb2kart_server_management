@@ -5,7 +5,11 @@ SCRIPT_DIR="$( dirname "$( realpath "$0" )" )"
 
 
 VALUES_FILES="${SCRIPT_DIR}/operator_values.env"
-
+# provides:
+#   - RACER_SERVER_SERVICE envvar
+#   - RACER_SERVER_CMD_START envvar
+#   - RACER_SERVER_CMD_RESTART envvar
+#   - RACER_SERVER_CMD_STOP envvar
 source "${VALUES_FILES}"
 
 
@@ -17,6 +21,43 @@ ADDONS_DIR="${SCRIPT_DIR}/addons"
 ADDONS_INSTALLED_SUBDIR="${ADDONS_DIR}/installed"
 ADDONS_ENABLED_SUBDIR="${ADDONS_DIR}/enabled"
 ADDONS_PENDING_OPS_JSON_FILE="${ADDONS_DIR}/pending_op.json"
+
+
+SERVCMD_COOLDOWN_FILEBASE="${SCRIPT_DIR}/.cooldown"
+SERVCMD_COOLDOWN_PERIOD=180
+
+cmd_serv(){
+    CMD="$1"
+
+    CURRENT_TIME=$(date +%s)
+    CAN_DO="true"
+    COOLDOWN_FILE="${SERVCMD_COOLDOWN_FILEBASE}_${CMD}"
+    
+    if [ ! -f "$COOLDOWN_FILE" ]; then
+        CAN_DO="false"
+    else
+        LAST_SERVCMD_TIME="$( cat "${COOLDOWN_FILE}" )"
+        TIME_DIFF="$((CURRENT_TIME - LAST_SERVCMD_TIME))"
+
+        if [ "$TIME_DIFF" -lt "$SERVCMD_COOLDOWN_PERIOD" ]; then
+            CAN_DO="false"
+        fi
+    fi
+
+    if "${CAN_DO}"; then
+        echo "CURRENT_TIME" > "${COOLDOWN_FILE}"
+
+        sudo "${CMD}"
+
+        echo "{ \"state\": \"ok\" }"
+        exit 0
+    else
+        REMAINING_TIME="$(( SERVCMD_COOLDOWN_PERIOD - TIME_DIFF ))"
+
+        echo "{\n    \"state\": \"cooldown\",\n    \"remaining_seconds\": ${REMAINING_TIME}\n}"
+        exit 4
+    fi
+}
 
 
 CMD="$1"
@@ -45,6 +86,15 @@ case "${CMD}" in
         echo "inactive"
         exit 1
     fi
+;;
+"START")
+    cmd_serv "${RACER_SERVER_CMD_START}"
+;;
+"RESTART")
+    cmd_serv "${RACER_SERVER_CMD_RESTART}"
+;;
+"STOP")
+    cmd_serv "${RACER_SERVER_CMD_STOP}"
 ;;
 "MODE_INFO")
     if [ -f "${RACER_MODE_INFO_FILE}" ]; then
