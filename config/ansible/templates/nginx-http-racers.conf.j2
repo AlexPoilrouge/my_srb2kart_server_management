@@ -1,0 +1,12 @@
+
+server{
+    server_name {{ http_source_addr }};
+
+    {% for racer in racers %}location ~* ^\/{{ racer.dirname }}\/(.+\..+)$ {
+        root {{ root_dir }}{{ strashbot.home }}/{{ racer.dirname }}/addons/installed;
+
+        try_files /$1 =404;
+    }
+    {% endfor %}
+    
+}

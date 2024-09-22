@@ -21,22 +21,6 @@
     mode: 0644
     owner: root
     group: root
-- name: install nginx conf
-  when: nginx.install
-  ansible.builtin.template:
-    src: ../templates/nginx-http-racer.conf.j2
-    dest: "{{ root_dir }}/etc/nginx/sites-available/nginx-http-{{ racer.name }}.conf"
-    mode: 0644
-    owner: root
-    group: root
-- name: nginx conf activation
-  when: nginx.install
-  ansible.builtin.file:
-    state: link
-    src: "{{ root_dir }}/etc/nginx/sites-available/nginx-http-{{ racer.name }}.conf"
-    dest: "{{ root_dir }}/etc/nginx/sites-enabled/nginx-http-{{ racer.name }}.conf"
-    owner: root
-    group: root
 
 - name: luafiles folder creation
   ansible.builtin.file:

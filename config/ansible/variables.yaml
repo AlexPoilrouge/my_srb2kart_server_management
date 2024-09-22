@@ -22,6 +22,7 @@ web:
   domain: strashbot.fr
   jquery_ver: 3.6.0
 
+http_source_addr: 127.0.0.1
 racers:
   - name: SRB2Kart
     dirname: .srb2kart 

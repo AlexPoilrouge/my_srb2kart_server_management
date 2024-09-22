@@ -57,6 +57,22 @@
         owner: "{{ strashbot.username }}"
         group: "{{ strashbot.username }}"
 
+    - name: install addons nginx conf
+      when: nginx.install
+      ansible.builtin.template:
+        src: ../templates/nginx-http-racers.conf.j2
+        dest: "{{ root_dir }}/etc/nginx/sites-available/nginx-http-racers.conf"
+        mode: 0644
+        owner: root
+        group: root
+    - name: nginx racer conf activation
+      when: nginx.install
+      ansible.builtin.file:
+        state: link
+        src: "{{ root_dir }}/etc/nginx/sites-available/nginx-http-racers.conf"
+        dest: "{{ root_dir }}/etc/nginx/sites-enabled/nginx-http-racers.conf"
+        owner: root
+        group: root
 
     - include_tasks: ./tasks/racer_install.yaml
       loop: "{{ racers }}"
