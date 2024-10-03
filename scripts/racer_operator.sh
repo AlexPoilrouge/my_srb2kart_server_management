@@ -123,7 +123,8 @@ case "${CMD}" in
                 fi
             done
 
-            jq '.deletion = []' 2>/dev/null  > "${ADDONS_PENDING_OPS_JSON_FILE}"
+            tmpfile="$( mktemp )"
+            jq '.deletion = []' "${ADDONS_PENDING_OPS_JSON_FILE}" 2> /dev/null > "${tmpfile}" && mv "${tmpfile}" "${ADDONS_PENDING_OPS_JSON_FILE}"
         fi
 
         exec {LOCK_PID}>&-
@@ -142,7 +143,8 @@ case "${CMD}" in
                 fi
             done
 
-            jq '.disablement = []' 2>/dev/null > "${ADDONS_PENDING_OPS_JSON_FILE}"
+            tmpfile="$( mktemp )"
+            jq '.disablement = []' "${ADDONS_PENDING_OPS_JSON_FILE}" 2> /dev/null > "${tmpfile}" && mv "${tmpfile}" "${ADDONS_PENDING_OPS_JSON_FILE}" 
         fi
 
         exec {LOCK_PID}>&-
