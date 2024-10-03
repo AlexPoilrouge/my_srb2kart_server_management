@@ -114,38 +114,38 @@ case "${CMD}" in
     FORCE="$( echo "$1" | tr '[:upper:]' '[:lower:]' )"
     shift
     if [ "${FORCE}" == "force" ] || ( ! "${THIS_SCRIPT}" IS_SERVICE_ACTIVE ); then
-        exec {LOCK_PID} >> "${ADDONS_PENDING_OPS_JSON_FILE}"
+        exec {LOCK_PID}>>"${ADDONS_PENDING_OPS_JSON_FILE}"
 
         if flock -w 3 ${LOCK_PID}; then
-            yq e '.deletion[]' "${ADDONS_PENDING_OPS_JSON_FILE}" | tr -d '"' | while read -r FILE; do
+            jq '.deletion[]' "${ADDONS_PENDING_OPS_JSON_FILE}" 2>/dev/null  | tr -d '"' | while read -r FILE; do
                 if [ -f "${ADDONS_INSTALLED_SUBDIR}/${FILE}" ]; then
                     rm -f "${ADDONS_INSTALLED_SUBDIR}/${FILE}"
                 fi
             done
 
-            yq e '.deletion = []' -i "${ADDONS_PENDING_OPS_JSON_FILE}"
+            jq '.deletion = []' 2>/dev/null  > "${ADDONS_PENDING_OPS_JSON_FILE}"
         fi
 
-        exec {LOCK_PID} >&-
+        exec {LOCK_PID}>&-
     fi
 ;;
 "PENDING_DISABLES")
     FORCE="$( echo "$1" | tr '[:upper:]' '[:lower:]' )"
     shift
     if [ "${FORCE}" == "force" ] || ( ! "${THIS_SCRIPT}" IS_SERVICE_ACTIVE ); then 
-        exec {LOCK_PID} >> "${ADDONS_PENDING_OPS_JSON_FILE}"
+        exec {LOCK_PID}>>"${ADDONS_PENDING_OPS_JSON_FILE}"
         
         if flock -w 3 ${LOCK_PID}; then
-            yq e '.disablement[]' "${ADDONS_PENDING_OPS_JSON_FILE}" | tr -d '"' | while read -r FILE; do
+            jq '.disablement[]' "${ADDONS_PENDING_OPS_JSON_FILE}" 2>/dev/null | tr -d '"' | while read -r FILE; do
                 if [ -f "${ADDONS_ENABLED_SUBDIR}/${FILE}" ]; then
                     rm -f "${ADDONS_ENABLED_SUBDIR}/${FILE}"
                 fi
             done
 
-            yq e '.disablement = []' -i "${ADDONS_PENDING_OPS_JSON_FILE}"
+            jq '.disablement = []' 2>/dev/null > "${ADDONS_PENDING_OPS_JSON_FILE}"
         fi
 
-        exec {LOCK_PID} >&-
+        exec {LOCK_PID}>&-
     fi
 ;;
 "PENDING")
