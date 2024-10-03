@@ -110,41 +110,29 @@ case "${CMD}" in
         exit 3
     fi
 ;;
-"PENDING_DELETES")
+"PENDING_DELETES" | "PENDING_DISABLES")
     FORCE="$( echo "$1" | tr '[:upper:]' '[:lower:]' )"
     shift
     if [ "${FORCE}" == "force" ] || ( ! "${THIS_SCRIPT}" IS_SERVICE_ACTIVE ); then
         exec {LOCK_PID}>>"${ADDONS_PENDING_OPS_JSON_FILE}"
 
-        if flock -w 3 ${LOCK_PID}; then
-            jq '.deletion[]' "${ADDONS_PENDING_OPS_JSON_FILE}" 2>/dev/null  | tr -d '"' | while read -r FILE; do
-                if [ -f "${ADDONS_INSTALLED_SUBDIR}/${FILE}" ]; then
-                    rm -f "${ADDONS_INSTALLED_SUBDIR}/${FILE}"
-                fi
-            done
-
-            tmpfile="$( mktemp )"
-            jq '.deletion = []' "${ADDONS_PENDING_OPS_JSON_FILE}" 2> /dev/null > "${tmpfile}" && mv "${tmpfile}" "${ADDONS_PENDING_OPS_JSON_FILE}"
+        OP_FIELD="disablement"
+        if [ "${CMD}" == "PENDING_DELETES" ]; then
+            OP_FIELD="deletion"
         fi
 
-        exec {LOCK_PID}>&-
-    fi
-;;
-"PENDING_DISABLES")
-    FORCE="$( echo "$1" | tr '[:upper:]' '[:lower:]' )"
-    shift
-    if [ "${FORCE}" == "force" ] || ( ! "${THIS_SCRIPT}" IS_SERVICE_ACTIVE ); then 
-        exec {LOCK_PID}>>"${ADDONS_PENDING_OPS_JSON_FILE}"
-        
         if flock -w 3 ${LOCK_PID}; then
-            jq '.disablement[]' "${ADDONS_PENDING_OPS_JSON_FILE}" 2>/dev/null | tr -d '"' | while read -r FILE; do
-                if [ -f "${ADDONS_ENABLED_SUBDIR}/${FILE}" ]; then
+            jq ".${OP_FIELD}[]" "${ADDONS_PENDING_OPS_JSON_FILE}" 2>/dev/null  | tr -d '"' | while read -r FILE; do
+                if [ -f "${ADDONS_INSTALLED_SUBDIR}/${FILE}" ]; then
                     rm -f "${ADDONS_ENABLED_SUBDIR}/${FILE}"
+                    if [ "${CMD}" == "PENDING_DELETES" ]; then
+                        rm -f "${ADDONS_INSTALLED_SUBDIR}/${FILE}"
+                    fi
                 fi
             done
 
             tmpfile="$( mktemp )"
-            jq '.disablement = []' "${ADDONS_PENDING_OPS_JSON_FILE}" 2> /dev/null > "${tmpfile}" && mv "${tmpfile}" "${ADDONS_PENDING_OPS_JSON_FILE}" 
+            jq ".${OP_FIELD} = []" "${ADDONS_PENDING_OPS_JSON_FILE}" 2> /dev/null > "${tmpfile}" && mv "${tmpfile}" "${ADDONS_PENDING_OPS_JSON_FILE}"
         fi
 
         exec {LOCK_PID}>&-
