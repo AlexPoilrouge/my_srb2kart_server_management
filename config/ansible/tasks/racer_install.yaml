@@ -59,18 +59,9 @@
     mode: 0755
     owner: "{{ strashbot.username }}"
     group: "{{ strashbot.username }}"
-- name: racer serv config copy startup.cfg
-  ansible.builtin.copy:
-    remote_src: true
-    src: "{{ server_source_dir }}/config/serv/startup.cfg"
-    dest: "{{ root_dir }}{{ strashbot.home }}/{{ racer.dirname }}/cfg/startup.cfg"
-    mode: 0700
-    owner: "{{ strashbot.username }}"
-    group: "{{ strashbot.username }}"
-- name: racer serv config copy racer's serv.cfg
-  ansible.builtin.copy:
-    remote_src: true
-    src: "{{ server_source_dir }}/config/serv/racerserv.cfg"
+- name: setting racer main config file
+  ansible.builtin.template:
+    src: "../templates/racerserv.cfg.j2"
     dest: "{{ root_dir }}{{ strashbot.home }}/{{ racer.dirname }}/{{ racer.prefix }}serv.cfg"
     mode: 0700
     owner: "{{ strashbot.username }}"
