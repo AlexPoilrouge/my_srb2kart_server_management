@@ -33,7 +33,7 @@ rm -f "${STRASHBOT_USER_HOME}/${RACER_DIR}/ringdata.dat"
 LOAD_ORDER_SCRIPT="${STRASHBOT_USER_HOME}/${RACER_DIR}/load_addon_manager.py"
 LOAD_ADDON_CFG="${STRASHBOT_USER_HOME}/${RACER_DIR}/dl_load.cfg"
 if [ -f "${LOAD_ORDER_SCRIPT}" ]; then
-    echo "" > "${LOAD_ADDON_CFG}"
+    echo "wait" > "${LOAD_ADDON_CFG}"
     "${LOAD_ORDER_SCRIPT}" | while read -r ADDON_FILENAME; do
         echo "addfile \"addons/enabled/${ADDON_FILENAME}\"" >> "${LOAD_ADDON_CFG}"
         echo "wait 3" >> "${LOAD_ADDON_CFG}"

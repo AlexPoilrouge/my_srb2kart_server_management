@@ -52,21 +52,33 @@
     - { script: "record_lmp_read.py" }
     - { script: "log_processor.py"}
     - { script: "load_addon_manager.py" }
-- name: racer serv config copy
+- name: config (cfg) folder creation
+  ansible.builtin.file:
+    path: "{{ root_dir }}{{ strashbot.home }}/{{ racer.dirname }}/cfg"
+    state: directory
+    mode: 0755
+    owner: "{{ strashbot.username }}"
+    group: "{{ strashbot.username }}"
+- name: racer serv config copy startup.cfg
   ansible.builtin.copy:
     remote_src: true
-    src: "{{ server_source_dir }}/config/serv/{{ item.name }}"
-    dest: "{{ root_dir }}{{ strashbot.home }}/{{ racer.dirname }}/{{ item.name }}"
+    src: "{{ server_source_dir }}/config/serv/startup.cfg"
+    dest: "{{ root_dir }}{{ strashbot.home }}/{{ racer.dirname }}/cfg/startup.cfg"
     mode: 0700
     owner: "{{ strashbot.username }}"
     group: "{{ strashbot.username }}"
-  loop:
-    - { name: "kartserv.cfg" }
-    - { name: "startup.cfg" }
+- name: racer serv config copy racer's serv.cfg
+  ansible.builtin.copy:
+    remote_src: true
+    src: "{{ server_source_dir }}/config/serv/racerserv.cfg"
+    dest: "{{ root_dir }}{{ strashbot.home }}/{{ racer.dirname }}/{{ racer.prefix }}serv.cfg"
+    mode: 0700
+    owner: "{{ strashbot.username }}"
+    group: "{{ strashbot.username }}"
 - name: racer serv config prepare
   ansible.builtin.template:
     src: "../templates/{{ item.basename }}.{{racer.name}}.j2"
-    dest: "{{ root_dir }}{{ strashbot.home }}/{{ racer.dirname }}/{{ item.basename }}"
+    dest: "{{ root_dir }}{{ strashbot.home }}/{{ racer.dirname }}/cfg/{{ item.basename }}"
     mode: 0700
     owner: "{{ strashbot.username }}"
     group: "{{ strashbot.username }}"
