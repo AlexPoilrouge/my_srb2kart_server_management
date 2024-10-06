@@ -32,6 +32,9 @@ rm -f "${STRASHBOT_USER_HOME}/${RACER_DIR}/ringdata.dat"
 
 CFG_DIR="${STRASHBOT_USER_HOME}/${RACER_DIR}/cfg"
 
+OPERATOR_SCRIPT="${STRASHBOT_USER_HOME}/${RACER_DIR}/racer_operator.sh"
+"${OPERATOR_SCRIPT}" "PENDING" "force"
+
 LOAD_ORDER_SCRIPT="${STRASHBOT_USER_HOME}/${RACER_DIR}/load_addon_manager.py"
 LOAD_ADDON_CFG="${CFG_DIR}/dl_load.cfg"
 if [ -f "${LOAD_ORDER_SCRIPT}" ]; then
