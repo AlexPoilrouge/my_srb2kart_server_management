@@ -49,9 +49,6 @@ SKINS_FILE="${STRASHBOT_USER_HOME}/${RACER_DIR}/skins.txt"
 touch "${STATE_FILE}" "${MAPS_FILE}" "${SKINS_FILE}" 
 chmod 704 "${STATE_FILE}" "${MAPS_FILE}" "${SKINS_FILE}"
 
-OPERATOR_SCRIPT="${STRASHBOT_USER_HOME}/${RACER_DIR}/racer_operator.sh"
-"${OPERATOR_SCRIPT}" "PENDING" "force"
-
 trap 'kill $(jobs -p)' EXIT
 ( tail -f "${LOG_FILE}" | "${STRASHBOT_USER_HOME}/${RACER_DIR}/log_processor.py" "${STATE_FILE}" "${MAPS_FILE}" "${SKINS_FILE}") &
 nice -n -20 ${RACER_EXE} -dedicated -password ${PASS} ${RACER_LAUNCH_ARGS}
