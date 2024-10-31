@@ -4,6 +4,14 @@
 SCRIPT_DIR="$( dirname "$( realpath "$0" )" )"
 
 
+VALUES_FILES="${SCRIPT_DIR}/server_start.env"
+# provides:
+#   - STRASHBOT_USER_HOME envvar
+#   - RACER_DIR envvar
+#   - RACER_EXE envvar
+#   - RACER_LAUNCH_ARGSenvvar
+source "${VALUES_FILES}"
+
 
 PASS="$( </dev/urandom tr -dc '0123456789azertyuiopqsdfghjklmwxcvbnAZERTYUIOPQSDFGHJKLMWXCVBN' | head -c6 )"
 
@@ -31,16 +39,25 @@ chmod 704 "${LOG_FILE}"
 rm -f "${STRASHBOT_USER_HOME}/${RACER_DIR}/ringdata.dat"
 
 CFG_DIR="${STRASHBOT_USER_HOME}/${RACER_DIR}/cfg"
+ADDONS_DIR="${STRASHBOT_USER_HOME}/${RACER_DIR}/addons"
 
+CUSTOM_CFG_SCRIPT="${STRASHBOT_USER_HOME}/${RACER_DIR}/customyamlconfig_to_cfg.py"
 OPERATOR_SCRIPT="${STRASHBOT_USER_HOME}/${RACER_DIR}/racer_operator.sh"
+
+if [ -f "${CUSTOM_CFG_SCRIPT}" ]; then
+    "${CUSTOM_CFG_SCRIPT}" "RESTORE_ADDONS" "${CFG_DIR}" "${ADDONS_DIR}"
+fi
 "${OPERATOR_SCRIPT}" "PENDING" "force"
+if [ -f "${CUSTOM_CFG_SCRIPT}" ]; then
+    "${CUSTOM_CFG_SCRIPT}" "MAKE" "${CFG_DIR}" "${ADDONS_DIR}"
+fi
 
 LOAD_ORDER_SCRIPT="${STRASHBOT_USER_HOME}/${RACER_DIR}/load_addon_manager.py"
 LOAD_ADDON_CFG="${CFG_DIR}/dl_load.cfg"
 if [ -f "${LOAD_ORDER_SCRIPT}" ]; then
     echo "wait" > "${LOAD_ADDON_CFG}"
     "${LOAD_ORDER_SCRIPT}" | while read -r ADDON_FILENAME; do
-        echo "addfile \"addons/enabled/${ADDON_FILENAME}\"" >> "${LOAD_ADDON_CFG}"
+        echo "addfile \"${ADDONS_DIR}/enabled/${ADDON_FILENAME}\"" >> "${LOAD_ADDON_CFG}"
         echo "wait 3" >> "${LOAD_ADDON_CFG}"
     done
     chmod 704 "${LOAD_ADDON_CFG}"

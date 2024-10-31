@@ -9,6 +9,7 @@ RUN	 pacman -S --noconfirm \
                 openssh \
                 sudo \
                 python \
+                python-croniter \
                 tar \
                 git
 

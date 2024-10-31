@@ -5,7 +5,7 @@ RUN chmod 644 /etc/pacman.d/mirrorlist
 
 RUN	 pacman -Syy
 
-RUN pacman -Syu --noconfirm --needed base-devel sudo wget python tar git ansible yq
+RUN pacman -Syu --noconfirm --needed base-devel sudo wget python python-croniter tar git ansible yq
 
 
 COPY docker/*.sh /scripts/

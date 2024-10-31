@@ -59,8 +59,8 @@ the `.racers.[].launch_args` value).
 
 Also, both of the server must have a ***server config*** template.
 For SRB2Kart and RingRacers, respectively:
-- `config/ansible/templates/my_server_config.cfg.SRB2Kart.j2`
-- `config/ansible/templates/my_server_config.cfg.RingRacers.j2`
+- `config/ansible/templates/base_server_config.cfg.SRB2Kart.j2`
+- `config/ansible/templates/base_server_config.cfg.RingRacers.j2`
 
 
 ## Tests

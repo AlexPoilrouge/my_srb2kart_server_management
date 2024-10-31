@@ -49,9 +49,20 @@
     - { script: "ls_restricted.lib.sh" }
     - { script: "racer_operator.sh" }
     - { script: "zipping_addons.sh" }
+    - { script: "server_start.sh" }
     - { script: "record_lmp_read.py" }
     - { script: "log_processor.py"}
     - { script: "load_addon_manager.py" }
+    - { script: "customyamlconfig_to_cfg.py" }
+- name: install racer py libs
+  ansible.builtin.copy:
+    remote_src: true
+    src: "{{ server_source_dir }}/scripts/py_lib/"
+    dest: "{{ root_dir }}{{ strashbot.home }}/{{ racer.dirname }}/py_lib/"
+    mode: 0755
+    owner: "{{ strashbot.username }}"
+    group: "{{ strashbot.username }}"
+
 - name: config (cfg) folder creation
   ansible.builtin.file:
     path: "{{ root_dir }}{{ strashbot.home }}/{{ racer.dirname }}/cfg"
@@ -74,7 +85,8 @@
     owner: "{{ strashbot.username }}"
     group: "{{ strashbot.username }}"
   loop:
-    - { basename: "my_server_config.cfg" }
+    - { basename: "base_server_config.cfg" }
+    - { basename: "allowed_commands.yaml"}
 - name: racer server start script prepare
   ansible.builtin.template:
     src: "../templates/{{ item.basename }}.j2"
@@ -83,5 +95,5 @@
     owner: "{{ strashbot.username }}"
     group: "{{ strashbot.username }}"
   loop:
-    - { basename: "server_start.sh" }
     - { basename: "operator_values.env" }
+    - { basename: "server_start.env" }
