@@ -19,11 +19,6 @@ FILE="${SCRIPT_DIR}/.TMP_PASS"
 
 echo "${PASS}" > "$FILE"
 
-STRASHBOT_USER_HOME="{{ root_dir }}{{ strashbot.home }}"
-RACER_DIR="{{ racer.dirname }}"
-RACER_EXE="{{ racer.exe }}"
-RACER_LAUNCH_ARGS="{{ racer.launch_args }}"
-
 LOG_FILE="${STRASHBOT_USER_HOME}/${RACER_DIR}/log.txt"
 LOGS_DIR="${STRASHBOT_USER_HOME}/${RACER_DIR}/logs"
 mkdir -p "${LOGS_DIR}"
