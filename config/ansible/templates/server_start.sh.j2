@@ -16,17 +16,11 @@ RACER_DIR="{{ racer.dirname }}"
 RACER_EXE="{{ racer.exe }}"
 RACER_LAUNCH_ARGS="{{ racer.launch_args }}"
 
-LOG_FILE="${STRASHBOT_USER_HOME}/${RACER_DIR}/log.txt"
+LOG_FILE="${STRASHBOT_USER_HOME}/${RACER_DIR}/{{ racer.log_filename }}"
 LOGS_DIR="${STRASHBOT_USER_HOME}/${RACER_DIR}/logs"
-mkdir -p "${LOGS_DIR}"
-if [ -f "${LOG_FILE}" ]; then
-    cp -vf "${LOG_FILE}" "${LOGS_DIR}/log$( date +'%Y%m%d%H%M%S' ).txt"
-    if [ "$( ls "${LOGS_DIR}"/log*.txt | wc -l )" -gt 5 ]; then
-        rm -vf "$( find "${LOGS_DIR}"/log*.txt -type f -printf '%T+ %p\n' | sort | head -n 1 | cut -d' ' -f2 )"
-    fi
-fi
-touch "${LOG_FILE}"
 chmod 704 "${LOG_FILE}"
+mkdir -p "${LOGS_DIR}"
+find "${LOGS_DIR}" -type f -name 'log*.txt' -mtime +$((3 * 30)) -exec rm -v {} \;
 
 rm -f "${STRASHBOT_USER_HOME}/${RACER_DIR}/ringdata.dat"
 

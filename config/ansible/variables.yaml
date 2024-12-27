@@ -28,6 +28,7 @@ racers:
     aur_pkg: srb2kart
     exe: /usr/bin/srb2kart
     lua_files_directory: /usr/share/games/SRB2Kart/luafiles
+    log_filename: log.txt
     launch_args: -bandwidth 2000000 -port 5028 -room 33
     addr: 127.0.0.1
     systemd_service:
