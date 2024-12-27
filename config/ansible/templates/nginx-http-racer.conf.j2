@@ -1,5 +1,6 @@
 
 server{
+{% if not nginx.unique_addr %}
     server_name {{ racer.addr }};
 
     location /{{ racer.dirname }}/log {
@@ -25,4 +26,30 @@ server{
 
         try_files $uri =404;
     }
+{% else %}
+    server_name {{ racers[0].addr }};
+
+    {% for racer in racers %}
+
+    location /{{ racer.dirname }}/log {
+        root {{ root_dir }}{{ strashbot.home }}/{{ racer.dirname }};
+
+        try_files /{{ racer.log_filename }} =404;
+    }
+
+    location ~* ^\/{{ racer.dirname }}\/(.+\.zip)$ {
+        root {{ root_dir }}{{ strashbot.home }}/{{ racer.dirname }};
+
+        try_files /$1 /addons/$1 =404;
+    }
+
+    location ~* ^\/{{ racer.dirname }}\/(.+\..+)$ {
+        root {{ root_dir }}{{ strashbot.home }}/{{ racer.dirname }}/addons/installed;
+
+        try_files /$1 =404;
+    }
+    
+    {% endfor %}
+{% endif %}
+
 }

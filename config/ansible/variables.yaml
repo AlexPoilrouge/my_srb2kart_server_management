@@ -17,6 +17,7 @@ systemd:
   install: true
 nginx:
   install: true
+  unique_addr: true
 web:
   install: true
   domain: strashbot.fr

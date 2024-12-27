@@ -22,7 +22,7 @@
     owner: root
     group: root
 - name: install nginx conf
-  when: nginx.install
+  when: nginx.install and not nginx.unique_addr
   ansible.builtin.template:
     src: ../templates/nginx-http-racer.conf.j2
     dest: "{{ root_dir }}/etc/nginx/sites-available/nginx-http-{{ racer.name }}.conf"
@@ -30,7 +30,7 @@
     owner: root
     group: root
 - name: nginx conf activation
-  when: nginx.install
+  when: nginx.install and not nginx.unique_addr
   ansible.builtin.file:
     state: link
     src: "{{ root_dir }}/etc/nginx/sites-available/nginx-http-{{ racer.name }}.conf"

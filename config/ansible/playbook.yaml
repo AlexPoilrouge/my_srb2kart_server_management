@@ -30,6 +30,23 @@
     - include_tasks: ./tasks/nginx_web_generic.yaml
       when: web.install and nginx.install
 
+    - name: unique nginx conf for racers
+      when: nginx.install and nginx.unique_addr
+      ansible.builtin.template:
+        src: ./templates/nginx-http-racer.conf.j2
+        dest: "{{ root_dir }}/etc/nginx/sites-available/nginx-http-racers.conf"
+        mode: 0644
+        owner: root
+        group: root
+    - name: unique racing nginx conf activation
+      when: nginx.install and nginx.unique_addr
+      ansible.builtin.file:
+        state: link
+        src: "{{ root_dir }}/etc/nginx/sites-available/nginx-http-racers.conf"
+        dest: "{{ root_dir }}/etc/nginx/sites-enabled/nginx-http-racers.conf"
+        owner: root
+        group: root
+
     - include_tasks: ./tasks/install_files.yaml
       when: web.install
       loop:
