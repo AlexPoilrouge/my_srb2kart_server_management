@@ -46,6 +46,18 @@ case "${CMD}" in
         exit 1
     fi
 ;;
+"RESTART")
+    if sudo systemctl restart "${RACER_SERVER_SERVICE}" >/dev/null 2>&1; then
+        exit 0
+    else
+        exit 4
+;;
+"STOP")
+    if sudo systemctl stop "${RACER_SERVER_SERVICE}" >/dev/null 2>&1; then
+        exit 0
+    else
+        exit 5
+;;
 "MODE_INFO")
     if [ -f "${RACER_MODE_INFO_FILE}" ]; then
         cat "${RACER_MODE_INFO_FILE}"
