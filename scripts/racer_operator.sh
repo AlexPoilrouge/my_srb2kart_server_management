@@ -51,12 +51,14 @@ case "${CMD}" in
         exit 0
     else
         exit 4
+    fi
 ;;
 "STOP")
     if sudo systemctl stop "${RACER_SERVER_SERVICE}" >/dev/null 2>&1; then
         exit 0
     else
         exit 5
+    fi
 ;;
 "MODE_INFO")
     if [ -f "${RACER_MODE_INFO_FILE}" ]; then
