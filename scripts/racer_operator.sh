@@ -48,15 +48,19 @@ case "${CMD}" in
 ;;
 "RESTART")
     if sudo systemctl restart "${RACER_SERVER_SERVICE}" >/dev/null 2>&1; then
+        echo "restarted"
         exit 0
     else
+        echo "restart_fail"
         exit 4
     fi
 ;;
 "STOP")
     if sudo systemctl stop "${RACER_SERVER_SERVICE}" >/dev/null 2>&1; then
+        echo "stopped"
         exit 0
     else
+        echo "stop_fail"
         exit 5
     fi
 ;;
