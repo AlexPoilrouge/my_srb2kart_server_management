@@ -7,6 +7,13 @@ server{
 
         try_files /$1 =404;
     }
+
+    location /log {
+        root {{ root_dir }}{{ strashbot.home }}/{{ racer.dirname }};
+
+        try_files /{{ racer.log_filename }} =404;
+    }
+
     {% endfor %}
     
 }
