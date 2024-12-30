@@ -27,7 +27,7 @@ def validate_commands(config_commands, allowed_commands):
     for command_info in config_commands:
         command = command_info['command']
         if command in allowed_commands:
-            arguments = ' '.join(command_info['arguments'])
+            arguments = ' '.join(command_info['arguments']) if 'arguments' in command_info else ''
             valid_commands.append(f"{command} {arguments}")
         else:
             print(f"Skipping invalid command: {command}")
