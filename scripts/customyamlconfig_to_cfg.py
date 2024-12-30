@@ -104,8 +104,9 @@ def process_yaml_files():
                 
                 try:
                     name = data.get('name', 'Unknown')
-                    config_commands = data['configuration']['commands']
-                    config_addons = data['configuration']['addons']
+                    configuration= data['configuration']
+                    config_commands = configuration['commands'] if 'commands' in configuration else []
+                    config_addons = configuration['addons'] if 'addons' in configuration else []
                     
                     # Validate commands
                     valid_commands = validate_commands(config_commands, allowed_commands)
@@ -113,7 +114,7 @@ def process_yaml_files():
                     configs[name]= { "file": yaml_file, "commands": valid_commands, "addons": config_addons }
 
                     # addons handle, and sort out of disabled those already enabled
-                except:
+                except Exception as e::
                     print(f"Configuration generation error - {e}")
 
         if len(configs)<=0:
@@ -137,7 +138,7 @@ def process_yaml_files():
 
         for key in configs:
             config= configs[key]
-            config_addons= config['addons'] if "addons" in config else None
+            config_addons= config['addons'] if "addons" in config else []
 
             addons_to_enable= []
             addons_to_disable= []
