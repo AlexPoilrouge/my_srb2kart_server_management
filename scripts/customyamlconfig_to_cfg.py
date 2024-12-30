@@ -114,7 +114,7 @@ def process_yaml_files():
                     configs[name]= { "file": yaml_file, "commands": valid_commands, "addons": config_addons }
 
                     # addons handle, and sort out of disabled those already enabled
-                except Exception as e::
+                except Exception as e:
                     print(f"Configuration generation error - {e}")
 
         if len(configs)<=0:
