@@ -137,17 +137,18 @@ def process_yaml_files():
 
         for key in configs:
             config= configs[key]
-            config_addons= config['addons']
+            config_addons= config['addons'] if "addons" in config else None
 
             addons_to_enable= []
             addons_to_disable= []
-            if 'enable' in config_addons:
-                addons_to_enable+= config_addons['enable']
-            if 'disable' in config_addons:
-                addons_to_disable+= config_addons['disable']
+            if config_addons :
+                if 'enable' in config_addons:
+                    addons_to_enable+= config_addons['enable']
+                if 'disable' in config_addons:
+                    addons_to_disable+= config_addons['disable']
 
-            addons_to_enable= list(set(addons_to_enable))
-            addons_to_disable= [addon for addon in list(set(addons_to_disable)) if addon not in addons_to_enable]
+                addons_to_enable= list(set(addons_to_enable))
+                addons_to_disable= [addon for addon in list(set(addons_to_disable)) if addon not in addons_to_enable]
 
             try:
                 handle_addons(addons_to_enable, addons_to_disable)
