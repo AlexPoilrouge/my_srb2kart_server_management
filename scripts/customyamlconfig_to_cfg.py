@@ -19,7 +19,11 @@ def read_yaml(file_path):
 # Function to check if current time matches the cron expression
 def time_matches_cron(cron_expression):
     current_time = datetime.now().replace(second=0, microsecond=0)
-    return croniter.match(cron_expression, current_time)
+    try:
+        return croniter.match(cron_expression, current_time, second_at_beginning=True)
+    except Exception as e:
+        print(e)
+        return False
 
 # Function to validate commands against allowed commands
 def validate_commands(config_commands, allowed_commands):
