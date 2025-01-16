@@ -2,8 +2,8 @@
 server{
     server_name {{ http_source_addr }};
 
-    {% for racer in racers %}location ~* ^\/{{ racer.dirname }}\/(.+\..+)$ {
-        root {{ root_dir }}{{ strashbot.home }}/{{ racer.dirname }}/addons/installed;
+    {% for racer in racers %}location ~* ^\/{{ racer.dirname }}\/logs\/(.+\..+)$ {
+        root {{ root_dir }}{{ strashbot.home }}/{{ racer.dirname }}/logs;
 
         try_files /$1 =404;
     }
@@ -14,6 +14,27 @@ server{
         try_files /{{ racer.log_filename }} =404;
     }
 
+    location /{{ racer.dirname }}/logs/ {
+        root {{ root_dir }}{{ strashbot.home }};
+        autoindex on;
+        autoindex_exact_size off;
+        autoindex_localtime on;
+    }
+
+
+    location /{{ racer.dirname }}\/addons/ {
+        alias {{ root_dir }}{{ strashbot.home }}/{{ racer.dirname }}/addons/installed/;
+        autoindex on;
+        autoindex_exact_size off;
+        autoindex_localtime on;
+    }
+
+    location ~* ^\/{{ racer.dirname }}\/(addons\/)?(.+\..+)$ {
+        root {{ root_dir }}{{ strashbot.home }}/{{ racer.dirname }}/addons/installed;
+
+        try_files /$2 =404;
+    }
+    
     {% endfor %}
     
 }

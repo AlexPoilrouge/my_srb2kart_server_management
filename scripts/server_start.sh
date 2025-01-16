@@ -23,10 +23,12 @@ LOG_FILE="${STRASHBOT_USER_HOME}/${RACER_DIR}/log.txt"
 LOGS_DIR="${STRASHBOT_USER_HOME}/${RACER_DIR}/logs"
 mkdir -p "${LOGS_DIR}"
 if [ -f "${LOG_FILE}" ]; then
-    cp -vf "${LOG_FILE}" "${LOGS_DIR}/log$( date +'%Y%m%d%H%M%S' ).txt"
-    if [ "$( ls "${LOGS_DIR}"/log*.txt | wc -l )" -gt 5 ]; then
-        rm -vf "$( find "${LOGS_DIR}"/log*.txt -type f -printf '%T+ %p\n' | sort | head -n 1 | cut -d' ' -f2 )"
+    if "${RACER_HANDLE_LOGS}"; then
+        cp -vf "${LOG_FILE}" "${LOGS_DIR}/log$( date +'%Y%m%d%H%M%S' ).txt"
     fi
+    ls -t "${LOGS_DIR}"/log*.txt | tail -n +17 | while read -r LOGS_LOGFILE; do
+        rm -vf "${LOGS_LOGFILE}"
+    done
 fi
 touch "${LOG_FILE}"
 chmod 704 "${LOG_FILE}"

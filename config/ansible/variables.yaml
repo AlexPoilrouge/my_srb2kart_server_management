@@ -39,3 +39,5 @@ racers:
       start: "/bin/systemctl start SRB2Kart_serv.service"
       restart: "/bin/systemctl restart SRB2Kart_serv.service"
       stop: "/bin/systemctl stop SRB2Kart_serv.service"
+    log_filename: log.txt
+    handle_logs_storage: true
