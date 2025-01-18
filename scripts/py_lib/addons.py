@@ -2,6 +2,8 @@
 
 import os
 from pathlib import Path
+import re
+from typing import List
 
 INSTALLED_DIRNAME="installed"
 ENABLED_DIRNAME="enabled"
@@ -40,4 +42,40 @@ class AddonsHandler:
             print(f"Removed symlink: {enabled_path}")
         else:
             print(f"Symlink '{enabled_path}' does not exist.")
+
+    def get_installed_addons_filenames_from_regex(self, rgx : str) -> List[str]:
+        installed_dirpath = self.dir_path / INSTALLED_DIRNAME
+        if not installed_dirpath.exists():
+            print(f"No addons 'installed' directory.")
+            return []
+
+        try:
+            pattern= re.compile(rgx)
+            addons= []
+
+            for addon_filename in os.listdir(installed_dirpath):
+                print(f"-- --> checking file '{addon_filename}' against rgx '{rgx}' [{pattern}]")
+                addon_full_path = os.path.join(installed_dirpath, addon_filename)
+                if os.path.isfile(addon_full_path) and pattern.search(addon_full_path):
+                    addons.append(addon_filename)
+        except Exception as e:
+            print(f"Error reading files matchin '{rgx}' in '{installed_dirpath}'. - {e}")
+        finally:
+            return addons
+
+    def get_installed_addons_filenames_from_ptr_list(self, ptr_list) -> List[str]:
+        addons= []
+        for addon_ptr in ptr_list:
+            if "text" in addon_ptr:
+                addons.append(addon_ptr["text"])
+            elif "regex" in addon_ptr:
+                rgx_str= addon_ptr["regex"]
+                matched_addons= self.get_installed_addons_filenames_from_regex(rgx_str)
+                print(f"=> matched addons from rgx '{rgx_str}': {matched_addons}")
+                addons+= matched_addons
+        return addons
+                
+
+
+
 

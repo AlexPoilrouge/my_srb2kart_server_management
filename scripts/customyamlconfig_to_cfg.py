@@ -74,6 +74,8 @@ def neutral_config(output_file):
 # Main function to process the YAML files and generate the .cfg file
 def process_yaml_files():
     global workDir
+    global addons_handler
+    
     config_dir = os.path.join(workDir, 'config.d')
     allowed_commands_file = os.path.join(workDir, 'allowed_commands.yaml')
     output_file = os.path.join(workDir, 'custom_config.cfg')
@@ -102,8 +104,8 @@ def process_yaml_files():
 
             # If 'triggertime' exists and matches current time
             if 'triggertime' in data:
-                triggertime= data['triggertime']
-                if triggertime.lower().strip()=="never" or not time_matches_cron(triggertime):
+                triggertime= data['triggertime'].lower().strip()
+                if triggertime=="never" or (triggertime!="default" and not time_matches_cron(triggertime)):
                     continue
                 
                 try:
@@ -115,7 +117,12 @@ def process_yaml_files():
                     # Validate commands
                     valid_commands = validate_commands(config_commands, allowed_commands)
 
-                    configs[name]= { "file": yaml_file, "commands": valid_commands, "addons": config_addons }
+                    configs[name]= { 
+                        "file": yaml_file,
+                        "commands": valid_commands,
+                        "addons": config_addons,
+                        "default": (triggertime=="default")
+                    }
 
                     # addons handle, and sort out of disabled those already enabled
                 except Exception as e:
@@ -125,6 +132,11 @@ def process_yaml_files():
             print("No configuration to generate…")
             neutral_config(output_file)
             return
+        else:
+            # the 'default' configs are sorted out if there is at least one non-default config
+            count_defaults= sum(1 for key in configs if configs[key]['default'])
+            if count_defaults > 0 and count_defaults < len(configs):
+                configs= { key: config for key, config in configs.items() if not config['default'] }
 
         try:
             with open(output_file, 'w') as output:
@@ -148,9 +160,9 @@ def process_yaml_files():
             addons_to_disable= []
             if config_addons :
                 if 'enable' in config_addons:
-                    addons_to_enable+= config_addons['enable']
+                    addons_to_enable+= addons_handler.get_installed_addons_filenames_from_ptr_list( config_addons['enable'] )
                 if 'disable' in config_addons:
-                    addons_to_disable+= config_addons['disable']
+                    addons_to_disable+= addons_handler.get_installed_addons_filenames_from_ptr_list( config_addons['disable'] )
 
                 addons_to_enable= list(set(addons_to_enable))
                 addons_to_disable= [addon for addon in list(set(addons_to_disable)) if addon not in addons_to_enable]
