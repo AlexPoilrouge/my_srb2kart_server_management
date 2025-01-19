@@ -43,22 +43,13 @@ OPERATOR_SCRIPT="${STRASHBOT_USER_HOME}/${RACER_DIR}/racer_operator.sh"
 
 if [ -f "${CUSTOM_CFG_SCRIPT}" ]; then
     "${CUSTOM_CFG_SCRIPT}" "RESTORE_ADDONS" "${CFG_DIR}" "${ADDONS_DIR}"
-fi
+fi  
 "${OPERATOR_SCRIPT}" "PENDING" "force"
 if [ -f "${CUSTOM_CFG_SCRIPT}" ]; then
     "${CUSTOM_CFG_SCRIPT}" "MAKE" "${CFG_DIR}" "${ADDONS_DIR}"
 fi
 
 LOAD_ORDER_SCRIPT="${STRASHBOT_USER_HOME}/${RACER_DIR}/load_addon_manager.py"
-LOAD_ADDON_CFG="${CFG_DIR}/dl_load.cfg"
-if [ -f "${LOAD_ORDER_SCRIPT}" ]; then
-    echo "wait" > "${LOAD_ADDON_CFG}"
-    "${LOAD_ORDER_SCRIPT}" | while read -r ADDON_FILENAME; do
-        echo "addfile \"${ADDONS_DIR}/enabled/${ADDON_FILENAME}\"" >> "${LOAD_ADDON_CFG}"
-        echo "wait 3" >> "${LOAD_ADDON_CFG}"
-    done
-    chmod 704 "${LOAD_ADDON_CFG}"
-fi
 
 STATE_FILE="${STRASHBOT_USER_HOME}/${RACER_DIR}/state.txt"
 MAPS_FILE="${STRASHBOT_USER_HOME}/${RACER_DIR}/maps.txt"
@@ -68,4 +59,5 @@ chmod 704 "${STATE_FILE}" "${MAPS_FILE}" "${SKINS_FILE}"
 
 trap 'kill $(jobs -p)' EXIT
 ( tail -f "${LOG_FILE}" | "${STRASHBOT_USER_HOME}/${RACER_DIR}/log_processor.py" "${STATE_FILE}" "${MAPS_FILE}" "${SKINS_FILE}") &
-nice -n -20 ${RACER_EXE} -dedicated -password ${PASS} ${RACER_LAUNCH_ARGS}
+nice -n -20 ${RACER_EXE} -dedicated -password ${PASS} ${RACER_LAUNCH_ARGS} \
+    $( [ -f "${LOAD_ORDER_SCRIPT}" ] && "${LOAD_ORDER_SCRIPT}" --file_line --addons_dir "${ADDONS_DIR}/enabled" )

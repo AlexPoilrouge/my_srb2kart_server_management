@@ -4,6 +4,7 @@ import os
 import sys
 import re
 import yaml
+import argparse
 
 def load_yaml(yaml_path):
     with open(yaml_path, 'r') as file:
@@ -70,7 +71,7 @@ def apply_rules(files, rules):
     
     return files
 
-def main():
+def main(addons_dir=None, file_line=False):
     # Determine the directory where the script is located
     script_dir = os.path.dirname(os.path.abspath(__file__))
 
@@ -108,9 +109,21 @@ def main():
     ordered_files = apply_rules(files, rules)
     
     # Output the final ordered list of files
+    if file_line:
+        print("-file", end=' ')
     for file in ordered_files:
-        # print(os.path.join(directory,file))
-        print(file)
+        output_file= os.path.join(addons_dir,file) if addons_dir else file
+        if(file_line):
+            print(output_file, end=' ')
+        else:
+            print(output_file)
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument("-f", "--file_line", action="store_true")
+    parser.add_argument("-d", "--addons_dir")
+
+    args = parser.parse_args()
+
+    main( addons_dir=args.addons_dir, file_line=args.file_line )
