@@ -46,11 +46,9 @@
                 <p>Discord StrashBot is my personal Discord bot.<br/>
                     Depending on which guild you meet him, its function can differ.
                 </p> 
-                <p>As of ver. <em>0.3.0</em> there are mainly 2 usage for strashBot:
+                <p>As of ver. <em>0.4.0</em> there are remains only one usage for strashBot:
                     <ul>
-                        <li><b>Smash Tool:</b> offering few services for the Smash Strasbourg's community.</li>
                         <li><b>SRB2Kart Server Manager:</b> tool to manage the StrashBot SRB2Kart Server.</li>
-                        <li><b>Minecraft Bedrock server manager:</b> don't bother with that, plz.</li>
                     </ul>
                 </p>
             
@@ -75,6 +73,14 @@
                 <h1 id="kart_slash_cmd">Kart Slash Commands [All Users]</h1>
                 <p>Coming soon…</p>
                 <h2 id="slash_kart_info">/kart_info</h2>
+                <p><b>Options:</b><ul>
+                    <li><span class="code">karter</span> - the game server to target: 
+                        <ul>
+                            <li><b>ringracers</b> <em>[default]</em></li>
+                            <li><b>srb2kart</b></li>
+                        </ul>
+                    </li>
+                </ul></p>
 
                 <p>The <span class="code">/kart_info</span> command allows to check the current state of the
                     <em>StrashBot Karting</em> SRB2Kart server. This give the user info about the number of player
@@ -235,6 +241,14 @@
                     <b>Note:</b> the password is only worth for the current session.
                     Each time the server restarts, the password changes.
                     </p>
+                <p><b>Options:</b><ul>
+                    <li><span class="code">karter</span> - the game server to target: 
+                        <ul>
+                            <li><b>ringracers</b> <em>[default]</em></li>
+                            <li><b>srb2kart</b></li>
+                        </ul>
+                    </li>
+                </ul></p>
 
 
                 <h2 id="slash_kart_server">/kart_server</h2>
@@ -242,40 +256,34 @@
                 <p>The <span class="code">/kart_server</span> commands are for managing directly the Strashbot SRB2Kart Server.
                     Used to start, stop or restart the server.</p>
 
-                <h3 id="slash_kart_server_start">/kart_server start</h3>
-                <p>Call the <span class="code">/kart_server start</span> subcommand to start the SRB2Kart.
-                    Only works if the server isn't already running.</p>
-
                 <h3 id="slash_kart_server_stop">/kart_server stop</h3>
                 <p>Call the <span class="code">/kart_server stop</span> subcommand to stop the SRB2Kart.
                     Only works if the server is running.</p>
                 <p><b>Options:</b><ul>
-                    <li><span class="code">force</span> - pass this option to True, to force the server's halt.
-                        If not, the command will fail if there are players currently on the SRB2Kart server.</li>
+                    <li>
+                        <span class="code">karter</span> - the game server to target: 
+                        <ul>
+                            <li><b>ringracers</b> <em>[default]</em></li>
+                            <li><b>srb2kart</b></li>
+                        </ul>
+                    </li><li><span class="code">force</span> - pass this option to True, to force the server's halt.
+                        If not, the command will fail if there are players currently on the SRB2Kart server.
+                    </li>
                 </ul></p>
+
 
                 <h3 id="slash_kart_server_restart">/kart_server restart</h3>
-                <p>Call the <span class="code">/kart_server stop</span> subcommand to stop the SRB2Kart.</p>
+                <p>Call the <span class="code">/kart_server restart</span> subcommand to start or restart the SRB2Kart.</p>
                 <p><b>Options:</b><ul>
-                    <li><span class="code">force</span> - pass this option to True, to force the server's restart.
-                        If not, the command will fail if there are players currently on the SRB2Kart server.</li>
+                    <li><span class="code">karter</span> - the game server to target: 
+                        <ul>
+                            <li><b>ringracers</b> <em>[default]</em></li>
+                            <li><b>srb2kart</b></li>
+                        </ul>
+                    </li><li><span class="code">force</span> - pass this option to True, to force the server's restart.
+                        If not, the command will fail if there are players currently on the SRB2Kart server.
+                    </li>
                 </ul></p>
-
-                <h3 id="slash_kart_server_logs">/kart_server logs</h3>
-                <p>Call the <span class="code">/kart_server logs</span> subcommand to get a reminder of the
-                    server's log url, lol.</p>
-
-                <h3 id="slash_kart_server_logs">/kart_server config</h3>
-                <p>The <span class="code">/kart_server config</span> subcommands is for checking and changing
-                    the addon configuration layer of the <em>StrashBort Karting</em> SRB2Kart server.</p>
-                <p><b>Options:</b><ul>
-                    <li><span class="code">set</span> - this option allows you to upload a new configuration file.</li>
-                </ul></p>
-                <p style="margin-left: 32px;"><b>Note: </b>the following kart commands are blacklisted from the config file:<br/>
-                <span class="code">"addfile" "alias" "bind" "toggle" "changeconfig" "exec" "loadconfig" "runsoc" "saveconfig"
-                    "exitgame" "quit" "demote" "password" "promote" "connect" "cheats" "runscripts" "addons_folder"
-                    "addons_option" "addons_search_case" "addons_search_type" "maxsend"</span>
-                </p>
 
 
                 <h2 id="slash_kart_addons_manage">/kart_addons_manage</h2>
